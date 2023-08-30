@@ -319,6 +319,7 @@ First, let's think about `0b1`, which is equal to just 1 in decimal.
 If we were to "shift" this bits to the left one we would have `0b10`, which is equal to 2 in decimal.
 If we repeat this we have `0b100`, which is 4 in decimal.
 Therefore, every time we perform a left shift we double.
+Note that I am leaving out the leaving 0s (similar to how 3 and 03 are the same number).
 
 This also holds for numbers that are not powers of two.
 For instance, `0b11` is equal to 3 in decimal, and a left shift gives us `0b110`, which is 6.
