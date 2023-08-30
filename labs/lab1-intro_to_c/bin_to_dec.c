@@ -7,7 +7,7 @@
 int main() {
 
    // user input string
-   char s[MAXSTR]; 
+   char input_s[MAXSTR]; 
 
    // prompt for input if input from terminal
    if (isatty(fileno(stdin))) {
