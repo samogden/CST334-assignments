@@ -455,9 +455,10 @@ Your first C program in OS is now complete!
 Your program is now complete!
 We've seen a lot of things in this lab, including format specifiers, bit shifting, I/O in C, and some preprocessor commands.
 
-Submit your "Lab 1" document on canvas.
-
 ***TODO:*** Take a few minutes to write a short bit at the end of your Lab1 document reflecting on what worked how you expected or what was new for you.  If you used ChatGPT at all, did you find it useful or did it just add complexity?
+
+
+Submit your "Lab 1" document on canvas.
 
 If you want to check it out, the complete code I wrote is in `bin_to_dec.complete.c`.
 It isn't heavily commented (homework code should be!) so I'm a bad example, but try to go through and add in comments explaining it in your own words.
