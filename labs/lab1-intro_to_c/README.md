@@ -118,6 +118,9 @@ Run the below command to test compilation.
 gcc -o convert bin_to_dec.c
 ```
 
+***Note:*** If this gives you an error or a warning then reach out to the teaching staff.  
+You may not be correctly running docker and we'll be able to help get you sorted out pretty quickly.
+
 This command invokes `gcc`, which is the [GNU C Compiler](https://gcc.gnu.org/), a widely used open source compiler for the C language.
 We are issuing two commands to this compiler.
 First, the `-o` flag is telling the `gcc` program what to name the output file -- in this case `convert`.
