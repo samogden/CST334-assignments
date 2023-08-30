@@ -2,8 +2,9 @@
 
 The goal of this lab is to get you used to programming in C in your local environment, as well as using a few of the C debugging tools when things go wrong!
 
-Throughout there are a number of steps labeled ***TODO*** which contain instructors to copy something into your document.
+Throughout there are a number of steps labeled ***TODO*** which contain instructions to copy something into your document.
 When you get to these please follow the instructions.
+You will turn in this document as a PDF when you are done.
 
 A note on notation: I will use `0b1` to say "binary number with representation 1" to differentiate it from the decimal one.
 A more complete example would be `0b10` which is equal to 2 in decimal.
@@ -449,6 +450,8 @@ Your first C program in OS is now complete!
 
 Your program is now complete!
 We've seen a lot of things in this lab, including format specifiers, bit shifting, I/O in C, and some preprocessor commands.
+
+Submit your "Lab 1" document on canvas.
 
 ***TODO:*** Take a few minutes to write a short bit at the end of your Lab1 document reflecting on what worked how you expected or what was new for you.  If you used ChatGPT at all, did you find it useful or did it just add complexity?
 
