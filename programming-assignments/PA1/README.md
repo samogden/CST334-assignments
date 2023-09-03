@@ -85,7 +85,8 @@ You will have to consult the below point values to calculate your score.
 ## Assignment components
 
 
-### Strings (21 points)
+### Strings 
+***(21 points)***
 
 Remember from class that Strings in C are null-terminated character arrays.
 In this section you should practice using string functions and mimic them on your own.
@@ -106,7 +107,8 @@ void find_first_index(char* str, char target);      // 2 points
 void find_last_index(char* str, char target);       // 2 points
 ```
 
-### Structs (19 points)
+### Structs 
+***(19 points)***
 
 Structs in C are contiguous memory objects, where we group together more primative object types to make more complex types.
 They are similar to objects in object-oriented languages, but consist of only the data instead of the associated functions as well.
@@ -128,7 +130,8 @@ int add_person(Group* group, Person* person_to_add);                // 3 points
 int remove_person(Group* group, Person* person_to_remove);          // 1 point
 ```
 
-### Processes (30 points)
+### Processes 
+***(30 points)***
 
 In class we will be learning about process management, where we start and stop processes.
 The core of this will be handled by the OS but when using C there are two main functions that are essential for us to learn how to use well: `fork()` and `exec()`.
@@ -153,7 +156,8 @@ int make_exec_call(int* errno); // 10 points
 ```
 
 
-### System Calls (10 points)
+### System Calls 
+***(10 points)***
 
 Below the standard library provided by `stdli.h` is a set of [system calls](https://man7.org/linux/man-pages/man2/syscalls.2.html) that allow direct interfacing with the operating system below.
 This is how programs actually interface with the operating systems -- they make system calls and the operating system takes over to actually do the work.
