@@ -16,6 +16,7 @@
  */
 int get_str_length(char* str) {
     // todo
+    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
     return -1;
 }
 
@@ -26,6 +27,7 @@ int get_str_length(char* str) {
  */
 char* copy_str(char* str) {
     // todo
+    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
     return NULL;
 }
 
@@ -35,6 +37,7 @@ char* copy_str(char* str) {
  * @param new_length The length of the output string.
  */
 void truncate_string(char* str, int new_length) {
+    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
     // todo
 }
 
@@ -62,6 +65,7 @@ void to_lowercase(char* str) {
  */
 int find_first_index(char* str, char target) {
     // todo
+    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
     return -1;
 }
 
@@ -73,6 +77,7 @@ int find_first_index(char* str, char target) {
  */
 int find_last_index(char* str, char target) {
     // todo
+    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
     return -1;
 }
 
@@ -199,6 +204,8 @@ int make_exec_call(char* program_to_call, char** arguments, int* errno) {
  */
 void print_string(char* str) {
     // todo
+    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Failure to do so will result in a 0 for this function!
 }
 
 /**
@@ -209,6 +216,8 @@ void print_string(char* str) {
 FILE* open_file_to_read(char* path_to_file) {
     // todo
     // hint: https://stackoverflow.com/a/1658517
+    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Failure to do so will result in a 0 for this function!
     return NULL;
 }
 
@@ -219,6 +228,8 @@ FILE* open_file_to_read(char* path_to_file) {
  */
 FILE* open_file_to_write(char* path_to_file) {
     // todo
+    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Failure to do so will result in a 0 for this function!
     return NULL;
 }
 
@@ -229,6 +240,8 @@ FILE* open_file_to_write(char* path_to_file) {
  */
 FILE* open_file_to_readwrite(char* path_to_file) {
     // todo
+    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Failure to do so will result in a 0 for this function!
     return NULL;
 }
 
@@ -240,6 +253,8 @@ FILE* open_file_to_readwrite(char* path_to_file) {
 void write_str_to_fid(char* str, FILE* f) {
     // todo
     // hint: https://linuxhint.com/write-system-call-c/
+    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Failure to do so will result in a 0 for this function!
 }
 
 /**
@@ -250,6 +265,8 @@ void write_str_to_fid(char* str, FILE* f) {
  */
 char* read_str_from_fid(FILE* f, int max_chars) {
     // todo
+    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Failure to do so will result in a 0 for this function!
     return NULL;
 }
 
@@ -259,4 +276,6 @@ char* read_str_from_fid(FILE* f, int max_chars) {
  */
 void close_fid(FILE* f) {
     // todo
+    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Failure to do so will result in a 0 for this function!
 }
