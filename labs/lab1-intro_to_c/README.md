@@ -2,8 +2,9 @@
 
 The goal of this lab is to get you used to programming in C in your local environment, as well as using a few of the C debugging tools when things go wrong!
 
-Throughout there are a number of steps labeled ***TODO*** which contain instructors to copy something into your document.
+Throughout there are a number of steps labeled ***TODO*** which contain instructions to copy something into your document.
 When you get to these please follow the instructions.
+You will turn in this document as a PDF when you are done.
 
 A note on notation: I will use `0b1` to say "binary number with representation 1" to differentiate it from the decimal one.
 A more complete example would be `0b10` which is equal to 2 in decimal.
@@ -116,6 +117,9 @@ Run the below command to test compilation.
 ```bash
 gcc -o convert bin_to_dec.c
 ```
+
+***Note:*** If this gives you an error or a warning then reach out to the teaching staff.  
+You may not be correctly running docker and we'll be able to help get you sorted out pretty quickly.
 
 This command invokes `gcc`, which is the [GNU C Compiler](https://gcc.gnu.org/), a widely used open source compiler for the C language.
 We are issuing two commands to this compiler.
@@ -318,6 +322,7 @@ First, let's think about `0b1`, which is equal to just 1 in decimal.
 If we were to "shift" this bits to the left one we would have `0b10`, which is equal to 2 in decimal.
 If we repeat this we have `0b100`, which is 4 in decimal.
 Therefore, every time we perform a left shift we double.
+Note that I am leaving out the leaving 0s (similar to how 3 and 03 are the same number).
 
 This also holds for numbers that are not powers of two.
 For instance, `0b11` is equal to 3 in decimal, and a left shift gives us `0b110`, which is 6.
@@ -451,6 +456,9 @@ Your program is now complete!
 We've seen a lot of things in this lab, including format specifiers, bit shifting, I/O in C, and some preprocessor commands.
 
 ***TODO:*** Take a few minutes to write a short bit at the end of your Lab1 document reflecting on what worked how you expected or what was new for you.  If you used ChatGPT at all, did you find it useful or did it just add complexity?
+
+
+Submit your "Lab 1" document on canvas.
 
 If you want to check it out, the complete code I wrote is in `bin_to_dec.complete.c`.
 It isn't heavily commented (homework code should be!) so I'm a bad example, but try to go through and add in comments explaining it in your own words.
