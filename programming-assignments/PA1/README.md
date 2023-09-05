@@ -24,10 +24,13 @@ Before we get started, let's check for updates to the docker image by running:
 docker pull samogden/csumb:cst334
 ```
 
-Then, navigate using your terminal on your local machien to your working directory (i.e. the github repo `CST334-assignments`) and run the below command to start docker:
+Then, navigate using your terminal on your local machine to your working directory (i.e. the github repo `CST334-assignments`) and run the below command to start docker:
 ```shell
 docker run -it -v ${PWD}:/tmp/programming samogden/csumb:cst334
 ```
+
+***Question:*** What are the differences between these commands and the ones for lab1?  What do they mean?
+
 
 Once the docker shell starts update your github files:
 ```shell
@@ -43,8 +46,6 @@ cd /tmp/programming/programming-assignments/PA1
 
 Now you're ready to get started coding!
 
-
-***Question:*** What are the differences between these commands and the ones for lab1?  What do they mean?
 
 ### Testing Code
 
