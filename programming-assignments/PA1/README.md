@@ -32,7 +32,7 @@ docker run -it -v ${PWD}:/tmp/programming samogden/csumb:cst334
 ***Question:*** What are the differences between these commands and the ones for lab1?  What do they mean?
 
 
-Once the docker shell starts update your github files:
+Once the docker shell starts change to the appropriate directory (e.g. run `cd programming`) and update your github files:
 ```shell
 git stash
 git pull
