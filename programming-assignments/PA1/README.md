@@ -26,7 +26,7 @@ docker pull samogden/csumb:cst334
 
 Then, navigate using your terminal on your local machien to your working directory (i.e. the github repo `CST334-assignments`) and run the below command to start docker:
 ```shell
-docker run -it -v ${PWD}:/tmp/programming cst334
+docker run -it -v ${PWD}:/tmp/programming samogden/csumb:cst334
 ```
 
 Once the docker shell starts update your github files:
