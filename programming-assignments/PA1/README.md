@@ -39,6 +39,10 @@ git pull
 git stash pop
 ```
 
+Note: these git instructions might give you an error talking about different users.
+This is a side effect of the new docker image I recently pushed (and you pulled).
+Take the steps advised in them in this case, but in future cases you might not want to ignore such warnings.
+
 And then change to the appropriate directory:
 ```shell
 cd /tmp/programming/programming-assignments/PA1
