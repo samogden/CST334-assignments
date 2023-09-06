@@ -17,7 +17,7 @@ Additionally, create a google document (or microsoft word, or apple pages, if yo
 
 ### Step 1: Start Docker
 
-First, navigate to your working directory and type in the following command:
+First, navigate to your working directory in your terminal of choice (e.g. PowerShell on Windows or Terminal on macOS) and type in the following command:
 ```bash
 docker run -it -v ${PWD}:/tmp/lab samogden/csumb:cst334
 ```

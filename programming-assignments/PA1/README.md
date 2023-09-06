@@ -24,17 +24,24 @@ Before we get started, let's check for updates to the docker image by running:
 docker pull samogden/csumb:cst334
 ```
 
-Then, navigate using your terminal on your local machien to your working directory (i.e. the github repo `CST334-assignments`) and run the below command to start docker:
+Then, navigate using your terminal on your local machine to your working directory (i.e. the github repo `CST334-assignments`) and run the below command to start docker:
 ```shell
-docker run -it -v ${PWD}:/tmp/programming cst334
+docker run -it -v ${PWD}:/tmp/programming samogden/csumb:cst334
 ```
 
-Once the docker shell starts update your github files:
+***Question:*** What are the differences between these commands and the ones for lab1?  What do they mean?
+
+
+Once the docker shell starts change to the appropriate directory (e.g. run `cd programming`) and update your github files:
 ```shell
 git stash
 git pull
 git stash pop
 ```
+
+Note: these git instructions might give you an error talking about different users.
+This is a side effect of the new docker image I recently pushed (and you pulled).
+Take the steps advised in them in this case, but in future cases you might not want to ignore such warnings.
 
 And then change to the appropriate directory:
 ```shell
@@ -43,8 +50,6 @@ cd /tmp/programming/programming-assignments/PA1
 
 Now you're ready to get started coding!
 
-
-***Question:*** What are the differences between these commands and the ones for lab1?  What do they mean?
 
 ### Testing Code
 
