@@ -55,7 +55,7 @@ Test(String, to_lowercase) {
     char* test_str = "HeLlo";
     to_lowercase(test_str);
     for (int i = 0; i < strlen(test_str); i++) {
-        cr_assert(test_str[i] >= 'a' && test_str[i] <= 'a');
+        cr_assert(test_str[i] >= 'a' && test_str[i] <= 'z');
     }
 }
 
