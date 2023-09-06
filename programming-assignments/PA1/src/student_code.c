@@ -17,7 +17,7 @@
 int get_str_length(char* str) {
     // todo
     // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    return -1;
+    return -1
 }
 
 /**
@@ -160,7 +160,7 @@ int remove_person(Group* group, Person* person_to_remove) {
  * Processes *
  *************/
 /**
- * Fork off a process and return the child's PID
+ * Fork off a process and return the child's PID *from the child process*
  * @return the PID of the child process
  */
 int fork_and_return_child() {
@@ -174,7 +174,7 @@ int fork_and_return_child() {
 }
 
 /**
- * Fork off a process and return the child's PID but from the parent
+ * Fork off a process and return the child's PID *from the parent process*
  * @return the PID of the child process
  */
 int fork_and_return_parent() {
