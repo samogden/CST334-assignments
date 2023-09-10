@@ -1,7 +1,3 @@
-//
-// Created by Sam Ogden on 8/28/23.
-//
-
 #ifndef PROJECTS_STUDENT_CODE_H
 #define PROJECTS_STUDENT_CODE_H
 
