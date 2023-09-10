@@ -326,9 +326,456 @@ This looks to be doing exactly the same thing!
 The only difference is that the string is longer.
 Huh.  Curiouser and curiouser.
 
-Because it's doing the same thing but failing more epically, let's just disable this test for now.
-Set the `.disabled` to be `true` (and remember to turn it on again before submitting your homework!).
+Because it's doing the same thing but failing more epically, let's just isolate just this test for now.
+Set the `.disabled` on the first test to be`true` (and remember to turn it on again before submitting your homework!).
 
 ***TODO:*** Take a screenshot with the test disabled and paste it into your google doc.
 
 #### Step 2a: let's see what happens when we've disabled that test
+
+```shell
+[DOCKER] /tmp/lab/labs/lab2/ $ make 2>&1 | cat -n
+     1	rm -rf bin unit_tests debug
+     2	mkdir -p bin
+     3	gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
+     4	gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ unit_tests.c -o unit_tests bin/student_code.o
+     5	./unit_tests
+     6	*** stack smashing detected ***: terminated
+     7	[----] tests/tests-person.c:25: Unexpected signal caught below this line!
+     8	[FAIL] Person::make_new_person_badly: CRASH!
+     9	[====] Synthesis: Tested: 1 | Passing: 0 | Failing: 1 | Crashing: 1
+    10	make: *** [Makefile:13: all] Error 1
+```
+
+Okay, so now we're having this really bad fail.
+If we can fix it then it can probably help us figure out what's going on a bit better.
+Let's get going and dig into it a bit more!
+
+
+### Step 3: Isolating the problem
+
+Before we start digging into debugging tools I have to say that I'm willing to bet some of you can already guess what's going on.
+For a problem like this a full debug is potentially overkill but it's good to go through the steps and practice.
+
+Okay!
+So let's grab this snippet of code and make use of our `debug.c`.
+The idea is that we can move the problematic piece of code over there and poke at it a bit more to see what's going wrong.
+Let's copy lines 15-21 over into our main function as such:
+
+```c
+ 1	#include "src/student_code.h"
+ 2
+ 3	int main() {
+ 4	    // Next we poke around at our expectations a bit
+ 5	    Person p2 = make_new_person(27, "Douglas Adams", 42);
+ 6
+ 7	    //Next, we test to make sure it worked correctly
+ 8	    cr_assert(p2.age == 27); // Test age
+ 9	    cr_assert(strcmp(p2.name, "Douglas Adams") == 0); // Note that we use the strcmp function
+10	    cr_assert(p2.favorite_number == 42); // Test favorite number
+11
+12	    return 0;
+13	}
+```
+
+After we've done this let's run a `make debug`, which calls a special make rule I've added that builds a debug executable.
+
+```shell
+[DOCKER] /tmp/lab/labs/lab2/ $ make debug
+gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
+debug.c: In function 'main':
+debug.c:8:5: warning: implicit declaration of function 'cr_assert' [-Wimplicit-function-declaration]
+    8 |     cr_assert(p2.age == 27); // Test age
+      |     ^~~~~~~~~
+debug.c:9:15: warning: implicit declaration of function 'strcmp' [-Wimplicit-function-declaration]
+    9 |     cr_assert(strcmp(p2.name, "Douglas Adams") == 0); // Note that we use the strcmp function
+      |               ^~~~~~
+debug.c:2:1: note: include '<string.h>' or provide a declaration of 'strcmp'
+    1 | #include "src/student_code.h"
+  +++ |+#include <string.h>
+    2 |
+/usr/bin/ld: /tmp/cc2m428F.o: in function `main':
+debug.c:(.text+0x44): undefined reference to `cr_assert'
+/usr/bin/ld: debug.c:(.text+0x6c): undefined reference to `cr_assert'
+/usr/bin/ld: debug.c:(.text+0x80): undefined reference to `cr_assert'
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:21: debug] Error 1
+```
+
+Oh.
+Something went wrong.
+It's always good to start at the beginning and start working down because often the first bug cascades into causing other ones.
+
+The first warning we see is `debug.c:8:5: warning: implicit declaration of function 'cr_assert'`.
+This is saying that our testing code isn't included.
+This `cr_assert` is how we actually make the assertions in our unit tests.
+Since this is us trying to isolate a problem, let's assume our testing framework is good and not use `cr_assert`.
+Let's go through and instead change all of our `cr_assert` statements to `printf` to print out their results.
+This makes our tests look like the below:
+
+```c
+printf("%d\n", (p2.age == 27)); // Test age
+printf("%d\n", (strcmp(p2.name, "Douglas Adams") == 0)); // Note that we use the strcmp function
+printf("%d\n", (p2.favorite_number == 42)); // Test favorite number
+```
+
+Don't forget to include `stdio.h`.
+Also, note that we are printing out decimals instead of booleans because booleans don't properly exist in C.
+
+Running this again we see we've still got an issue, but GCC has suggestions for how to fix it.
+```shell
+[DOCKER] /tmp/lab/labs/lab2/ $ make debug
+mkdir -p bin
+gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
+gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
+debug.c: In function 'main':
+debug.c:10:21: warning: implicit declaration of function 'strcmp' [-Wimplicit-function-declaration]
+   10 |     printf("%d\n", (strcmp(p2.name, "Douglas Adams") == 0)); // Note that we use the strcmp function
+      |                     ^~~~~~
+debug.c:3:1: note: include '<string.h>' or provide a declaration of 'strcmp'
+    2 | #include "src/student_code.h"
+  +++ |+#include <string.h>
+    3 |
+```
+
+We can just follow it's suggestions and add in the `string.h` library and we should be good to go:
+
+```shell
+[DOCKER] /tmp/lab/labs/lab2/ $ make debug
+gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
+[DOCKER] /tmp/lab/labs/lab2/ $ ./debug
+*** stack smashing detected ***: terminated
+Aborted
+```
+
+We can now cleanly compile but we're still failing.
+Time to move onto figuring out what's going on!
+
+***TODO:*** Take a screenshot of your debug.c and paste it into your google document.
+
+### Step 3: GDB
+
+The first tool we'll be using is [GDB](https://www.sourceware.org/gdb/), aka the GNU Project Debugger.
+To start up GDB we simply type `gdb [program name]` and it launches the debugger with that program as it's input.
+
+```shell
+[DOCKER] /tmp/lab/labs/lab2/ $ gdb debug
+GNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "aarch64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from debug...
+(No debugging symbols found in debug)
+(gdb)
+```
+
+This show us an output explaining a little bit about GDB and then drops us as a `(gdb)` prompt where we can enter commands.
+
+The idea behind GDB is that it allows us to set breakpoints and see memory variables.
+It also, critically, allows us to see a backtrace of what went wrong.
+This backtrace is usually a good first step to figuring out what's happening and gives us an idea of where we can set breakpoints to isolate problems.
+
+To see this we first need to run our program, so at this prompt type in either `run` or just `r` (if you're in a rush).
+You should see something like the below:
+
+```shell
+(gdb) run
+Starting program: /tmp/lab/labs/lab2/debug
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/aarch64-linux-gnu/libthread_db.so.1".
+*** stack smashing detected ***: terminated
+
+Program received signal SIGABRT, Aborted.
+__pthread_kill_implementation (threadid=281474842214432, signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
+44	./nptl/pthread_kill.c: No such file or directory.
+```
+
+What we see is that the program still crashes (sometimes it doesn't because gdb makes a few tweaks to memory layout to simply debugging), and is killed.
+To see a bit of information about _why_ let's call `backtrace` (or `bt`) to ask what sequence of calls was made.
+(You can also specify a number of functions to report back, but for now let's just use it without this).
+
+```shell
+(gdb) backtrace
+#0  __pthread_kill_implementation (threadid=281474842214432, signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
+#1  0x0000fffff7e4f254 in __pthread_kill_internal (signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:78
+#2  0x0000fffff7e0a67c in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+#3  0x0000fffff7df7130 in __GI_abort () at ./stdlib/abort.c:79
+#4  0x0000fffff7e43308 in __libc_message (action=action@entry=do_abort, fmt=fmt@entry=0xfffff7f237a8 "*** %s ***: terminated\n")
+    at ../sysdeps/posix/libc_fatal.c:155
+#5  0x0000fffff7ec5898 in __GI___fortify_fail (msg=msg@entry=0xfffff7f23790 "stack smashing detected") at ./debug/fortify_fail.c:26
+#6  0x0000fffff7ec5864 in __stack_chk_fail () at ./debug/stack_chk_fail.c:24
+#7  0x0000aaaaaaaa0a64 in make_new_person ()
+#8  0x0000aaaaaaaa0944 in main ()
+```
+
+To read this we start from the bottom and read upwards (or at least I do), to dig into the execution of the program.
+This let's us see which of our functions caused a problem, and which are caused by other libraries.
+I see that we are in `main ()` and then `make_new_person ()`, and then above that is something called `__stack_chk_fail ()`.
+That, paired with the error saying "stack smashing detected" seems to be saying that something is messing around with the stack and causing some check to fail.
+That's weird.
+
+Let's look at this program a bit more by checking out the memory at that `make_new_person ()` call:
+
+```shell
+(gdb) x/5i 0x0000aaaaaaaa0a64
+   0xaaaaaaaa0a64 <make_new_person+116>:	mov	x0, x2
+   0xaaaaaaaa0a68 <make_new_person+120>:	mov	x1, x3
+   0xaaaaaaaa0a6c <make_new_person+124>:	ldp	x29, x30, [sp], #64
+   0xaaaaaaaa0a70 <make_new_person+128>:	ret
+   0xaaaaaaaa0a74 <_fini>:	nop
+```
+
+In this command we're saying to show us the memory (`x`) and to show the next 5 instructions (`/5i`) after our particular memory location.
+Note that we can also add in offsets to our memory location (e.g. `0x0000aaaaaaaa0a64-5`) to show the instructions leading up to it, but it doesn't automatically do math for us leading to possible garbage results.
+
+So I broke my promise again because we're now looking at assembly language.
+And it's not even particularly useful because I don't know exactly what that means, and can't tell what it corresponds to in our program and what line needs to be fixed.
+To remedy this we want to turn on debugging.
+
+Quit gdb by running `quit`.
+
+#### Step 3b: Compiling for GDB
+
+Let's do a slightly modification to our Makefile to have it compile with some extra information for gdb.
+This is already turned on in the projects but I wanted to have an excuse to talk about it.
+In your Makefile goto line 2 and after `-Wall` add in a `-g` flag so it reads:
+```makefile
+CFLAGS=-Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/
+```
+
+This flag will add in some extra information that gdb uses.
+
+***TODO:*** What does this flag do?  Use the man pages or the `--help` flag to help you figure it out!
+
+Recompiling with this flag by rerunning `make debug`, restart GDB as before, and re-run your program.
+You should get the same error as before.
+However, this time run the `backtrace` command and you'll see more information.
+
+```shell
+(gdb) backtrace
+#0  __pthread_kill_implementation (threadid=281474842214432, signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
+#1  0x0000fffff7e4f254 in __pthread_kill_internal (signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:78
+#2  0x0000fffff7e0a67c in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+#3  0x0000fffff7df7130 in __GI_abort () at ./stdlib/abort.c:79
+#4  0x0000fffff7e43308 in __libc_message (action=action@entry=do_abort, fmt=fmt@entry=0xfffff7f237a8 "*** %s ***: terminated\n")
+    at ../sysdeps/posix/libc_fatal.c:155
+#5  0x0000fffff7ec5898 in __GI___fortify_fail (msg=msg@entry=0xfffff7f23790 "stack smashing detected") at ./debug/fortify_fail.c:26
+#6  0x0000fffff7ec5864 in __stack_chk_fail () at ./debug/stack_chk_fail.c:24
+#7  0x0000aaaaaaaa0a64 in make_new_person (age=27, name=0xaaaaaaaa0a90 "Douglas Adams", favorite_number=42) at src/student_code.c:15
+#8  0x0000aaaaaaaa0944 in main () at debug.c:7
+```
+
+Whoa, that's a lot more information!
+Now GDB is not only showing us what line is failing, but also the arguments being passed in!
+That's much more useful.
+
+#### Step 3c: Stepping through code in GDB
+
+Okay!  Now that we have actual information, let's try stepping through some code.
+To do this run `break make_new_person` to set a breakpoint at the beginning of our make_new_person function, and then call `run`.
+
+```shell
+(gdb) break make_new_person
+Breakpoint 1 at 0xa04: file src/student_code.c, line 9.
+(gdb) run
+Starting program: /tmp/lab/labs/lab2/debug
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/aarch64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, make_new_person (age=27, name=0xaaaaaaaa0a90 "Douglas Adams", favorite_number=42) at src/student_code.c:9
+9	Person make_new_person(int age, char* name, int favorite_number) {
+```
+
+Now our program is stopped at the beginning of this function and we want to step through it looking at local variables.
+To do this we use `step` and we use `info locals` to print out information on the local variables.
+
+```shell
+(gdb) info locals
+p = {age = -134397524, name = "\377\377\000\000\270\366\377\377", favorite_number = 65535}
+
+(gdb) step
+11	    p.age = age;
+
+(gdb) info locals
+p = {age = -134397524, name = "\377\377\000\000\270\366\377\377", favorite_number = 65535}
+
+(gdb) step
+12	    strcpy(p.name, name);
+
+(gdb) info locals
+p = {age = 27, name = "\377\377\000\000\270\366\377\377", favorite_number = 65535}
+
+(gdb) step
+strcpy () at ../sysdeps/aarch64/strcpy.S:75
+75	../sysdeps/aarch64/strcpy.S: No such file or directory.
+```
+
+We see that at first our locals are randomly initialized, as we would expect.
+Wehn we step through line 11 (`p.age = age;`) we see that this was actually telling us the _next_ instruction, and so we don't see any change for a little bit, but eventually we see that `age = 27` shows up in the local variable.
+Finally, the last bit is warning us that we've called another function and entered that.
+Since we're trusting `strcpy` for now we want to skip through this function.
+To do this we enter `finish` to skip over all of its steps.
+
+```shell
+(gdb) finish
+Run till exit from #0  strcpy () at ../sysdeps/aarch64/strcpy.S:79
+make_new_person (age=27, name=0xaaaaaaaa0a90 "Douglas Adams", favorite_number=42) at src/student_code.c:13
+13	    p.favorite_number = favorite_number;
+(gdb) info locals
+p = {age = 27, name = "Douglas ", favorite_number = 1835099201}
+```
+
+We see that we've finished copying over the string, but it's not the full string for some weird reason.
+Instead, it's "Douglas " and then we've lost the "Adams".
+It's also weird that our `favorite_number` field has now changed, but that number was junk anyway, right?
+
+If we keep stepping through our program we see that it sets our `favorite_number` correctly and we eventually start getting warnings that "stack smashing" has occurred.
+
+```shell
+(gdb) step
+14	    return p;
+(gdb) info locals
+p = {age = 27, name = "Douglas ", favorite_number = 42}
+(gdb) step
+15	}
+(gdb) info locals
+p = {age = 27, name = "Douglas ", favorite_number = 42}
+(gdb) step
+__stack_chk_fail () at ./debug/stack_chk_fail.c:24
+24	./debug/stack_chk_fail.c: No such file or directory.
+(gdb) info locals
+No locals.
+(gdb) step
+__GI___fortify_fail (msg=msg@entry=0xfffff7f23790 "stack smashing detected") at ./debug/fortify_fail.c:23
+23	./debug/fortify_fail.c: No such file or directory.
+```
+It looks like something's probably wrong with that `strcpy`, but that's a library function so it must be something we're doing to call it.
+Hmmmm.
+
+***TODO:*** Take a screenshot of you walking through gdb like the above and paste it into your google document.
+
+
+### Step 4: Looking at our code
+
+Based on what we've seen until now we know that something is wrong with how we're using the `strcpy` function.
+Even though it's a library function it's somehow messing something up.
+The biggest hint we have is that it's somehow dropping the "Adams" part of "Douglas Adams" when using `strcpy`, and changing whatever is after that in memory.
+
+This hint points us to something to do with buffer sizes.
+Usually when we see that:
+1. Something is cutoff mysteriously, and
+2. Something directly around it in memory is changed, and
+
+Then it means that something has overflowed a buffer.
+
+So let's look at our buffers by looking at our `student_code.h` file.
+```c
+1	#ifndef PROJECTS_STUDENT_CODE_H
+2	#define PROJECTS_STUDENT_CODE_H
+3
+4	typedef struct Person {
+5	    int age;
+6	    char name[8];
+7	    int favorite_number;
+8	} Person;
+9
+10	/**
+11	 * This function takes in an age, a name, and a favorite number and returns a person
+12	 * @param age integer representing age
+13	 * @param name character string representing name (at most 7 chars long!)
+14	 * @param favorite_number integer representing favorite number
+15	 * @return
+16	 */
+17	Person make_new_person(int age, char* name, int favorite_number);
+18
+19	#endif //PROJECTS_STUDENT_CODE_H
+```
+
+Okay, so we see we have a struct defined here, and then some docstring stuff, and then a function definition.
+Looking at our struct we're particularly interested in line 10, because that's the buffer we're having trouble with.
+We see that it's defined as a character array of length 8!
+The name we're testing with is much longer than that!
+
+Is that how many characters we're printing out?
+```c
+[DOCKER] /tmp/lab/labs/lab2/ $ echo "Douglas " | awk -F '' -v 'OFS=\n' '{$1=$1}1'  | cat -n
+ 1	D
+ 2	o
+ 3	u
+ 4	g
+ 5	l
+ 6	a
+ 7	s
+ 8
+```
+
+Hmm, we're getting 8 characters including our space, right?
+So it looks like it's doing okay.
+But what do we know about C strings?
+We know that they should be null-terminated (i.e. end with a `\0`), so a string that's fit into an array of size 8 should only have 7 characters.
+...but ours has a space in the 8th character.
+
+So it seems like what might be happening is that we're copying a string that's too long into too small a location.
+Let's try changing the size of this array to something bigger, say 16, to allow for much longer names.
+
+Making this change and re-running we see that our debug now runs successfully!
+
+```shell
+[DOCKER] /tmp/lab/labs/lab2/ $ make debug
+gcc -Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
+[DOCKER] /tmp/lab/labs/lab2/ $ ./debug
+1
+1
+1
+```
+
+Let's try out our unit tests!
+```shell
+[DOCKER] /tmp/lab/labs/lab2/ $ make
+rm -rf bin unit_tests debug
+mkdir -p bin
+gcc -Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
+gcc -Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ unit_tests.c -o unit_tests bin/student_code.o
+./unit_tests
+[====] Synthesis: Tested: 1 | Passing: 1 | Failing: 0 | Crashing: 0
+```
+
+Hey that's great!
+Our unit test is no longer crashing!
+Success!
+
+***TODO:*** Take a screenshot of running the passing unit test.
+
+
+### Conclusion
+
+We've now walked through how to use GDB, at least in a basic way.
+We've fixed a buffer overflow problem, and looked at how memory is represented in the computer.
+This is how we can start debugging problems without `printf` statements, and even when our `printf` statements are failing!
+GDB is incredibly powerful and can help us solve most runtime problems we run into in C, so long as we know what it's trying to tell us.
+GDB has a ton of other features that I encourage you to explore.
+Additionally, ChatGPT is a fairly good resource at GDB, although it might take a bit of wrangling to get a really good answer.
+
+
+Finally, I have two followup questions!
+
+***TODO:*** What step did we forget to do?  There was something I mentioned as important and then totally neglected to follow up on.  What is it?
+
+
+***TODO:*** Is our solution a "safe" solution to the problem?  Does it prevent it from happening again?  What would be a better solution?  (Hint: it's mentioned in one of the linked pages here)
+
+
+
+
+
