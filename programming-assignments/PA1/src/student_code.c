@@ -169,6 +169,7 @@ int fork_and_return_child() {
      * Question:
      * Is this even possible?
      * If it is then make it so, if it isn't then write a quick paragraph telling me why it isn't possible using the ideas of `fork(...)` discussed in class
+     *    and then ignore the unit test failing (by setting .disable)
      */
     return -1;
 }
