@@ -19,7 +19,7 @@ Test(Syscalls, open_file_to_read) {
     fprintf(f_write, "hello");
     fclose(f_write);
 
-    FILE* f_read = open_file_to_read("/temp/temp.txt");
+    FILE* f_read = open_file_to_read("/tmp/temp.txt");
     char read_back[10];
     fgets(read_back, 10, f_read);
     fclose(f_read);
@@ -33,11 +33,11 @@ Test(Syscalls, open_file_to_read) {
 Test(Syscalls, open_file_to_write) {
     remove("/tmp/temp.txt");
 
-    FILE* f_write = open_file_to_write("/temp/temp.txt");
+    FILE* f_write = open_file_to_write("/tmp/temp.txt");
     fprintf(f_write, "hello");
     fclose(f_write);
 
-    FILE* f_read = fopen("/temp/temp.txt", "r");
+    FILE* f_read = fopen("/tmp/temp.txt", "r");
     char read_back[10];
     fgets(read_back, 10, f_read);
     fclose(f_read);
@@ -50,11 +50,11 @@ Test(Syscalls, open_file_to_write) {
 Test(Syscalls, open_file_to_readwrite) {
     remove("/tmp/temp.txt");
 
-    FILE* f_write = open_file_to_readwrite("/temp/temp.txt");
+    FILE* f_write = open_file_to_readwrite("/tmp/temp.txt");
     fprintf(f_write, "hello");
     fclose(f_write);
 
-    FILE* f_read = open_file_to_readwrite("/temp/temp.txt");
+    FILE* f_read = open_file_to_readwrite("/tmp/temp.txt");
     char read_back[10];
     fgets(read_back, 10, f_read);
     fclose(f_read);
@@ -71,7 +71,7 @@ Test(Syscalls, write_str_to_fid) {
     write_str_to_fid("hello", f_write);
     fclose(f_write);
 
-    FILE* f_read = fopen("/temp/temp.txt", "r");
+    FILE* f_read = fopen("/tmp/temp.txt", "r");
     char read_back[10];
     fgets(read_back, 10, f_read);
     fclose(f_read);
@@ -88,7 +88,7 @@ Test(Syscalls, read_str_from_fid) {
     fprintf(f_write, "hello");
     fclose(f_write);
 
-    FILE* f_read = fopen("/temp/temp.txt", "r");
+    FILE* f_read = fopen("/tmp/temp.txt", "r");
     char* read_back = malloc(10*sizeof(char));
     read_back = read_str_from_fid(f_read, 10);
     fclose(f_read);
