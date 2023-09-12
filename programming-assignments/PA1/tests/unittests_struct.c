@@ -24,7 +24,7 @@ Test(Struct, person_to_string) {
 Test(Struct, group_make_new) {
     Group g = group_make_new("totally not cyborgs");
     cr_assert(strcmp(g.group_name, "totally not cyborgs") == 0);
-    cr_assert(sizeof(g.group_members) == 50*sizeof(Person));
+    cr_assert(sizeof(g.group_members) == 50*sizeof(Person*));
     cr_assert(g.num_members == 0);
 }
 
