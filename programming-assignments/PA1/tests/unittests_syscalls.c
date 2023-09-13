@@ -102,5 +102,5 @@ Test(Syscalls, close_fid) {
     FILE* fid = fopen("/tmp/temp.txt", "r+");
     fprintf(fid, "hello");
     close_fid(fid);
-    cr_assert(fileno(fid) == -1);
+    cr_assert(fprintf(fid, "\n") < 0);
 }
