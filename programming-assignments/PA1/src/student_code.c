@@ -17,7 +17,7 @@
 int get_str_length(char* str) {
     // todo
     // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    return -1;
+    return -1
 }
 
 /**
@@ -169,7 +169,6 @@ int fork_and_return_child() {
      * Question:
      * Is this even possible?
      * If it is then make it so, if it isn't then write a quick paragraph telling me why it isn't possible using the ideas of `fork(...)` discussed in class
-     *    and then ignore the unit test failing (by setting .disable)
      */
     return -1;
 }
@@ -188,7 +187,7 @@ int fork_and_return_parent() {
  * @param program_to_call Name of the program to call
  * @param arguments Arguments to pass to the program we're calling
  * @param errno Error code if necessary.  Set to 0 for success, 1 for failure to fork, 2 for failure to exec
- * @return Exit code of exec call if errno == 0, else -1
+ * @return Exit code of the program run via the exec call (hint: look for *status)
  */
 int make_exec_call(char* program_to_call, char** arguments, int* errno) {
     // todo
