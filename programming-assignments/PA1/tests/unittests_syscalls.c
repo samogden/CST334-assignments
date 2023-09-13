@@ -67,7 +67,7 @@ Test(Syscalls, open_file_to_readwrite) {
 Test(Syscalls, write_str_to_fid) {
     remove("/tmp/temp.txt");
 
-    FILE* f_write = fopen("/tmp/temp.txt", "r+");
+    FILE* f_write = fopen("/tmp/temp.txt", "w");
     write_str_to_fid("hello", f_write);
     fclose(f_write);
 
@@ -84,7 +84,7 @@ Test(Syscalls, write_str_to_fid) {
 Test(Syscalls, read_str_from_fid) {
     remove("/tmp/temp.txt");
 
-    FILE* f_write = fopen("/tmp/temp.txt", "r+");
+    FILE* f_write = fopen("/tmp/temp.txt", "w");
     fprintf(f_write, "hello");
     fclose(f_write);
 
@@ -99,7 +99,7 @@ Test(Syscalls, read_str_from_fid) {
 }
 
 Test(Syscalls, close_fid) {
-    FILE* fid = fopen("/tmp/temp.txt", "r+");
+    FILE* fid = fopen("/tmp/temp.txt", "w");
     fprintf(fid, "hello");
     close_fid(fid);
     cr_assert(fprintf(fid, "\n") < 0);
