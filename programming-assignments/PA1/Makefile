@@ -14,11 +14,15 @@ TARGET = unit_tests
 
 
 all: clean unit_tests
-	./$(TARGET) -j1
+	./unit_tests
 
 # Rule to build the executable
-$(TARGET): unit_tests.c bin $(OBJS) $(TEST)
-	$(CC) $(CFLAGS) unit_tests.c -o $@ $(OBJS) 
+unit_tests: unit_tests.c bin $(OBJS) $(TEST)
+	$(CC) $(CFLAGS) unit_tests.c -o $@ $(OBJS)
+
+# Rule to build the debug executable
+debug: debug.c bin $(OBJS) $(TEST)
+	$(CC) $(CFLAGS) debug.c -o $@ $(OBJS)
 
 # Rule to compile .c files into .o files
 bin/%.o: src/%.c $(HEADERS) $(TEST)
@@ -26,7 +30,9 @@ bin/%.o: src/%.c $(HEADERS) $(TEST)
 
 # Clean rule to remove object files and the executable
 clean:
-	rm -rf bin $(TARGET)
+	rm -rf bin unit_tests debug
 
 bin:
 	mkdir -p bin
+
+.PHONY: all clean
