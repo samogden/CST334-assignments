@@ -14,7 +14,7 @@ TARGET = unit_tests
 
 
 all: clean unit_tests
-	./unit_tests
+	./unit_tests -j1
 
 # Rule to build the executable
 unit_tests: unit_tests.c bin $(OBJS) $(TEST)
