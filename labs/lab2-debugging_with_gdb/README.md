@@ -181,6 +181,10 @@ Shoot.
 That's not good.
 Something went wrong.
 
+***Note:*** if running on an intel processor you may not see a stack smashing warning. 
+although some of the errors are less interesting the debugging will still work since youll still fail unit tests for the same reason (just less egregiously, and with a slightly different error reported).
+So, if thats you then keep going and reading and adding in breakpoints is where stuff starts getting fun again.
+
 ***TODO:*** Take a screenshot of the `make` command failing and paste it into your google document.
 
 #### Step 1a: Digging into what we're seeing
