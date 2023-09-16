@@ -181,9 +181,9 @@ Shoot.
 That's not good.
 Something went wrong.
 
-***Note:*** if running on an intel processor you may not see a stack smashing warning. 
-although some of the errors are less interesting the debugging will still work since youll still fail unit tests for the same reason (just less egregiously, and with a slightly different error reported).
-So, if thats you then keep going and reading and adding in breakpoints is where stuff starts getting fun again.
+***Note:*** if running on an intel processor you may not see a stack smashing warning.
+If this happens to you  then a few of the below steps will be affect -- specifically when you run gdb your execution will not stop and running `backtrace` will say there is no stack -- this is because the execution of the program completed.
+If this happens then please read through the next few sections until you get to when we [recompile for GDB](#step-3b-compiling-for-gdb) where instructions will be more similar.
 
 ***TODO:*** Take a screenshot of the `make` command failing and paste it into your google document.
 
@@ -505,6 +505,11 @@ __pthread_kill_implementation (threadid=281474842214432, signo=signo@entry=6, no
 44	./nptl/pthread_kill.c: No such file or directory.
 ```
 
+***Note:***
+It seems that sometimes the stack smashing fails right here and instead your program completes normally.
+If that happens to you then I'm sorry I didn't succeed in causing an error on your computer, and I'd love to try to figure out why so stop by office hours sometime.
+In the meantime, just read along for the next section until we get to [Section 3b where we recompile and set a breakpoint](#step-3b-compiling-for-gdb).
+
 What we see is that the program still crashes (sometimes it doesn't because gdb makes a few tweaks to memory layout to simply debugging), and is killed.
 To see a bit of information about _why_ let's call `backtrace` (or `bt`) to ask what sequence of calls was made.
 (You can also specify a number of functions to report back, but for now let's just use it without this).
@@ -731,7 +736,7 @@ We know that they should be null-terminated (i.e. end with a `\0`), so a string 
 ...but ours has a space in the 8th character.
 
 So it seems like what might be happening is that we're copying a string that's too long into too small a location.
-Let's try changing the size of this array to something bigger, say 16, to allow for much longer names.
+Let's try changing the size of this array to something bigger, say 1024, to allow for much longer names.
 
 Making this change and re-running we see that our debug now runs successfully!
 
