@@ -46,4 +46,7 @@ Assume the jobs arrive at the same time. (We did something similar in class, but
 Suppose you have three jobs run A, then B, then C.  
 What is the difference between average turnaround time and average response time for this schedule?
 
+## Solutions
 
+You can reference my solutions to this lab [here](https://docs.google.com/document/d/1jmmczQcVCLko6ZJR8EAMJW1zz5Ma32as/edit?usp=sharing&ouid=101263792352541733911&rtpof=true&sd=true).
+Please only check them after you are done, or to see how I'm approaching the problem (i.e. through logs of pictures)
