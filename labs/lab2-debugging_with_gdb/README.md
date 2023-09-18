@@ -785,6 +785,8 @@ Finally, I have two followup questions!
 ***TODO:*** Is our solution a "safe" solution to the problem?  Does it prevent it from happening again?  What would be a better solution?  (Hint: it's mentioned in one of the linked pages here)
 
 
+#### Last step: Submission of your google doc
 
+Please submit your google doc where you've been collecting todos!
 
 
