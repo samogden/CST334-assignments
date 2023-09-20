@@ -135,6 +135,10 @@ int add_person(Group* group, Person* person_to_add);                // 3 points
 int remove_person(Group* group, Person* person_to_remove);          // 1 point
 ```
 
+***NOTE:***
+You will need to change the `struct Group` definition in `student_code.h` to pass the unit tests.
+The `void*` types are placeholders for you to change.
+
 ### Processes 
 ***(30 points)***
 
