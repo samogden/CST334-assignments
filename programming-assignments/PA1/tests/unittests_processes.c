@@ -43,7 +43,7 @@ Test(Processes, make_exec_call__fully_qualified_no_args) {
 
 Test(Processes, make_exec_call__fully_qualified_w_args) {
     int status;
-    char* args =  {"/bin", NULL};
+    char* args[] =  {"/bin", NULL};
     int ret_val = make_exec_call("/bin/ls", args, &status);
     cr_assert(ret_val == 0);
 }
@@ -56,7 +56,7 @@ Test(Processes, make_exec_call__unqualified_no_args) {
 
 Test(Processes, make_exec_call__unqualified_w_args) {
     int status;
-    char* args =  {"/bin", NULL};
+    char* args[] =  {"/bin", NULL};
     int ret_val = make_exec_call("ls", args, &status);
     cr_assert(ret_val == 0);
 }
