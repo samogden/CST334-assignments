@@ -169,6 +169,7 @@ int fork_and_return_child() {
      * Question:
      * Is this even possible?
      * If it is then make it so, if it isn't then write a quick paragraph telling me why it isn't possible using the ideas of `fork(...)` discussed in class
+     * Write this up here instead of code and ignore the failing unit-test -- I'll grade based on this answer instead.
      */
     return -1;
 }
@@ -197,16 +198,6 @@ int make_exec_call(char* program_to_call, char** arguments, int* errno) {
 /****************
  * System Calls *
  ****************/
-
-/**
- * Print a call using system calls.  Note: You should not use printf or any variation for this, just the `syscall(...)` function
- * @param str The null-terminated string to print
- */
-void print_string(char* str) {
-    // todo
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-}
 
 /**
  * Open a file to read using the `open(...)` call in C
