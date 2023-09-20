@@ -204,7 +204,7 @@ int make_exec_call(char* program_to_call, char** arguments, int* errno) {
  */
 void print_string(char* str) {
     // todo
-    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
     // Failure to do so will result in a 0 for this function!
 }
 
@@ -216,7 +216,7 @@ void print_string(char* str) {
 FILE* open_file_to_read(char* path_to_file) {
     // todo
     // hint: https://stackoverflow.com/a/1658517
-    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
     // Failure to do so will result in a 0 for this function!
     return NULL;
 }
@@ -228,7 +228,7 @@ FILE* open_file_to_read(char* path_to_file) {
  */
 FILE* open_file_to_write(char* path_to_file) {
     // todo
-    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
     // Failure to do so will result in a 0 for this function!
     return NULL;
 }
@@ -240,7 +240,7 @@ FILE* open_file_to_write(char* path_to_file) {
  */
 FILE* open_file_to_readwrite(char* path_to_file) {
     // todo
-    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
     // Failure to do so will result in a 0 for this function!
     return NULL;
 }
@@ -253,7 +253,7 @@ FILE* open_file_to_readwrite(char* path_to_file) {
 void write_str_to_fid(char* str, FILE* f) {
     // todo
     // hint: https://linuxhint.com/write-system-call-c/
-    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
     // Failure to do so will result in a 0 for this function!
 }
 
@@ -265,7 +265,7 @@ void write_str_to_fid(char* str, FILE* f) {
  */
 char* read_str_from_fid(FILE* f, int max_chars) {
     // todo
-    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
     // Failure to do so will result in a 0 for this function!
     return NULL;
 }
@@ -276,6 +276,6 @@ char* read_str_from_fid(FILE* f, int max_chars) {
  */
 void close_fid(FILE* f) {
     // todo
-    // Note: You cannot use any of the functions in unistd.h that begin with 'f' for this assignment!  Instead make sure you use `open(...)` and `close(...)` and similar functions!
+    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
     // Failure to do so will result in a 0 for this function!
 }
