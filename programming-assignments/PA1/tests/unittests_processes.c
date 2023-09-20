@@ -15,7 +15,7 @@ Test(Processes, fork_and_return_child) {
     int child_pid = fork_and_return_child();
 
     cr_assert(child_pid != parent_pid); // Is it us?
-    cr_assert(child_pid == getuid()); // Since we are now the child, check that
+    cr_assert(child_pid == getpid()); // Since we are now the child, check that
 
     int status;
     pid_t return_pid = waitpid(child_pid, &status, WNOHANG);
@@ -27,7 +27,7 @@ Test(Processes, fork_and_return_parent) {
     int child_pid = fork_and_return_parent();
 
     cr_assert(child_pid != parent_pid); // Is it us?
-    cr_assert(child_pid != getuid()); // Since we are now the child, check that
+    cr_assert(child_pid != getpid()); // Since we are now the child, check that
 
     int status;
     pid_t return_pid = waitpid(child_pid, &status, WNOHANG);
