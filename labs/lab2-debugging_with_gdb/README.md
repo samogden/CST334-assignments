@@ -6,7 +6,7 @@ In this lab we'll be trying to debug some runtime issues in C to get a sense of 
 Runtime issues in C are different than in many other languages, such as python, because by default C doesn't give us any hints as to what is wrong.
 This allows it to run much faster, but is also much harder to understand.
 
-In this lab we'll be talking about compilation flags and we'll be trying out two tools, `gdb` and `valgrind` to help is isolate memory issues and figure out what's going wrong.
+In this lab we'll be talking about compilation flags and we'll be trying out a tool, `gdb` to help is isolate memory issues and figure out what's going wrong.
 
 ## Getting Started
 
