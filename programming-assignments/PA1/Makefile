@@ -28,6 +28,9 @@ debug: debug.c bin $(OBJS) $(TEST)
 bin/%.o: src/%.c $(HEADERS) $(TEST)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+grade:
+	python ../../helpers/grader.py
+
 # Clean rule to remove object files and the executable
 clean:
 	rm -rf bin unit_tests debug
@@ -35,4 +38,4 @@ clean:
 bin:
 	mkdir -p bin
 
-.PHONY: all clean
+.PHONY: all clean grade
