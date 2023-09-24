@@ -9,6 +9,12 @@ from argparse import Namespace
 from typing import List
 from collections import defaultdict
 
+import re
+
+logging.basicConfig()
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
+
 class ScoringTest(object):
   def __init__(self, suite, test_group, value, test_name=None):
     self.suite = suite
@@ -123,7 +129,6 @@ def run_unittests(path_to_assignment_directory):
 
 def parse_unit_tests_json(in_lines) -> Results:
   json_lines = fix_json(in_lines)
-  print(json_lines)
   json_dict = json.loads(json_lines)
   
   results = Results.create_from_dict(json_dict)
@@ -151,7 +156,6 @@ def fix_json(json_str):
 def parse_scoring(path_to_scoring) -> List[ScoringTest]:
   with open(path_to_scoring) as fid:
     json_dict = json.load(fid)
-  print(json_dict.keys())
   scoring_tests = []
   for test_group in json_dict["tests"]:
     if "tests" in test_group.keys():
@@ -182,12 +186,51 @@ def make_test(path_to_assignment_directory):
   stdout = proc.stdout.read().decode()
   stderr = proc.stderr.read().decode()
   
-  logging.info(stderr)
-  
   if proc.returncode == 0:
     return True
   else:
     return False
+
+def find_function(source_code, target_function_name):
+  
+  def skip_multiline_comment(lines, line_i):
+    while "*/" not in lines[line_i]:
+      line_i += 1
+    return line_i
+  
+  def capture_function(lines, line_i):
+    start_i = line_i
+    line_i += 1
+    depth = 1
+    while depth > 0 and line_i < len(lines):
+      cleaned_line = ' '.join(lines[line_i].split('//')[0]) # Not super strong, but whatever
+      if '/*' in cleaned_line:
+        line_i = skip_multiline_comment(lines, line_i)
+        continue
+      depth += cleaned_line.count('{') - cleaned_line.count('}')
+      log.debug(f"depth: {depth}")
+      line_i += 1
+    return lines[start_i:line_i]
+  
+  with open(source_code, 'r') as fid:
+    source_lines = [l.rstrip() for l in fid.readlines()]
+    
+  function_pattern = re.compile("^\s*\w*\s*\**\s*(\w+)\(.*\).*{.*$")
+  function_lines = []
+  
+  curr_line_i = 0
+  while curr_line_i < len(source_lines):
+    curr_line = source_lines[curr_line_i]
+    result =  function_pattern.search(curr_line)
+    if result is not None:
+      function_name = result.group(1)
+      log.debug(f"function_name: {function_name} (\"{curr_line}\")")
+      if function_name == target_function_name:
+        function_lines = capture_function(source_lines, curr_line_i)
+        break
+    curr_line_i += 1
+  
+  log.debug('\n'.join(function_lines))
 
 
 
@@ -199,7 +242,8 @@ def main():
     test.score(scoring_tests)
     print(test.get_score())
   else:
-    logging.error("Build failed")
+    log.error("Build failed")
+  
 
 if __name__ == "__main__":
   main()
