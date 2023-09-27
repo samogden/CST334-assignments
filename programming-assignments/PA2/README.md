@@ -51,7 +51,7 @@ So we see that 44 tests are failing and one is passing.
 Oof.
 But don't worry, there aren't 44 functions this time, I just broke down the tests a little bit more fine-grained this time around.
 
-***Question:*** How tests are there per function you have to write?  Give me the breakdown 
+***Question:*** How many tests are there per function you have to write?  Give me the breakdown per function. 
 
 #### A side note
 I'm actively working to improve the output of the tests to be more clear about what is passing and what is failing.
