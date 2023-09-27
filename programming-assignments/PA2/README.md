@@ -22,6 +22,8 @@ Once you are all set, change to the appropriate directory for PA2.
 
 Now you're ready to get started coding!
 
+***Question:*** Get docker running and upload me a screenshot of you running `tree` in the code directory 
+
 
 ### Testing Code
 
@@ -48,6 +50,8 @@ make: *** [Makefile:17: all] Error 1
 So we see that 44 tests are failing and one is passing.  
 Oof.
 But don't worry, there aren't 44 functions this time, I just broke down the tests a little bit more fine-grained this time around.
+
+***Question:*** How tests are there per function you have to write?  Give me the breakdown 
 
 #### A side note
 I'm actively working to improve the output of the tests to be more clear about what is passing and what is failing.
@@ -90,11 +94,16 @@ The core of this simulation happens in `process_scheduling.c` between lines 50 a
     }
 ```
 
+***Question:*** What data structure do we use to hold the processes?
+
 Essentially, at each step we pick a model using our selection function (`params.process_selection_func(entered_processes);`) and then use that to run one simulation step.
 Your goal in this assignment is to write these selection functions.
 
 I should note that these model selection functions are selected in individual unit tests using some function pointer stuff.
 You can check it out, but you just need to know that you have to write these functions.
+
+***Question:*** How do we choose the highest priority job?
+
 
 ### Your task
 
