@@ -64,27 +64,26 @@ void remove_process(PROCESS_LIST* pl, PROCESS* p) {
 }
 
 void print_contents(PROCESS_LIST* pl) {
-    printf("(print_contents) (last_used: %d) ", pl->last_used);
+    fprintf(stderr, "(print_contents) (last_used: %d) ", pl->last_used);
     if (is_empty(pl)) {
-        printf("[empty]\n");
+        fprintf(stderr, "[empty]\n");
         return;
     }
     for (int i = 0; i < pl->num_processes; i++) {
         if (i == pl->last_used) {
-            printf("**id=%d**", pl->processes[i]->id);
+            fprintf(stderr, "**id=%d**", pl->processes[i]->id);
         } else {
-            printf("id=%d", pl->processes[i]->id);
+            fprintf(stderr, "id=%d", pl->processes[i]->id);
         }
-        printf("(%.1f/%.1f)", pl->processes[i]->time_remaining, pl->processes[i]->length);
+        fprintf(stderr, "(%.1f/%.1f)", pl->processes[i]->time_remaining, pl->processes[i]->length);
         if (i != (pl->num_processes - 1)) {
-            printf(" -> ");
+            fprintf(stderr, " -> ");
         }
     }
-    printf("\n");
+    fprintf(stderr, "\n");
 }
 
 void mark_last_used(PROCESS_LIST* pl, PROCESS* p) {
-    //printf("Marking %d (id=%d) as last used, next will be: %d (id=%d)\n", pl->last_used, pl->last_used+1 %pl->num_processes, pl->processes[pl->last_used+1 %pl->num_processes]->id);
     for (int i = 0; i < pl->num_processes; i++) {
         if (pl->processes[i] == p) {
             pl->last_used = i;

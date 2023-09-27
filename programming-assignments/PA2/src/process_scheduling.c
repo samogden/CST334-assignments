@@ -53,8 +53,9 @@ SCHEDULER_STATS* process_scheduling_loop(SCHEDULER_PARAMS params, SCHEDULER_STAT
 
         // First, get jobs that have actually started, based on their entry time
         PROCESS_LIST* entered_processes = copy_only_entered_processes(processes_to_schedule, curr_time);
-        //PROCESS_LIST* entered_processes = processes_to_schedule;
-        print_contents(entered_processes);
+
+        // to debug better, uncommenting the next line might help
+        //print_contents(entered_processes);
 
         if (is_empty(entered_processes)) {
             printf("No jobs ready, skipping time slice");

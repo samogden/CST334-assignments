@@ -5,6 +5,7 @@
 
 #include <criterion/criterion.h>
 
+#include "tests/unittests_helpers.c"
 #include "tests/unittests_fifo.c"
 #include "tests/unittests_priority.c"
 #include "tests/unittests_lifo.c"
