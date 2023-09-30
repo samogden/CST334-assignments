@@ -259,7 +259,7 @@ def main():
     test = run_unittests(os.path.abspath(args.assignment_dir))
     test.score(scoring_tests)
     score, results = test.get_score()
-    results["score"] = score
+    results_json["score"] = score
     results_json["suites"] = results
   else:
     results_json = {
