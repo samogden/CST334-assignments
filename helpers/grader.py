@@ -240,7 +240,7 @@ def main():
   if make_test(os.path.abspath(args.assignment_dir)):
     test = run_unittests(os.path.abspath(args.assignment_dir))
     test.score(scoring_tests)
-    print(test.get_score())
+    print(f"score: {test.get_score():0.2f}")
   else:
     log.error("Build failed")
   
