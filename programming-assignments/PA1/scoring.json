@@ -19,7 +19,7 @@
     {"suite" : "String",    "test_group" : "find_last_index",         "value" : 2 },
     {"suite" : "Struct",    "test_group" : "person_make_new",         "value" : 3 },
     {"suite" : "Struct",    "test_group" : "person_to_string",        "value" : 2 },
-    {"suite" : "Struct",    "test_group" : "group_make_new",          "value" : 3 },
+    {"suite" : "Struct",    "test_group" : "group_make_new",          "value" : 6 },
     {"suite" : "Struct",    "test_group" : "num_people_in_group",     "value" : 2 },
     {"suite" : "Struct",    "test_group" : "free_spaces_in_group",    "value" : 2 },
     {"suite" : "Struct",    "test_group" : "add_person",              "value" : 3 },
