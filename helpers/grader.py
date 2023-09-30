@@ -261,7 +261,6 @@ def main():
     score, results = test.get_score()
     results["score"] = score
     results_json = results
-    #print(f"score: {test.get_score():0.2f}")
   else:
     results_json = {
       "build_status" : "FAILURE",
@@ -269,7 +268,6 @@ def main():
       "score" : 0.0
     }
     log.error("Build failed")
-    print(f"score: {0:0.2f}")
   print(json.dumps(results_json, indent=4))
   
 
