@@ -243,6 +243,7 @@ def main():
     print(f"score: {test.get_score():0.2f}")
   else:
     log.error("Build failed")
+    print(f"score: {0:0.2f}")
   
 
 if __name__ == "__main__":
