@@ -130,7 +130,7 @@ class Results(object):
 def parse_flags() -> Namespace:
   parser = argparse.ArgumentParser()
   parser.add_argument("--assignment_dir", default=os.getcwd(), help="Path to assignment directory")
-  parser.add_argument("--output", required=True)
+  parser.add_argument("--output", default="/tmp/results.json")
   args: Namespace = parser.parse_args()
   return args
 
@@ -272,7 +272,7 @@ def main():
   results_json["build_logs"] = json.encoder.JSONEncoder().encode(build_log),
   print(json.dumps(results_json, indent=4))
   with open(args.output, 'w') as fid:
-    pprint.pprint(results_json, fid)
+    pprint(results_json, fid)
   
 
 if __name__ == "__main__":
