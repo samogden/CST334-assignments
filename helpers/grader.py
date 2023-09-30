@@ -264,10 +264,11 @@ def main():
   else:
     results_json = {
       "build_status" : "FAILURE",
-      "build_logs" : json.encoder.JSONEncoder().encode(build_log),
       "score" : 0.0
     }
     log.error("Build failed")
+    
+  results_json["build_logs"] = json.encoder.JSONEncoder().encode(build_log),
   print(json.dumps(results_json, indent=4))
   
 
