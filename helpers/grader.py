@@ -1,11 +1,13 @@
 #!env python
 
 import argparse
+import collections
 import json
 import logging
 import os
 import subprocess
 from argparse import Namespace
+from pprint import pprint
 from typing import List
 from collections import defaultdict
 
@@ -34,10 +36,7 @@ class Test(object):
     self.value = value
   
   def get_score(self):
-    if self.status == "PASSED":
-      return self.value
-    else:
-      return 0
+    return self.value if self.status == "PASSED" else 0.0
   
   @classmethod
   def create_from_dict(cls, json_dict):
@@ -61,7 +60,15 @@ class Suite(object):
     self.tests[test.name] = test
   
   def get_score(self):
-    return sum([t.get_score() for t in self.tests.values()])
+    results = { "PASSED" : [], "FAILED" : [] }
+    score = 0.0
+    for t in self.tests.values():
+      score += t.get_score()
+      if t.status == "PASSED":
+        results["PASSED"].append(t.name)
+      else:
+        results["FAILED"].append(t.name)
+    return score, results
   
   def __str__(self):
     return f"{self.name} : ({self.passed}/{len(self.tests)}"
@@ -94,11 +101,19 @@ class Results(object):
     return f"Results: {self.passed} / {sum([len(suite.tests.keys()) for (name, suite) in self.suites.items()])}"
   
   def get_score(self):
-    return sum([s.get_score() for s in self.suites.values()])
+    results = {}
+    score = 0.0
+    for s in self.suites.values():
+      suite_score, suite_results = s.get_score()
+      score += suite_score
+      results[s.name] = suite_results
+    return score, results
+    #return sum([s.get_score() for s in self.suites.values()])
   
   def score(self, scoring_tests: List[ScoringTest]):
     for score in scoring_tests:
       self.suites[score.suite].tests[score.test_name].set_value(score.value)
+      
   @classmethod
   def create_from_dict(cls, json_dict):
     new_result = cls(
@@ -187,9 +202,9 @@ def make_test(path_to_assignment_directory):
   stderr = proc.stderr.read().decode()
   
   if proc.returncode == 0:
-    return True
+    return True, stderr
   else:
-    return False
+    return False, stderr
 
 def find_function(source_code, target_function_name):
   
@@ -237,13 +252,25 @@ def find_function(source_code, target_function_name):
 def main():
   args = parse_flags()
   scoring_tests = parse_scoring(os.path.join(os.path.abspath(args.assignment_dir), "scoring.json"))
-  if make_test(os.path.abspath(args.assignment_dir)):
+  results_json = {}
+  
+  build_success, build_log = make_test(os.path.abspath(args.assignment_dir))
+  if build_success:
     test = run_unittests(os.path.abspath(args.assignment_dir))
     test.score(scoring_tests)
-    print(f"score: {test.get_score():0.2f}")
+    score, results = test.get_score()
+    results["score"] = score
+    results_json = results
+    #print(f"score: {test.get_score():0.2f}")
   else:
+    results_json = {
+      "build_status" : "FAILURE",
+      "build_logs" : json.encoder.JSONEncoder().encode(build_log),
+      "score" : 0.0
+    }
     log.error("Build failed")
     print(f"score: {0:0.2f}")
+  print(json.dumps(results_json, indent=4))
   
 
 if __name__ == "__main__":
