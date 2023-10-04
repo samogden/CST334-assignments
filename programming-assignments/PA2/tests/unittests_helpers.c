@@ -55,13 +55,13 @@ Test(HelperFunctions, mark_process_run, .disabled=false) {
 Test(HelperFunctions, mark_process_end, .disabled=false) {
     SCHEDULER_STATS* s = get_empty_stats_block();
     PROCESS *p = create_process(1.0f, 0, 0.0f);
-
-    mark_process_end(s, p, 0.0f, 1.0f);
+    p->time_remaining = 0; // Pretend the job ran
+    mark_process_end(s, p, 1.0f, 0.0f);
 
     cr_assert(p->length == 1.0f);
     cr_assert(p->priority == 0);
     cr_assert(p->entry_time == 0.0f);
-    cr_assert(p->time_remaining == 1.0f);
+    cr_assert(p->time_remaining == 0.0f);
 
     cr_assert(s->num_processes_started == 0);
     cr_assert(s->num_processes_completed == 1);

@@ -33,9 +33,9 @@ void mark_process_run(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float
  * @param stats
  * @param p
  * @param curr_time
- * @param time_slice
+ * @param time_slice_left -- length of time left in the slice
  */
-void mark_process_end(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float time_slice);
+void mark_process_end(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float time_slice_left);
 
 /**
  * Select a process from a PROCESS_LIST struct to be run next using the First-In-First-Out selection process
