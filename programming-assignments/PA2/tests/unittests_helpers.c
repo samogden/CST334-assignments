@@ -80,11 +80,11 @@ Test(HelperFunctions, finalize_stats, .disabled=false) {
 
     mark_process_start(s, p0,0.0f, 1.0f);
     mark_process_run(s, p0, 0.0f, 1.0f);
-    mark_process_end(s, p0, 1.0f, 1.0f);
+    mark_process_end(s, p0, 1.0f, 0.0f);
 
     mark_process_start(s, p1,1.0f, 1.0f);
     mark_process_run(s, p1, 1.0f, 1.0f);
-    mark_process_end(s, p1, 2.0f, 1.0f);
+    mark_process_end(s, p1, 2.0f, 0.0f);
 
     finalize_stats(s);
 
