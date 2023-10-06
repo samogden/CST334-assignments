@@ -58,6 +58,7 @@ I'm actively working to improve the output of the tests to be more clear about w
 It's taking a bit of time, but if nothing else there may be a `make grade` that can calculate your grade so far, assuming everything works out well.
 
 
+
 ## Assignment description
 
 
@@ -131,6 +132,23 @@ PROCESS* sjf_process_selector(PROCESS_LIST* pl); // 6 points
 PROCESS* lifo_process_selector(PROCESS_LIST* pl); // 6 points
 PROCESS* stcf_process_selector(PROCESS_LIST* pl); // 6 points
 ```
+
+## Where to start
+
+I strongly recommend starting by looking at the `priority_process_selector` function that needs fixing.
+Look at what it's doing and what functions it is using.
+You need to fix it anyway, and it gives a pattern for a way to approach the other selectors.
+
+## Other considerations
+
+This project is much bigger than the previous projects you've tried -- before you were writing more or less all the code yourself but now you are given a fair bit of code.
+It is structure as what is essentially a library in C, where I provide a number of structs and functions that act on those structs -- almost like objects in object-oriented languages.
+
+To approach this project you don't need to understand all of the code in all of the provided files, but you should be aware of what functionality is available.
+This functionality is provided by way of the associated header (e.g. `.h`) files, that list the available structs and functions.
+Similar to `student_code.h`, these list the functions that the outside world can see and give a sense of how to use it.
+
+Therefore, I strongly recommend you check out `process.h`, `process_list.h`, and `process_scheduling.h` as these may alert you to some helpful functions that you can use -- I use one of them in the `priority_process_selector function`
 
 
 ## Conclusion
