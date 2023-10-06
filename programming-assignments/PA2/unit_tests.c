@@ -11,4 +11,5 @@
 #include "tests/unittests_lifo.c"
 #include "tests/unittests_sjf.c"
 #include "tests/unittests_stcf.c"
+#include "tests/unittests_rr.c"
 #include "tests/unittests_end2end.c"
