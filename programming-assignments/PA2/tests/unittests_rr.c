@@ -24,11 +24,16 @@ Test(RR, pri0_pri1) {
     PROCESS_LIST *pl = create_process_list();
     add_process_to_tail(pl, p0);
     add_process_to_tail(pl, p1);
+    mark_last_used(pl, p1);
 
     PROCESS *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p1);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p0);
 }
@@ -39,13 +44,20 @@ Test(RR, pri1_pri0) {
     PROCESS_LIST *pl = create_process_list();
     add_process_to_tail(pl, p0);
     add_process_to_tail(pl, p1);
+    mark_last_used(pl, p1);
 
     PROCESS *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p1);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p0);
+    mark_last_used(pl, selected);
+
 }
 
 Test(RR, pri0_pri1_pri1) {
@@ -56,15 +68,23 @@ Test(RR, pri0_pri1_pri1) {
     add_process_to_tail(pl, p0);
     add_process_to_tail(pl, p1);
     add_process_to_tail(pl, p2);
+    mark_last_used(pl, p2);
 
     PROCESS *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p1);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p2);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p0);
+    mark_last_used(pl, selected);
 }
 
 Test(RR, pri1_pri0_pri1) {
@@ -75,15 +95,24 @@ Test(RR, pri1_pri0_pri1) {
     add_process_to_tail(pl, p0);
     add_process_to_tail(pl, p1);
     add_process_to_tail(pl, p2);
+    mark_last_used(pl, p2);
 
     PROCESS *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p1);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p2);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p0);
+    mark_last_used(pl, selected);
+
 }
 
 Test(RR, pri1_pri1_pri0) {
@@ -94,13 +123,22 @@ Test(RR, pri1_pri1_pri0) {
     add_process_to_tail(pl, p0);
     add_process_to_tail(pl, p1);
     add_process_to_tail(pl, p2);
+    mark_last_used(pl, p2);
 
     PROCESS *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p1);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p2);
+    mark_last_used(pl, selected);
+
     selected = rr_process_selector(pl);
     cr_assert(selected == p0);
+    mark_last_used(pl, selected);
+
 }

@@ -17,7 +17,7 @@ void mark_process_run(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float
     // todo
 }
 
-void mark_process_end(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float time_slice_left) {
+void mark_process_end(SCHEDULER_STATS* stats, PROCESS* p, float end_time, float time_slice_remaining) {
     // todo
 }
 

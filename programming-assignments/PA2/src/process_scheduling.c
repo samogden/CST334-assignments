@@ -28,14 +28,14 @@ float run_simulation_step(PROCESS_LIST *pl, PROCESS* p, float curr_time, SCHEDUL
     if (p->time_remaining <= slice_left) {
         // Then the job will end this time slice
         slice_left = slice_left - p->time_remaining;
-        printf("Process (id=%d) completed\n", p->id);
-        mark_process_end(stats, p, curr_time, slice_left);
+        fprintf(stderr, "Process (id=%d) completed\n", p->id);
+        mark_process_end(stats, p, curr_time+p->time_remaining, slice_left);
         remove_process(pl, p);
         free(p);
     } else {
         // If it has more time remaining than the time slice then reduce the time remaining
         mark_process_run(stats, p, curr_time, slice_left);
-        printf("Ran process (id=%d) for %.2fs, %.2fs left\n", p->id, time_slice, p->time_remaining);
+        //fprintf(stderr, "(%.1f): Ran process (id=%d) for %.2fs, %.2fs left\n", curr_time, p->id, time_slice, p->time_remaining);
         slice_left = 0.0f;
     }
     return slice_left;
@@ -43,12 +43,12 @@ float run_simulation_step(PROCESS_LIST *pl, PROCESS* p, float curr_time, SCHEDUL
 
 SCHEDULER_STATS* process_scheduling_loop(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats, PROCESS_LIST* processes_to_schedule) {
 
-    printf("\nStarting processing loop\n");
+    fprintf(stderr, "\nStarting processing loop\n");
     float curr_time = 0.0f; // Record the current time of the simulation
     PROCESS* process_to_run; // Set up a variable to hold the process we're going to run
 
     while (!is_empty(processes_to_schedule) && curr_time <= MAX_TIME) {
-        printf("TIME: %.2fs\n", curr_time);
+        //fprintf(stderr, "TIME: %.2fs\n", curr_time);
         // While we still have processes to schedule, pick one and run it
 
         // First, get jobs that have actually started, based on their entry time
@@ -58,12 +58,13 @@ SCHEDULER_STATS* process_scheduling_loop(SCHEDULER_PARAMS params, SCHEDULER_STAT
         //print_contents(entered_processes);
 
         if (is_empty(entered_processes)) {
-            printf("No jobs ready, skipping time slice");
+            fprintf(stderr, "(%.1f) No jobs ready, skipping time slice\n", curr_time);
         } else {
             // Call our function to select our next process to run, passing in a process variable
             // By passing in a process point we can ensure we're modifying the existing process
             process_to_run = params.process_selection_func(entered_processes);
 
+            fprintf(stderr, "(%.1f) Running p%d (%.1f left)\n", curr_time, process_to_run->id, process_to_run->time_remaining);
             // Run a step of the simulation
             run_simulation_step(processes_to_schedule, process_to_run, curr_time, stats, params.time_slice);
         }
@@ -92,11 +93,11 @@ SCHEDULER_STATS* get_empty_stats_block() {
 }
 
 void print_stats(SCHEDULER_STATS stats) {
-    printf("stats->num_processes_started = %d\n", stats.num_processes_started);
-    printf("stats->num_processes_completed = %d\n", stats.num_processes_completed);
-    printf("stats->completion_time = %.2f\n", stats.completion_time);
-    printf("stats->sum_of_turnaround_times = %.2f\n", stats.sum_of_turnaround_times);
-    printf("stats->sum_of_response_time = %.2f\n", stats.sum_of_response_time);
-    printf("stats->average_turnaround_time = %.2f\n", stats.average_turnaround_time);
-    printf("stats->average_response_time = %.2f\n", stats.average_response_time);
+    fprintf(stderr, "stats->num_processes_started = %d\n", stats.num_processes_started);
+    fprintf(stderr, "stats->num_processes_completed = %d\n", stats.num_processes_completed);
+    fprintf(stderr, "stats->completion_time = %.2f\n", stats.completion_time);
+    fprintf(stderr, "stats->sum_of_turnaround_times = %.2f\n", stats.sum_of_turnaround_times);
+    fprintf(stderr, "stats->sum_of_response_time = %.2f\n", stats.sum_of_response_time);
+    fprintf(stderr, "stats->average_turnaround_time = %.2f\n", stats.average_turnaround_time);
+    fprintf(stderr, "stats->average_response_time = %.2f\n", stats.average_response_time);
 }
