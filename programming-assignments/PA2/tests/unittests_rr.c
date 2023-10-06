@@ -27,9 +27,9 @@ Test(RR, pri0_pri1) {
 
     PROCESS *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p1);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
 }
 
@@ -42,9 +42,9 @@ Test(RR, pri1_pri0) {
 
     PROCESS *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p1);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
 }
 
@@ -59,11 +59,11 @@ Test(RR, pri0_pri1_pri1) {
 
     PROCESS *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p1);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p2);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
 }
 
@@ -78,11 +78,11 @@ Test(RR, pri1_pri0_pri1) {
 
     PROCESS *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p1);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p2);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
 }
 
@@ -97,10 +97,10 @@ Test(RR, pri1_pri1_pri0) {
 
     PROCESS *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p1);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p2);
-    PROCESS *selected = rr_process_selector(pl);
+    *selected = rr_process_selector(pl);
     cr_assert(selected == p0);
 }
