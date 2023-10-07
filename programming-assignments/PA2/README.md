@@ -159,3 +159,8 @@ Reading the code may help you think about how we schedule in this system.
 
 p.s. - due to the timing there isn't an extra credit part to this assignment (as far as I'm aware).  Next time!
 
+## A hint...
+
+This assignment actually doesn't require much code.
+You might need to add a few extra functions, but every function mentioned above is 1-5 lines of code.
+If you find yourself with a function longer than ~5 lines think if there may be an easier way, and go back to checking out priority scheduling...
