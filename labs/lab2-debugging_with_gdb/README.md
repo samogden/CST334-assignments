@@ -182,7 +182,7 @@ That's not good.
 Something went wrong.
 
 ***Note:*** if running on an intel processor you may not see a stack smashing warning.
-If this happens to you  then a few of the below steps will be affect -- specifically when you run gdb your execution will not stop and running `backtrace` will say there is no stack -- this is because the execution of the program completed.
+If this happens to you  then a few of the below steps will be affected -- specifically when you run gdb your execution will not stop and running `backtrace` will say there is no stack -- this is because the execution of the program completed.
 If this happens then please read through the next few sections until you get to when we [recompile for GDB](#step-3b-compiling-for-gdb) where instructions will be more similar.
 
 ***TODO:*** Take a screenshot of the `make` command failing and paste it into your google document.
