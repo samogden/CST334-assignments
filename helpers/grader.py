@@ -17,7 +17,16 @@ logging.basicConfig()
 log = logging.getLogger()
 log.setLevel(logging.DEBUG)
 
-class ScoringTest(object):
+class ScoringItem(object):
+  pass
+
+class ScoringGroup(ScoringItem):
+  def __init__(self, name, value):
+    self.name = name
+    self.value = value
+    self.tests = []
+
+class ScoringTest(ScoringItem):
   def __init__(self, suite, test_group, value, test_name=None):
     self.suite = suite
     self.test_group = test_group
@@ -169,11 +178,9 @@ def fix_json(json_str):
     curr_line_i += 1
   return '\n'.join(out_lines)
 
-def parse_scoring(path_to_scoring) -> List[ScoringTest]:
-  with open(path_to_scoring) as fid:
-    json_dict = json.load(fid)
+def get_scoring_tests(tests):
   scoring_tests = []
-  for test_group in json_dict["tests"]:
+  for test_group in tests:
     if "tests" in test_group.keys():
       for test in test_group["tests"]:
         scoring_tests.append(
@@ -193,6 +200,22 @@ def parse_scoring(path_to_scoring) -> List[ScoringTest]:
         )
       )
   return scoring_tests
+
+
+def parse_scoring(path_to_scoring) -> List[ScoringItem]:
+  with open(path_to_scoring) as fid:
+    json_dict = json.load(fid)
+  scoring_tests = []
+  if "groups" in json_dict.keys():
+    groups = []
+    for group in json_dict["groups"]:
+      scoring_group = ScoringGroup(group["name"], group["value"])
+      scoring_group.tests = get_scoring_tests(json_dict["tests"])
+      groups.append(group)
+    return groups
+  if "tests" in json_dict.keys():
+    return get_scoring_tests(json_dict["tests"])
+
 
 def make_test(path_to_assignment_directory):
   os.chdir(path_to_assignment_directory)

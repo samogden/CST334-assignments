@@ -108,7 +108,9 @@ def print_tests(test_dict, indent=2, fid=sys.stdout):
     indent_level += 1
     print('{', end='', file=fid)
     for key, itm in dct.items():
-      if key != "tests":
+      if key == "value":
+        print(f"\"{key}\" : {itm},", end=' ', file=fid)
+      elif key != "tests":
         print(f"\"{key}\" : \"{itm}\",", end=' ', file=fid)
     print("\"tests\" : ", file=fid)
     print_indent(indent_level)

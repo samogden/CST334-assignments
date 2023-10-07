@@ -1,0 +1,84 @@
+{
+  "tests" : [
+    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 5, "tests" : ["mark_process_start"]},
+    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 5, "tests" : ["mark_process_run"]},
+    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 5, "tests" : ["mark_process_end"]},
+    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 20, "tests" : ["finalize_stats"]},
+    {"suite" : "FIFO", "test_group" : "FIFO", "value" : 6, "tests" :
+      [
+        "e0", 
+        "e0_e1", 
+        "e1_e0", 
+        "e0_e1_1", 
+        "e1_e0_e1", 
+        "e1_e1_e0",
+
+        "test_2proc_0entry_1entry_fifo",
+        "5proc_fifo"
+      ]
+    }, 
+    {"suite" : "SJF", "test_group" : "SJF", "value" : 6, "tests" :
+      [
+        "e0", 
+        "l1_l2", 
+        "l2_l1", 
+        "l1_l2_l2", 
+        "l2_l1_l2", 
+        "l2_l2_l1",
+
+        "test_2proc_0entry_1entry_sjf",
+        "5proc_sjf"
+      ]
+    },
+    {"suite" : "LIFO", "test_group" : "LIFO", "value" : 6, "tests" :
+      [
+        "e0", 
+        "e0_e1", 
+        "e1_e0", 
+        "e0_e1_1", 
+        "e1_e0_e1", 
+        "e1_e1_e0",
+
+        "test_2proc_0entry_1entry_lifo",
+        "5proc_lifo"
+      ]
+    },
+    {"suite" : "STCF", "test_group" : "STCF", "value" : 6, "tests" :
+      [
+        "e0", 
+        "e0_e1", 
+        "e1_e0", 
+        "e0_e1_1", 
+        "e1_e0_e1", 
+        "e1_e1_e0",
+
+        "test_2proc_0entry_1entry_stcf",
+        "5proc_stcf"
+      ]
+    }, 
+    {"suite" : "PRIORITY", "test_group" : "PRIORITY", "value" : 15, "tests" :
+      [
+        "pri0", 
+        "pri0_pri1", 
+        "pri1_pri0", 
+        "pri0_pri1_pri1", 
+        "pri1_pri0_pri1", 
+        "pri1_pri1_pri0",
+
+        "5proc_priority"
+      ]
+    }, 
+    {"suite" : "RR", "test_group" : "RR", "value" : 6, "tests" :
+      [
+        "pri0", 
+        "pri0_pri1", 
+        "pri1_pri0", 
+        "pri0_pri1_pri1", 
+        "pri1_pri0_pri1", 
+        "pri1_pri1_pri0",
+        "test_2proc_0entry_0entry_rr",
+        "test_2proc_0entry_1entry_rr"
+      ]
+    }
+  ]
+}
