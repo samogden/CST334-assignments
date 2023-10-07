@@ -139,6 +139,11 @@ I strongly recommend starting by looking at the `priority_process_selector` func
 Look at what it's doing and what functions it is using.
 You need to fix it anyway, and it gives a pattern for a way to approach the other selectors.
 
+## What to submit
+
+You'll be submitting ***only*** `student_code.c` and `student_code.h`.
+Any other files changed will be lost during the grading process.
+
 ## Other considerations
 
 This project is much bigger than the previous projects you've tried -- before you were writing more or less all the code yourself but now you are given a fair bit of code.
