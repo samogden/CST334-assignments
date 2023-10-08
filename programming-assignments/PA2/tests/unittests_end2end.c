@@ -14,7 +14,7 @@
 
 TestSuite(End2End, .disabled=false);
 
-Test(End2End, test_2proc_0entry_1entry_fifo, .disabled=false) {
+Test(FIFO, test_2proc_0entry_1entry_fifo, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
@@ -33,7 +33,7 @@ Test(End2End, test_2proc_0entry_1entry_fifo, .disabled=false) {
     printf("-----------------------------------\n");
 }
 
-Test(End2End, test_2proc_0entry_0entry_rr, .disabled=false) {
+Test(RR, test_2proc_0entry_0entry_rr, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
@@ -52,7 +52,7 @@ Test(End2End, test_2proc_0entry_0entry_rr, .disabled=false) {
     printf("-----------------------------------\n");
 }
 
-Test(End2End, test_2proc_0entry_1entry_rr, .disabled=false) {
+Test(RR, test_2proc_0entry_1entry_rr, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
@@ -71,7 +71,7 @@ Test(End2End, test_2proc_0entry_1entry_rr, .disabled=false) {
     printf("-----------------------------------\n");
 }
 
-Test(End2End, test_2proc_0entry_1entry_sjf, .disabled=false) {
+Test(SJF, test_2proc_0entry_1entry_sjf, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
@@ -91,7 +91,7 @@ Test(End2End, test_2proc_0entry_1entry_sjf, .disabled=false) {
 }
 
 
-Test(End2End, test_2proc_0entry_1entry_lifo, .disabled=false) {
+Test(LIFO, test_2proc_0entry_1entry_lifo, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
@@ -110,7 +110,7 @@ Test(End2End, test_2proc_0entry_1entry_lifo, .disabled=false) {
     printf("-----------------------------------\n");
 }
 
-Test(End2End, test_2proc_0entry_1entry_stcf, .disabled=false) {
+Test(STCF, test_2proc_0entry_1entry_stcf, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
@@ -132,7 +132,7 @@ Test(End2End, test_2proc_0entry_1entry_stcf, .disabled=false) {
 
 
 
-Test(End2End, 5proc_fifo, .disabled=false) {
+Test(FIFO, 5proc_fifo, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
@@ -151,7 +151,7 @@ Test(End2End, 5proc_fifo, .disabled=false) {
     printf("-----------------------------------\n");
 }
 
-Test(End2End, 5proc_lifo, .disabled=false) {
+Test(LIFO, 5proc_lifo, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
@@ -170,7 +170,7 @@ Test(End2End, 5proc_lifo, .disabled=false) {
     printf("-----------------------------------\n");
 }
 
-Test(End2End, 5proc_priority, .disabled=false) {
+Test(PRIORITY, 5proc_priority, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
@@ -189,7 +189,7 @@ Test(End2End, 5proc_priority, .disabled=false) {
     printf("-----------------------------------\n");
 }
 
-Test(End2End, 5proc_sjc, .disabled=false) {
+Test(SJF, 5proc_sjf, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
@@ -209,7 +209,7 @@ Test(End2End, 5proc_sjc, .disabled=false) {
 }
 
 
-Test(End2End, 5proc_stcf, .disabled=false) {
+Test(STCF, 5proc_stcf, .disabled=false) {
     SCHEDULER_STATS* stats = get_empty_stats_block();
     SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {
             .time_slice = 1,
