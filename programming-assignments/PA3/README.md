@@ -1,197 +1,57 @@
-# CST334 Project 1
+# CST334 Project 3
 
-## Background
+## Assignment Description
 
-In this project we're going to be mostly playing around with C to get a sense of how it works.
-This means we'll not only be trying out building our own structs, but also will be making system calls, using libraries, and trying to find some erroneous calls.
+In this project we're going to be writing a memory allocation library!
+Similar to how C presents `malloc()` and `free()` we will be writing for `mem_alloc()` and `mem_free()`, and any functions we need to help implement them.
 
-## Overview
+The general idea behind the approach that we're using is that we are allocating one large piece of memory (aka the "arena"), and then giving out smaller pieces of it as requested by calls to `mem_alloc()`, and returning these pieces to the general pool when `mem_free()` is called on them.
+Setting up the arena and destroying it at taken care of for you, and may be some clues about the various pieces that are used in the memory arena.
+Throughout the area we have a list of memory chunks including whether they are free or not.
 
-There are four parts to this homework, each worth a different amount of the overall grade.
-These four are [strings](#strings), [system calls](#system-calls), [structs](#structs), and [processes](#processes).
+On a call to `mem_alloc()` there are a few steps that need to be done.
+First, we need to find an appropriate piece of memory.
+In this allocator we are using a find-first approach, where we grab the first available piece of memory that is suitably sized.
+After this, we adjust its size, if necessary, by potentially forming a new element in our list of memory allocations.
 
-Note that each of these sections has a few questions at the beginning of them that you should answer for the Programming Assignment #1 Checkpoint on Canvas.
-
-## Getting started
-
-### Setting up your environment
-
-To get started move to the same directory where you did your lab work.
-We will be running similar, but slightly different, commands to get started on this assignment.
-
-Before we get started, let's check for updates to the docker image by running:
-```shell
-docker pull samogden/csumb:cst334
-```
-
-Then, navigate using your terminal on your local machien to your working directory (i.e. the github repo `CST334-assignments`) and run the below command to start docker:
-```shell
-docker run -it -v ${PWD}:/tmp/programming cst334
-```
-
-Once the docker shell starts update your github files:
-```shell
-git stash
-git pull
-git stash pop
-```
-
-And then change to the appropriate directory:
-```shell
-cd /tmp/programming/programming-assignments/PA1
-```
-
-Now you're ready to get started coding!
+On a call to `mem_free()` we need to take the input pointer, determine its length and free up that much memory.
+We need to update this chunk, and possibly "coalesce" it, where we combine it with the surrounding empty chunks.
 
 
-***Question:*** What are the differences between these commands and the ones for lab1?  What do they mean?
+### Your task
 
-### Testing Code
+You will be writing the pieces that find free memory, split chunks, free chunks, coalesce chunks, allocate, and free memory!
 
-To test your code you will run two commands; one of them will compile your code and the other will run the unit tests.
+Also, there are a few questions scattered throughout the source code that you need to answer for the checkpoint this week!
+I've labeled them with "question".
 
-#### Building code
-
-```shell
-make clean unit_tests
-```
-The above command invokes the Makefile to do two things.
-First, it cleans the local code, removing old compilations (by including the `clean` directive).
-Second, it tells the system to build the unit_tests target.
-If your system is taking a long time running this command (e.g. more than ~10 seconds) you simply run `make unit_tests` which will only rebuild when necessary.
-We will be learning more about `make` in class in later weeks.
-
-This command will show warnings when you first get it.
-These warnings are there because I did some hacky things to make sure the code compiled with the `todo` hooks active -- looking at fixing them is a good way to get started on the assignment!
-
-#### Running code
-
-```shell
-./unit_tests
-```
-
-This command runs the unit tests.
-You will see that initially that there are a lot of failing tests -- in fact all of them fail.
-There are also a few crashing tests -- these should be due to things that are necessary to fix later one.
-
-The above lines will have `FAIL` and point you to the assertions that are failing.
-Exploring the code to figure out _why_ these are failing will be helpful.
-
-Note that if it helps you can also call `./unit_tests --help` to get more information on calling the unit tests.
-
-Also, note that the tests do not yet have point values associated with them.
-You will have to consult the below point values to calculate your score.
-
-## Assignment components
-
-
-### Strings 
-***(21 points)***
-
-Remember from class that Strings in C are null-terminated character arrays.
-In this section you should practice using string functions and mimic them on your own.
-Note that some of these functions (e.g. `copy_str` and `length_of_str`) are available in the c string library, but you should implement your own version of them.
-I will reiterate this in the code itself, and use of these standard functions will result in a 0 for these problems.
-
-***Question:*** How do we know that we've gotten to the end of a c-string?
-
-#### Specific todos and point values
+### Functions you'll be writing
 
 ```c
-int get_str_length(char* str);                      // 4 points
-char* copy_str(char* str);                          // 4 points
-void truncate_string(char* str, int new_length);    // 3 points
-void to_uppercase(char* str);                       // 3 points
-void to_lowercase(char* str);                       // 3 points
-void find_first_index(char* str, char target);      // 2 points
-void find_last_index(char* str, char target);       // 2 points
+node_t * find_first_free_chunk(size_t size, node_t* starting_node); // 15 points
+void split_node(node_t* node, size_t size);                         // 20 points
+node_t* get_header(void* ptr);                                      // 15 points
+void coalesce_nodes(node_t* front, node_t* back);                   // 20 points
+
+extern void* mem_alloc(size_t size);                                // 5 points
+extern void mem_free(void *ptr);                                    // 5 points
 ```
 
-### Structs 
-***(19 points)***
+Note, you'll be using the first four functions to build the last two functions.  
+Think about how to use this to de-duplicate your code as much as possible!
 
-Structs in C are contiguous memory objects, where we group together more primative object types to make more complex types.
-They are similar to objects in object-oriented languages, but consist of only the data instead of the associated functions as well.
-With that said, we can also have functions associated with them, albeit with a more verbose usage (i.e. a longer and more explicit set of input parameters).
-In this section we'll practice both designing new structs, but also see how to use them and how to make functions for them.
+### Getting started
 
-***Question:*** When thinking about fields in object-oriented programming and fields in c-structs what are the key differences?
+Setting up this project is very similar to [PA1](../PA1) and [PA2](../PA2), so please check those out if you have questions!
 
-#### Specific todos and point values
+A thing to note is that `mem_alloc()` and `mem_free()` rely on the other functions, so starting on the other functions is a good idea!
 
-```c
-struct Group;                                                       // 3 points
-Person person_make_new(char* first_name, char* last_name, int age); // 3 points
-char* person_to_string(Person person);                              // 2 points
-Group group_make_new(char* group_name);                             // 3 points
-int num_people_in_group(Group* group);                              // 2 points
-int free_spaces_in_group(Group* group);                             // 2 points
-int add_person(Group* group, Person* person_to_add);                // 3 points
-int remove_person(Group* group, Person* person_to_remove);          // 1 point
-```
+## What to submit
 
-### Processes 
-***(30 points)***
-
-In class we will be learning about process management, where we start and stop processes.
-The core of this will be handled by the OS but when using C there are two main functions that are essential for us to learn how to use well: `fork()` and `exec()`.
-
-`fork()` starts a new process that is, at it's core, exactly the same as our process.
-They have an identical memory layout and the same program state with two differences.
-1. The PID of the child process is different.
-2. The return code of `fork()` in the child is 0, while in the parent process it is the PID of the child process.
-
-`exec()` will replace the existing process with a new one -- it completely erases the memory of the process and resets the PC back to start at the beginning of the process.
-Calling it without `fork`'ing off a new process will lead to the original process being lost, so we need to start a new child process first.
-Using it properly relies on checking error codes, and then getting the response of the child function.
-
-***Question:*** What makes a process distinct from the program code?
-
-#### Specific todos and point values
-
-```c
-int fork_and_return_child();    // 10 points
-int fork_and_return_parent();   // 10 points
-int make_exec_call(int* errno); // 10 points
-```
-
-
-### System Calls 
-***(10 points)***
-
-Below the standard library provided by `stdli.h` is a set of [system calls](https://man7.org/linux/man-pages/man2/syscalls.2.html) that allow direct interfacing with the operating system below.
-This is how programs actually interface with the operating systems -- they make system calls and the operating system takes over to actually do the work.
-Many of the calls are very specific, and often have wrappers of their own.
-***In this section you need to call them manually, not with the wrappers, which I will work to call out whenever possible.***
-
-There are some helpful instructions [here](https://jameshfisher.com/2018/02/19/how-to-syscall-in-c/).
-
-One important thing to remember is that [different platforms use different numbers for system calls](https://stackoverflow.com/a/30291003), meaning that running on your computer and my computer requires you to use the symbolic constant instead of the system call number (e.g. `SYS_gettid` instead of [186](https://www.mail-archive.com/osv-dev@googlegroups.com/msg06206.html)).
-This is part of how to make C more portable.
-
-***Question:***: When we make system calls in C what are we doing?
-
-#### Specific todos and point values
-
-```c
-FILE* open_file_to_read(char* path_to_file);        // 2 point
-FILE* open_file_to_write(char* path_to_file);       // 2 point
-FILE* open_file_to_readwrite(char* path_to_file);   // 1 point
-void write_str_to_fid(char* str, FILE* fid);        // 2 points
-char* read_str_from_fid(FILE* fid);                 // 2 points
-void close_fid(FILE* fid);                          // 1 point
-```
-
-Note that for these functions you ***cannot*** use the "nice" file functions defined in `unistd.h` such as `fopen()` or `flcose()`.
-Instead, you must use the systemcalls `open()` and `close()`.
-The key difference is that functions that start with "f" are generally off limits.
+You'll be submitting ***only*** `student_code.c` and `student_code.h`.
+Any other files changed will be lost during the grading process.
 
 
 ## Conclusion
 
 Good luck!
-Remember, don't pour too much time into low-value functions!
-Those are the ones that I expect to be the difficult or less important, but cool nevertheless!
-
-p.s. - due to the timing there isn't an extra credit part to this assignment (as far as I'm aware).  Next time!
-
