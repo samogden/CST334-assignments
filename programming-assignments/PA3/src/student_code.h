@@ -9,6 +9,7 @@
 #define ERR_CALL_FAILED    (-4)
 #define ERR_UNINITIALIZED   (-5)
 
+// Question: How many bytes is this?
 #define MAX_ARENA_SIZE (0x7FFFFFFF)
 
 extern int statusno;

@@ -18,12 +18,33 @@ On a call to `mem_free()` we need to take the input pointer, determine its lengt
 We need to update this chunk, and possibly "coalesce" it, where we combine it with the surrounding empty chunks.
 
 
+### Splitting chunks
+
+When we need to create a new node in our free list we need to split a chunk into smaller pieces.
+To do this we need to create a new node within the chunk that gives us enough room for _both_ the size of the object we want to allocate and the new header we are allocating.
+
+### Coalescing chunks
+
+When we have two chunks next to each other that are free, we want to combine them in order to allow us to allocate bigger objects.
+The idea, is that we have a list of nodes tracking whether they are free or not, and we want to combine two nodes together, similar to the picture below.
+
+```
+-----------------------------------------------------
+| node0 hdr | freed space | node1 hdr | freed space | 
+-----------------------------------------------------
+-->
+-----------------------------------------------------
+| node0 hdr | freed space                           | 
+-----------------------------------------------------
+```
+
 ### Your task
 
 You will be writing the pieces that find free memory, split chunks, free chunks, coalesce chunks, allocate, and free memory!
 
 Also, there are a few questions scattered throughout the source code that you need to answer for the checkpoint this week!
 I've labeled them with "question".
+Note that these are not _just_ in `student_code.*`.
 
 ### Functions you'll be writing
 

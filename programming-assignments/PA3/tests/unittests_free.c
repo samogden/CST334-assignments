@@ -33,9 +33,6 @@ Test(Free, test_free_basic){
   destroy();
 }
 
-
-
-
 Test(Free, test_free_coalescing_case1){
   int size, size2, size3;
   int page_size = getpagesize();

@@ -80,7 +80,7 @@ int destroy() {
     return ERR_SYSCALL_FAILED;
   }
 
-  // Question: Are there memory leaks?
+  // Question: Are there memory leaks here?
 
   // Clean up variables
   _arena_start = NULL;
