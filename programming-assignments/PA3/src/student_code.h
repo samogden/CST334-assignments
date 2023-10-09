@@ -28,14 +28,47 @@ extern int destroy();
 void print_header(node_t *header);
 
 // Functions to write
+/**
+ * Finds the first available free chunk that is big enough to support the requested size allocation.
+ * @param size
+ * @param starting_node
+ * @return
+ */
 node_t * find_first_free_chunk(size_t size, node_t* starting_node);
+
+/**
+ * Takes in the selected chunk of free memory and prepares it for usage, potentially by splitting it up into smaller pieces.
+ * @param node -- the chunk to prepare
+ * @param size
+ */
 void split_node(node_t* node, size_t size);
 
+/**
+ * Given a pointer to an object to free, returns the associated header containing size
+ * @param ptr
+ * @return
+ */
 node_t* get_header(void* ptr);
+
+/**
+ * Given two nodes, coalesces them into a single node, or sets a number of errors as appropriate
+ * @param front
+ * @param back
+ */
 void coalesce_nodes(node_t* front, node_t* back);
 
 // Full functions
+/**
+ * Allocates a block of memory of the given size
+ * @param size
+ * @return
+ */
 extern void* mem_alloc(size_t size);
+
+/**
+ * Frees a block of memory pointed to by ptr
+ * @param ptr
+ */
 extern void mem_free(void *ptr);
 
 
