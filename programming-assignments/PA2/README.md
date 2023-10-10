@@ -22,7 +22,7 @@ Once you are all set, change to the appropriate directory for PA2.
 
 Now you're ready to get started coding!
 
-***Question:*** Get docker running and upload me a screenshot of you running `tree` in the code directory 
+***Question:*** Get docker running and upload me a screenshot of you running `tree` in the directory we'll be developing in.
 
 
 ### Testing Code
@@ -95,7 +95,7 @@ The core of this simulation happens in `process_scheduling.c` between lines 50 a
     }
 ```
 
-***Question:*** What data structure do we use to hold the processes?
+***Question:*** Dig into the assignment code a bit -- what data structure do we use to hold the processes?
 
 Essentially, at each step we pick a model using our selection function (`params.process_selection_func(entered_processes);`) and then use that to run one simulation step.
 Your goal in this assignment is to write these selection functions.
@@ -103,7 +103,7 @@ Your goal in this assignment is to write these selection functions.
 I should note that these model selection functions are selected in individual unit tests using some function pointer stuff.
 You can check it out, but you just need to know that you have to write these functions.
 
-***Question:*** How do we choose the highest priority job in this code base?
+***Question:*** Dig into the assignment code a bit -- how do we choose the highest priority job in this code base?
 
 
 ### Your task
