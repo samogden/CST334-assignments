@@ -103,7 +103,7 @@ Your goal in this assignment is to write these selection functions.
 I should note that these model selection functions are selected in individual unit tests using some function pointer stuff.
 You can check it out, but you just need to know that you have to write these functions.
 
-***Question:*** How do we choose the highest priority job?
+***Question:*** How do we choose the highest priority job in this code base?
 
 
 ### Your task
