@@ -61,6 +61,10 @@ extern void mem_free(void *ptr);                                    // 5 points
 Note, you'll be using the first four functions to build the last two functions.  
 Think about how to use this to de-duplicate your code as much as possible!
 
+Another note:
+Some of these functions will be setting error codes!  Do not use the raw numbers for this -- instead, use the error codes from `student_code.h`!  
+Failure to do so will result in a points deduction.
+
 ### Getting started
 
 Setting up this project is very similar to [PA1](../PA1) and [PA2](../PA2), so please check those out if you have questions!
