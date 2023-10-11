@@ -84,14 +84,14 @@ Test(Functions, coalesce_nodes__check_null) {
 
   // Check whether inputting null does nothing but sets statusno
   coalesce_nodes(node1, NULL);
-  cr_assert(statusno == ERR_BAD_ARGUMENTS);
+  cr_assert(statusno == ERR_BAD_ARGUMENTS); // Use the errors from student_code.h, not the raw numbers!!
   cr_assert(node1->size == 0);
   cr_assert(node1->is_free == true);
   cr_assert(node1->fwd == node2);
   cr_assert(node1->bwd == node0);
 
   coalesce_nodes(NULL, node1);
-  cr_assert(statusno == ERR_BAD_ARGUMENTS);
+  cr_assert(statusno == ERR_BAD_ARGUMENTS); // Use the errors from student_code.h, not the raw numbers!!
   cr_assert(node1->size == 0);
   cr_assert(node1->is_free == true);
   cr_assert(node1->fwd == node2);
@@ -109,7 +109,7 @@ Test(Functions, coalesce_nodes__check_order) {
 
   // Check whether inputting in wrong order does nothing but sets statusno
   coalesce_nodes(node1, node0);
-  cr_assert(statusno == ERR_BAD_ARGUMENTS);
+  cr_assert(statusno == ERR_BAD_ARGUMENTS); // Use the errors from student_code.h, not the raw numbers!!
 
   cr_assert(node0->size == 0);
   cr_assert(node0->is_free == true);
@@ -135,7 +135,7 @@ Test(Functions, coalesce_nodes__check_free) {
 
   // Check whether inputting is_free is checked and sets statusno
   coalesce_nodes(node0, node1);
-  cr_assert(statusno == ERR_CALL_FAILED);
+  cr_assert(statusno == ERR_CALL_FAILED); // Use the errors from student_code.h, not the raw numbers!!
 
   cr_assert(node0->size == 0);
   cr_assert(node0->is_free == true);
@@ -149,7 +149,7 @@ Test(Functions, coalesce_nodes__check_free) {
 
   statusno = 0;
   coalesce_nodes(node1, node2);
-  cr_assert(statusno == ERR_CALL_FAILED);
+  cr_assert(statusno == ERR_CALL_FAILED); // Use the errors from student_code.h, not the raw numbers!!
 
   cr_assert(node1->size == 0);
   cr_assert(node1->is_free == false);
