@@ -12,7 +12,7 @@ Thanks to Dr. Glenn Bruns for this lab.
 For each of the questions below you should calculate the answer and show your work.
 Please open up a google document to track your answers, and then when you are finished submit the google document.
 
-## Backgrounf or all questions
+## Background or all questions
 
 We are going to assume the following;
 - Pages are 256bytes in size
@@ -24,31 +24,67 @@ We are going to assume the following;
 ### Questions 1a
 How many bits do we need for the offset for each page?
 
+
+<details>
+  <summary>Answer</summary>
+
+log2(256bytes) = 8bits for the offset
+
+</details>
+
 ### Question 1b
 How many bits do we need to represent the pages in our virtual address space?
+
+<details>
+  <summary>Answer</summary>
+
+log2(8 pages) = 3bits for the VPNs
+
+</details>
 
 ### Question 1c
 How many bits do we need to represent the page frames in our physical address space?
 
+<details>
+  <summary>Answer</summary>
+
+log2(32 pages) = 5bits for the PFNs
+
+</details>
+
 ### Question 1d
 How many bits do we need to present our full virtual address space?
+
+<details>
+  <summary>Answer</summary>
+
+11bits = (8bits for the offset) + (3 bits for the VPNs)
+
+</details>
 
 ### Question 1e
 How many bits do we need to represent our full physical address?
 
+<details>
+  <summary>Answer</summary>
+
+13bits = (8bits for the offset) + (5 bits for the PFNs)
+
+</details>
+
 ## Question 2
 For this question we are using the below page table:
 
-| **VPN** | **PFN**        |
-|-----|------------|
-| 000 | 0x8000000d |
-| 001 | 0x80000006 |
-| 010 | 0x8000001a |
-| 011 | 0x80000005 |
-| 100 | 0x8000000a |
-| 101 | 0x00000000 |
-| 110 | 0x8000001f |
-| 111 | 0x00000000 |
+| **VPN** | **PFN**      |
+|---------|--------------|
+| `000`   | `0x8000000d` |
+| `001`   | `0x80000006` |
+| `010`   | `0x8000001a` |
+| `011`   | `0x80000005` |
+| `100`   | `0x8000000a` |
+| `101`   | `0x00000000` |
+| `110`   | `0x8000001f` |
+| `111`   | `0x00000000` |
 
 In each row the leftmost bit says whether the VPN is valid or not.  
 So if you see that the leftmost hex digit is 8, then is binary 1000, so the VPN is valid. 
@@ -59,8 +95,29 @@ Based on this table, please answer the following questions.
 ### Question 2a
 Is VPN3 valid?
 
+<details>
+  <summary>Answer</summary>
+
+For this, we look at the 4th entry (since we start indexing at 0), and see it is going to be `0x80000005`. 
+The page table entry is `0x80000005` (`0b10000000000000000000000000000101`) has the leftmost bit as 1, so it is valid.
+Note, I didn't convert this to binary except as an example, since the leading hex 8 indicates the leading bit is a 1.
+
+Taking this, we know that our PFN is 5bits, which means we'd need 2 hex digits to represent it, so our PFN is 0x05`.
+
+</details>
+
+
 ### Question 2b 
 What is the PFN for VPN 1?
+
+<details>
+  <summary>Answer</summary>
+
+In this case, VPN1 is going to have a page table entry of `0x80000006`, which is also valid, and has a PFN of `0x06`.
+
+
+</details>
+
 
 ### Question 2c
 
@@ -71,11 +128,37 @@ In binary it looks like this:
 ```
 What is the VPN for this address?
 
+
+<details>
+  <summary>Answer</summary>
+
+In a previous question we identified how much of our address will be the VPN -- specifically, it will be the first 3bits.
+So in this case, our VPN is going to be `110`. 
+
+</details>
+
 ### Question 2d
 How many offset bits in a physical address (in our scenario)?
 
+<details>
+  <summary>Answer</summary>
+
+We know that the offset is the same in both the virtual and physical address spaces, so in both cases the offset is going ot be 8 bits.
+
+</details>
+
 ### Question 2e
 What is the PFN for the VPN in the virtual address above?
+
+
+<details>
+  <summary>Answer</summary>
+
+In the example above we had VPN of `110`, which we see is `0x8000001f`.
+From the leading `8` we see that it's a valid page, and then we want to grab out the appropriate part of the PFN.
+In this case, since we know our PFN is 5bits (from above), that would be 2 hex digits, so `0x1f`.
+
+</details>
 
 ### Question 2f
 Putting everything together, what is the physical address for the virtual address above? (`110 1110 0001`)
@@ -106,17 +189,17 @@ The offset is always the same in the virtual and the physical address.
 
 | ***Virtual Address*** | ***Physical Address*** |
 |-----------------------|------------------------|
-| 0x04d3                |                        |
-| 0x030d                |                        |
-| 0x0244                |                        |
-| 0x0566                |                        |
-| 0x03a7                |                        |
-| 0x057c                |                        |
-| 0x054b                |                        |
-| 0x0110                |                        |
-| 0x0624                |                        |
-| 0x07db                |                        |
-| 0x07c1                |                        |
+| `0x04d3`              |                        |
+| `0x030d`              |                        |
+| `0x0244`              |                        |
+| `0x0566`              |                        |
+| `0x03a7`              |                        |
+| `0x057c`              |                        |
+| `0x054b`              |                        |
+| `0x0110`              |                        |
+| `0x0624`              |                        |
+| `0x07db`              |                        |
+| `0x07c1`              |                        |
 
 ### Suggestion
 
@@ -127,6 +210,8 @@ The calculations from this lab were in `HW-Paging-LinearTranslate` using the bel
 $ python2 paging-linear-translate.py -P 256 -a 2k -p 8k -c -s 10 -n12
 
 ```
+
+Note: to run this you'll have to either install python2 in your docker image or run a `docker pull ...` to get the latest image.
 
 There are also multi-level paging examples available as well.
 
