@@ -187,6 +187,27 @@ The offset is always the same in the virtual and the physical address.
 
 ### Question 2e
 
+Please complete the below table.  Note, adding extra columns may help you track things.
+
+| ***Virtual Address*** | ***Physical Address*** |
+|-----------------------|------------------------|
+| `0x04d3`              |                        |
+| `0x030d`              |                        |
+| `0x0244`              |                        |
+| `0x0566`              |                        |
+| `0x03a7`              |                        |
+| `0x057c`              |                        |
+| `0x054b`              |                        |
+| `0x0110`              |                        |
+| `0x0624`              |                        |
+| `0x07db`              |                        |
+| `0x07c1`              |                        |
+
+
+<details>
+
+  <summary>Answer</summary>
+
 | ***Virtual Address*** | Binary        | VPN | Page Table Entry | Valid? | PFN    | ***Physical Address*** |
 |-----------------------|---------------|-----|------------------|--------|--------|------------------------|
 | `0x04d3`              | 100 1101 0011 | 100 | `0x8000000a`     | yes    | `0x0a` | `0x0ad3`               |
@@ -200,6 +221,7 @@ The offset is always the same in the virtual and the physical address.
 | `0x0624`              | 110 0010 0100 | 110 | `0x8000001f`     | yes    | `0x1f` | `0x1f24`               |
 | `0x07db`              | 111 1101 1011 | 111 | `0x00000000`     | no     | N/A    | N/A                    |
 | `0x07c1`              | 111 1100 0001 | 111 | `0x00000000`     | no     | N/A    | N/A                    |
+</details>
 
 ### Suggestion
 
