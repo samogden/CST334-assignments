@@ -203,18 +203,21 @@ def get_scoring_tests(tests):
 
 
 def parse_scoring(path_to_scoring) -> List[ScoringItem]:
-  with open(path_to_scoring) as fid:
-    json_dict = json.load(fid)
-  scoring_tests = []
-  if "groups" in json_dict.keys():
-    groups = []
-    for group in json_dict["groups"]:
-      scoring_group = ScoringGroup(group["name"], group["value"])
-      scoring_group.tests = get_scoring_tests(json_dict["tests"])
-      groups.append(group)
-    return groups
-  if "tests" in json_dict.keys():
-    return get_scoring_tests(json_dict["tests"])
+  try:
+    with open(path_to_scoring) as fid:
+      json_dict = json.load(fid)
+    scoring_tests = []
+    if "groups" in json_dict.keys():
+      groups = []
+      for group in json_dict["groups"]:
+        scoring_group = ScoringGroup(group["name"], group["value"])
+        scoring_group.tests = get_scoring_tests(json_dict["tests"])
+        groups.append(group)
+      return groups
+    if "tests" in json_dict.keys():
+      return get_scoring_tests(json_dict["tests"])
+  except FileNotFoundError:
+    return []
 
 
 def make_test(path_to_assignment_directory):
@@ -277,7 +280,6 @@ def main():
   args = parse_flags()
   scoring_tests = parse_scoring(os.path.join(os.path.abspath(args.assignment_dir), "scoring.json"))
   results_json = {}
-  
   build_success, build_log = make_test(os.path.abspath(args.assignment_dir))
   if build_success:
     test = run_unittests(os.path.abspath(args.assignment_dir))
@@ -291,6 +293,9 @@ def main():
       "score" : 0.0
     }
     log.error("Build failed")
+  
+  if len(scoring_tests) == 0:
+    results_json["score"] = "Not calculated"
     
   results_json["build_logs"] = json.encoder.JSONEncoder().encode(build_log),
   print(json.dumps(results_json, indent=4))
