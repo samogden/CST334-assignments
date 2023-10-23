@@ -14,6 +14,7 @@ bool is_entry_valid(PageTableEntry pte) {
 
 bool is_read_enabled(PageTableEntry pte) {
   // todo
+  // Question: Implement this function.  Hint: it can take as little as 1 line.
 }
 
 bool is_write_enabled(PageTableEntry pte) {

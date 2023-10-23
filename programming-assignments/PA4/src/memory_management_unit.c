@@ -43,4 +43,5 @@ void cleanup_MMU(MMU m) {
   free(m.page_pointer);
   free(m.physical_memory);
   free(m.page_used);
+  // Question: if we have one big MMU unit that we initialize like in PA3, why do we need to free individual parts here?
 }

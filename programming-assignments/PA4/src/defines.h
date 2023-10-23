@@ -28,6 +28,8 @@
 #define NUM_PFN_BITS 20
 #define NUM_METADATA_BITS 4
 
+// Question: Given these definitions, how many bytes will out physical memory be?
+
 // Define some derived types and sizes
 #define PAGE_SIZE ((1<<NUM_OFFSET_BITS))
 #define NUM_PAGES ((1<<NUM_VPN_BITS))
@@ -42,6 +44,8 @@
 #define READ_BIT (NUM_BITS_IN_BYTE*sizeof(AddressBasis) - 1)
 #define WRITE_BIT (NUM_BITS_IN_BYTE*sizeof(AddressBasis) - 2)
 #define EXEC_BIT (NUM_BITS_IN_BYTE*sizeof(AddressBasis) - 3)
+
+// Question: Do we need to worry about these metadata bits interfering with our entries?  Why or why not?
 
 // Set up the types that we are using.  Notice that they are all basically the same.
 typedef PAGETABLE_ENTRY_TYPE AddressBasis;

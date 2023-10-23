@@ -23,7 +23,6 @@ typedef struct MMU {
 
 // MMU Object Functions
 MMU new__MMU_pagetable();
-MMU new__MMU_pagedirectory();
 void cleanup_MMU(MMU m);
 
 
