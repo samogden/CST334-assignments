@@ -17,7 +17,7 @@ Start docker and go to the folder:
 ## Step 3
 Run the simulator with random seed 23:
 ```shell
-$ ./vsfs.py -s 23
+$ python2 vsfs.py -s 23
 ```
 Write down the operations that were used.  Remember, the possible operations are:
 ```shell
@@ -32,7 +32,7 @@ You should identify both the operations and the parameters.
 ## Step 4
 When you are finished, check your result by running:
 ```shell
-$ ./vsfs.py -s 23 -c
+$ python2 vsfs.py -s 23 -c
 ```
 
 ## Step 5
@@ -41,16 +41,16 @@ Repeat steps 2 and 3, but for random seed 26.
 ## Step 6
 Run the simulator in reverse mode, with random seed 29:
 ```shell
-$ ./vsfs.py -s 29 -r
+$ python2 vsfs.py -s 29 -r
 ```
 
-Write down the states that result from the operations shown.
+In your google document write down the states that result from the operations shown.
 
 ## Step 7
 Check your answer by running the program again, but with the -c option.
 
 ## Step 8
-Repeat steps 5 and 6, but this time with random seed 27.
+Repeat steps 5 and 6, but this time with another seed of your choice
 
 ## Conclusion
 
