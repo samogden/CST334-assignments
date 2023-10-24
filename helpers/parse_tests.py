@@ -26,7 +26,7 @@ def parse_flags():
   parser.add_argument(
     "--combine_by_suite",
     action="store_true",
-    default=True  # Disable this later on
+    default=False  # Disable this later on
   )
   
   return parser.parse_args()

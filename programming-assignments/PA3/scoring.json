@@ -1,0 +1,51 @@
+{
+  "tests" : [
+    {"suite" : "Free", "test_group" : "test_free", "value" : 5, "tests" :
+      [
+        "test_free_basic",
+        "test_free_coalescing_case1",
+        "test_free_coalescing_case2",
+        "test_free_coalescing_case3",
+        "test_free_coalescing_chains_fwd",
+        "test_free_coalescing_chains_bwd"
+      ]
+    },
+    {"suite" : "Alloc", "test_group" : "test_alloc", "value" : 5, "tests" :
+      [
+        "test_allocation_basic",
+        "test_allocationfree_placement",
+        "test_allocation_withsplits"
+      ]
+    },
+    {"suite" : "Functions", "test_group" : "get_header", "value" : 15, "tests" :
+      [
+        "get_header"
+      ]
+    }, 
+    {"suite" : "Functions", "test_group" : "coalesce_nodes", "value" : 20, "tests" :
+      [
+        "coalesce_nodes__coalesce_first",
+        "coalesce_nodes__coalesce_last",
+        "coalesce_nodes__check_null",
+        "coalesce_nodes__check_order",
+        "coalesce_nodes__check_free"
+      ]
+    },
+    {"suite" : "Functions", "test_group" : "find_first_free_chunk", "value" : 15, "tests" :
+      [
+        "find_first_free_chunk__0bytes",
+        "find_first_free_chunk__1bytes",
+        "find_first_free_chunk__1bytes_notfree",
+        "find_first_free_chunk__2bytes"
+      ]
+    }, 
+    {"suite" : "Functions", "test_group" : "split_node", "value" : 20, "tests" :
+      [
+        "split_node__same_size",
+        "split_node__too_small_to_split",
+        "split_node__big_enough_to_split1",
+        "split_node__big_enough_to_split2"
+      ]
+    }
+  ]
+}
