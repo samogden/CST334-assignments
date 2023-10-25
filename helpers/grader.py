@@ -147,8 +147,8 @@ def run_unittests(path_to_assignment_directory):
   os.chdir(path_to_assignment_directory)
   proc = subprocess.Popen(["./unit_tests", "--json"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   proc.wait()
-  stdout = proc.stdout.read().decode()
-  stderr = proc.stderr.read().decode()
+  stdout = proc.stdout.read().decode('latin-1')
+  stderr = proc.stderr.read().decode('latin-1')
   
   return parse_unit_tests_json(stdout)
 
