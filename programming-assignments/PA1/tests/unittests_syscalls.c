@@ -5,6 +5,8 @@
 #include <criterion/criterion.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "../src/student_code.h"
 
