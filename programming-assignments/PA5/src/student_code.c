@@ -26,6 +26,7 @@ void pass_to_client_handler(void* arg) {
  */
 void read_lock(PlayerDatabase* db) {
   // todo
+  // Question: What variables do we need to check before we know we can safely read?
 }
 
 /**
@@ -65,6 +66,7 @@ int add_player(PlayerDatabase* db, char* player_name) {
 
 // Update stats for a particular player
 int add_player_score(PlayerDatabase* db, char* player_name, int score) {
+  // Question: Do we realistically need to lock the entire database for this operation?
   write_lock(db);
   int return_val = _add_player_score(*db, player_name, score);
   write_unlock(db);

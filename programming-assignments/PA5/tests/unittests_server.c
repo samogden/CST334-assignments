@@ -9,7 +9,7 @@
 Test(Server, is_server_threaded, .init=setup, .fini=teardown, .timeout=3) {
   log_debug("Testing server threading....\n")
 
-  // Question: Why do you think I start at t1 here instead of t0?
+  // Question: Why do you think I start counting at t1 here instead of t0?
   pthread_t* t1 = make_request_async("do_slow_thing 2");
   pthread_t* t2 = make_request_async("do_slow_thing 2");
 
