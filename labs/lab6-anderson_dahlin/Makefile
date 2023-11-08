@@ -4,6 +4,6 @@ buffer: buffer.c
 	gcc -pthread -lm -o buffer buffer.c
 
 clean:
-	rm buffer
+	rm -f buffer
 
 .PHONY: all clean
