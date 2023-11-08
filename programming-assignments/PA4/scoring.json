@@ -1,0 +1,50 @@
+{
+  "tests" : [
+    {"suite" : "Functions", "test_group" : "is_entry_valid", "value" : 5, "tests" :
+    [
+      "is_entry_valid"
+    ]
+    },
+    {"suite" : "Functions", "test_group" : "is_read_enabled", "value" : 5, "tests" :
+    [
+      "is_read_enabled"
+    ]
+    },
+    {"suite" : "Functions", "test_group" : "is_write_enabled", "value" : 5, "tests" :
+    [
+      "is_write_enabled"
+    ]
+    },
+    {"suite" : "Functions", "test_group" : "is_execute_enabled", "value" : 5, "tests" :
+    [
+      "is_execute_enabled"
+    ]
+    },
+    {"suite" : "Functions", "test_group" : "convert_PageTableEntry_to_PFN", "value" : 10, "tests" :
+    [
+      "convert_PageTableEntry_to_PFN"
+    ]
+    },
+    {"suite" : "Functions", "test_group" : "find_free_page", "value" : 10, "tests" :
+    [
+      "find_free_page"
+    ]
+    },
+    {"suite" : "MMU_PageTable", "test_group" : "get_pagetableentry__MMU_pagetable", "value" : 10, "tests" : 
+      [
+        "get_pagetableentry__MMU_pagetable"
+      ]
+    }, 
+    {"suite" : "MMU_PageTable", "test_group" : "map_page__MMU_pagetable", "value" : 10, "tests" : 
+      [
+        "map_page__MMU_pagetable"
+      ]
+    },
+
+    {"suite" : "MMU_PageTable", "test_group" : "end_to_end", "value" : 20, "tests" :
+      [
+        "end_to_end"
+      ]
+    },
+  ]
+}
