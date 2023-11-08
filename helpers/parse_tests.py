@@ -21,7 +21,7 @@ def parse_flags():
   )
   parser.add_argument(
     "--output_file",
-    default="out.json"
+    default="scoring.json"
   )
   parser.add_argument(
     "--combine_by_suite",
