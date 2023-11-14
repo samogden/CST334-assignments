@@ -36,7 +36,10 @@ Test(Server, increment_test, .init=setup, .fini=teardown, .timeout=NUM_PLAYS*2) 
   }
   for (int i = 0; i < NUM_PLAYS; i++) {
     pthread_join(*threads[i], NULL);
+    printf(".");
+    fflush(stdout);
   }
+  printf("\n");
 
   char expected_response[100];
 
@@ -100,7 +103,10 @@ Test(Server, increment_test_two_users, .init=setup, .fini=teardown, .timeout=NUM
   }
   for (int i = 0; i < NUM_PLAYS; i++) {
     pthread_join(*threads[i], NULL);
+    printf(".");
+    fflush(stdout);
   }
+  printf("\n");
 
   char expected_response[100];
 
@@ -187,7 +193,10 @@ Test(Server, increment_test_two_users_mixed_workload, .init=setup, .fini=teardow
   }
   for (int i = 0; i < NUM_PLAYS; i++) {
     pthread_join(*threads[i], NULL);
+    printf(".");
+    fflush(stdout);
   }
+  printf("\n");
 
   char expected_response[100];
 
