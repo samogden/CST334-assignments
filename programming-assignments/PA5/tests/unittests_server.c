@@ -18,7 +18,13 @@ Test(Server, is_server_threaded, .init=setup, .fini=teardown, .timeout=3) {
 }
 
 
-Test(Server, increment_test, .init=setup, .fini=teardown, .timeout=NUM_PLAYS*2) {
+Test(Server,
+     increment_test,
+     .init=setup,
+     .fini=teardown,
+     .timeout=NUM_PLAYS*2,
+     .disabled=false
+       ) {
   log_debug("Testing server increment_test....\n")
   pthread_t* threads[NUM_PLAYS];
   make_request("add_player sam");
@@ -79,7 +85,7 @@ Test(Server, increment_test, .init=setup, .fini=teardown, .timeout=NUM_PLAYS*2) 
 }
 
 
-Test(Server, increment_test_two_users, .init=setup, .fini=teardown, .timeout=NUM_PLAYS*2) {
+Test(Server, increment_test_two_users, .init=setup, .fini=teardown, .timeout=NUM_PLAYS*2, .disabled=false) {
   log_debug("Testing server increment_test_two_users....\n")
   pthread_t* threads[NUM_PLAYS];
   make_request("add_player sam0");
@@ -146,7 +152,12 @@ Test(Server, increment_test_two_users, .init=setup, .fini=teardown, .timeout=NUM
 
 
 
-Test(Server, increment_test_two_users_mixed_workload, .init=setup, .fini=teardown, .timeout=NUM_PLAYS*2) {
+Test(Server,
+     increment_test_two_users_mixed_workload,
+     .init=setup,
+     .fini=teardown,
+     .timeout=NUM_PLAYS+7 // The duration, plus a few extra for the tests below
+       ) {
   log_debug("Testing server increment_test_two_users_mixed_workload....\n")
   pthread_t* threads[NUM_PLAYS];
   make_request("add_player sam0");

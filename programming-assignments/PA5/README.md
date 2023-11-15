@@ -65,6 +65,11 @@ Setting up this project is very similar to the [previous programming assignments
 You'll be submitting ***only*** `student_code.c` and `student_code.h`.
 Any other files changed will be lost during the grading process.
 
+## Tips and Tricks
+
+1. The tests for this asignment have built-in sleep functions that cause it to run for a long time (~10 minutes when I write this).  While it should output `.` as it runs, showing it's still working, and timeout if something goes horribly run, if you are testing a single function it might help to disable some of the unit tests.  For details on how to do this, check out some of the labs!
+2. For the server tests, there is a variable defined at the time called `NUM_PLAYS`.  Reducing this might give you a way to quickly test some stuff.  Don't forget to increase it again after you're done!
+
 ## Conclusion
 
 Good luck!
