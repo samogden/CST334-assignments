@@ -27,9 +27,9 @@
 //bool keep_server_running = true;
 
 
-#define log_debug(...) fprintf(stderr, "DEBUG:"); fprintf(stderr, __VA_ARGS__);
-#define log_info(...)  fprintf(stderr, "INFO:");  fprintf(stderr, __VA_ARGS__);
-#define log_error(...) fprintf(stderr, "ERROR:"); fprintf(stderr, __VA_ARGS__);
+#define log_debug(...) fprintf(stderr, "DEBUG:"); fprintf(stderr, __VA_ARGS__)
+#define log_info(...)  fprintf(stderr, "INFO:");  fprintf(stderr, __VA_ARGS__)
+#define log_error(...) fprintf(stderr, "ERROR:"); fprintf(stderr, __VA_ARGS__)
 
 
 void* start_server(void* port);

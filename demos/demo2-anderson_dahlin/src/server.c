@@ -7,18 +7,14 @@
 #include "queue.h"
 #include <pthread.h>
 
+#define NUM_EXECUTION_THREADS 4
+
 static int listenfd;
 
 Queue queue;
 
-void * run_server(void *pVoid) {
-  start_server(PORT);
-
-  pthread_t execution_thread;
-  pthread_create(&execution_thread, NULL, execution_loop, NULL);
-
-  while (true) {
-    int client_socket_fd = accept(listenfd, (struct sockaddr*)NULL, NULL);
+void* client_handler(void* arg) {
+    int client_socket_fd = (uintptr_t)arg;
 
     // Read from client
     char* input_buffer = malloc(MAX_MESSAGE_LENGTH+1);
@@ -41,6 +37,30 @@ void * run_server(void *pVoid) {
       perror("send error");
     }
     close(client_socket_fd);
+    return NULL;
+}
+
+void* run_server(void *pVoid) {
+  start_server(PORT);
+
+  pthread_t execution_threads[NUM_EXECUTION_THREADS];
+  for (int i = 0; i < NUM_EXECUTION_THREADS; i++) {
+    pthread_create(&execution_threads[i], NULL, execution_loop,
+      (void *)(uintptr_t)i);
+  }
+
+  while (true) {
+    int client_socket_fd = accept(listenfd, (struct sockaddr*)NULL, NULL);
+
+    //client_handler((void *)(uintptr_t)client_socket_fd);
+    pthread_t client_thread;
+    pthread_create(
+      &client_thread,
+      NULL,
+      client_handler,
+      (void *)(uintptr_t)client_socket_fd
+      );
+
   }
 }
 
@@ -49,12 +69,11 @@ void process_request(char** args) {
 }
 
 void* execution_loop(void* arg) {
+  int executor_id = (uintptr_t)arg;
   while (true) {
     char* item = pop(&queue);
     if (item != NULL) {
-      log_info("Got to execute: \"%s\"\n", item);
-      sleep(1);
-      log_info("Processed: \"%s\"\n", item);
+      log_info("Processed (%d): \"%s\"\n", executor_id, item);
     }
   }
 }
