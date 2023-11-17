@@ -4,6 +4,7 @@
 
 #include "client.h"
 
+#define NUM_REQUESTS 10
 
 void* make_request(void* msg) {
   struct sockaddr_in dest_addr;
@@ -34,10 +35,19 @@ pthread_t* make_request_async(void* msg) {
 }
 
 int main(void) {
-  pthread_t* t = make_request_async("10");
 
-  void* resp;
-  pthread_join(*t, &resp);
+  pthread_t* threads[NUM_REQUESTS];
 
-  printf("resp: \"%s\"\n", (char*)resp);
+  for (int i = 0; i < NUM_REQUESTS; i++) {
+    char* string_to_send = malloc(10);
+    sprintf(string_to_send, "%d", i);
+    threads[i] = make_request_async(string_to_send);
+  }
+
+  for (int i = 0; i < NUM_REQUESTS; i++) {
+    void* resp;
+    pthread_join(*threads[i], &resp);
+    printf("resp: \"%s\"\n", (char*)resp);
+  }
+
 }

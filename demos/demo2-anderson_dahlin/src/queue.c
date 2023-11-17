@@ -6,12 +6,18 @@
 #include <stdio.h>
 #include "server.h"
 
+#include "pthread.h"
 
 Queue init_queue() {
   Queue q = {
     .head = 0,
     .tail = 0,
+    .num_writers = 0,
+    .num_readers = 0
   };
+  pthread_mutex_init(&q.mutex, NULL);
+  pthread_cond_init(&q.can_write, NULL);
+  pthread_cond_init(&q.can_read, NULL);
   return q;
 }
 
@@ -26,7 +32,7 @@ bool is_empty(Queue* q) {
   return (q->head == q->tail);
 }
 
-int push(Queue* q, char* item) {
+int _push(Queue* q, char* item) {
   if (is_full(q)) {
     return -1;
   }
@@ -35,7 +41,7 @@ int push(Queue* q, char* item) {
   return q->head - q->tail % QUEUE_SIZE;
 }
 
-char* pop(Queue* q) {
+char* _pop(Queue* q) {
   if (is_empty(q)) {
     return NULL;
   }
@@ -44,8 +50,74 @@ char* pop(Queue* q) {
   return return_val;
 }
 
+char* _peek(Queue* q) {
+  if (is_empty(q)) {
+    return NULL;
+  }
+  return q->entries[q->tail];
+}
+
+
+int push(Queue* q, char* item) {
+  pthread_mutex_lock(&q->mutex);
+
+  while (q->num_readers > 0 || q->num_writers > 0 || is_full(q)) {
+    pthread_cond_wait(&q->can_write, &q->mutex);
+  }
+  q->num_writers++;
+  pthread_mutex_unlock(&q->mutex);
+
+  int return_val = _push(q, item);
+
+  pthread_mutex_lock(&q->mutex);
+  q->num_writers--;
+  pthread_cond_signal(&q->can_write);
+  pthread_cond_broadcast(&q->can_read);
+  pthread_mutex_unlock(&q->mutex);
+  return return_val;
+}
+
+char* pop(Queue* q) {
+  pthread_mutex_lock(&q->mutex);
+  while (q->num_readers > 0 || q->num_writers > 0 || is_empty(q)) {
+    pthread_cond_wait(&q->can_write, &q->mutex);
+  }
+  q->num_writers++;
+  pthread_mutex_unlock(&q->mutex);
+
+  char* return_val = _pop(q);
+
+  pthread_mutex_lock(&q->mutex);
+  q->num_writers--;
+  pthread_cond_signal(&q->can_write);
+  pthread_cond_broadcast(&q->can_read);
+  pthread_mutex_unlock(&q->mutex);
+  return return_val;
+}
+
+char* peek(Queue* q) {
+
+  pthread_mutex_lock(&q->mutex);
+  while (q->num_writers > 0 || is_empty(q)) {
+    pthread_cond_wait(&q->can_read, &q->mutex);
+  }
+  q->num_readers++;
+  pthread_mutex_unlock(&q->mutex);
+
+  char* return_val = _peek(q);
+
+  pthread_mutex_lock(&q->mutex);
+  q->num_readers--;
+  if (q->num_readers == 0) {
+    pthread_cond_signal(&q->can_write);
+  }
+  pthread_cond_broadcast(&q->can_read);
+  pthread_mutex_unlock(&q->mutex);
+  return return_val;
+}
+
 void print_queue(Queue* q) {
   for (int i = q->tail; i < get_size(q); i++) {
-    printf("%d -> %d\n", i - q->tail, q->entries[i % QUEUE_SIZE]);
+    printf("%d -> %s\n", i - q->tail, q->entries[i % QUEUE_SIZE]);
   }
 }

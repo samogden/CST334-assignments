@@ -7,18 +7,17 @@
 #include "queue.h"
 #include <pthread.h>
 
+#define NUM_EXECUTORS 4
+
 static int listenfd;
 
 Queue queue;
 
-void * run_server(void *pVoid) {
-  start_server(PORT);
 
-  pthread_t execution_thread;
-  pthread_create(&execution_thread, NULL, execution_loop, NULL);
 
-  while (true) {
-    int client_socket_fd = accept(listenfd, (struct sockaddr*)NULL, NULL);
+void* client_handler(void* arg) {
+    int client_socket_fd = (uintptr_t)arg;
+//  log_debug("Got client: %d\n", client_socket_fd);
 
     // Read from client
     char* input_buffer = malloc(MAX_MESSAGE_LENGTH+1);
@@ -41,6 +40,32 @@ void * run_server(void *pVoid) {
       perror("send error");
     }
     close(client_socket_fd);
+    return NULL;
+}
+
+void * run_server(void *pVoid) {
+  start_server(PORT);
+
+  pthread_t execution_threads[NUM_EXECUTORS];
+  for (int i = 0; i < NUM_EXECUTORS; i++) {
+    pthread_create(
+      &execution_threads[i],
+      NULL,
+      execution_loop,
+      (void*)(uintptr_t)i);
+  }
+
+  while (true) {
+    int client_socket_fd = accept(listenfd, (struct sockaddr*)NULL, NULL);
+
+    //client_handler((void*)(uintptr_t)client_socket_fd);
+    pthread_t client_thread;
+    pthread_create(
+      &client_thread,
+      NULL,
+      client_handler,
+      (void*)(uintptr_t)client_socket_fd
+      );
   }
 }
 
@@ -49,12 +74,16 @@ void process_request(char** args) {
 }
 
 void* execution_loop(void* arg) {
+  int loop_id = (uintptr_t)arg;
   while (true) {
-    char* item = pop(&queue);
+    char* item;
+    if (loop_id % 2 == 0 ) {
+      item = peek(&queue);
+    } else {
+      item = pop(&queue);
+    }
     if (item != NULL) {
-      log_info("Got to execute: \"%s\"\n", item);
-      sleep(1);
-      log_info("Processed: \"%s\"\n", item);
+      log_info("Processed (%d): \"%s\"\n", loop_id, item);
     }
   }
 }
