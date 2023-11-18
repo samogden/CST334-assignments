@@ -1,0 +1,34 @@
+{
+  "tests" : [
+    {"suite" : "Server", "test_group" : "Server", "value" : 20, "tests" :
+      [
+        "is_server_threaded", 
+        "increment_test_two_users"
+      ]
+    }, 
+    {"suite" : "Locks", "test_group" : "Locks", "value" : 40, "tests" :
+      [
+        "add_player", 
+        "add_player_score", 
+        "get_player_plays", 
+        "get_player_high_score", 
+        "get_best_player", 
+        "get_num_players", 
+        "get_highest_score", 
+        "get_total_plays"
+      ]
+    }, 
+    {"suite" : "Conditions", "test_group" : "Conditions", "value" : 20, "tests" :
+      [
+        "add_player", 
+        "add_player_score", 
+        "get_player_plays", 
+        "get_player_high_score", 
+        "get_best_player", 
+        "get_num_players", 
+        "get_highest_score", 
+        "get_total_plays"
+      ]
+    }
+  ]
+}
