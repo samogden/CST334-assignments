@@ -187,7 +187,7 @@ char* exec_request(char** args) {
     sprintf(
       response,
       "%d",
-      do_slow_thing(atoi(args[1]))
+      do_slow_thing((float)atoi(args[1]))
     );
 
 
