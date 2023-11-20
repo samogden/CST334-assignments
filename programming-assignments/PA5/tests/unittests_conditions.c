@@ -160,7 +160,6 @@ Test(Conditions, add_player_score, .timeout=6*TIME_DELAY) {
 
   // Check to make sure that the delay time is bigger than the time delay, so we actually locked.
   // Note that we don't check an upper limit since that is enforced by out timeout.
-  log_debug("\n");
   cr_assert(elapsed_time >= 3*TIME_DELAY);
 }
 
