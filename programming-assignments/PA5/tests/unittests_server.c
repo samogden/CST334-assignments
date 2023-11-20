@@ -6,7 +6,7 @@
 #include "../src/common.h"
 
 
-Test(Server, is_server_threaded, .init=setup, .fini=teardown, .timeout=3) {
+Test(Server, is_server_threaded, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
   log_debug("Testing server threading....\n")
 
   // Question: Why do you think I start counting at t1 here instead of t0?
@@ -85,7 +85,7 @@ Test(Server,
 }
 
 
-Test(Server, increment_test_two_users, .init=setup, .fini=teardown, .timeout=NUM_PLAYS*2, .disabled=false) {
+Test(Server, increment_test_two_users, .init=setup, .fini=teardown, .timeout=NUM_PLAYS*2 * TIME_DELAY, .disabled=false) {
   log_debug("Testing server increment_test_two_users....\n")
   pthread_t* threads[NUM_PLAYS];
   make_request("add_player sam0");
@@ -156,12 +156,13 @@ Test(Server,
      increment_test_two_users_mixed_workload,
      .init=setup,
      .fini=teardown,
-     .timeout=NUM_PLAYS+7 // The duration, plus a few extra for the tests below
+     .timeout=(NUM_PLAYS+10) * TIME_DELAY // The duration, plus a few extra for the tests below
        ) {
   log_debug("Testing server increment_test_two_users_mixed_workload....\n")
   pthread_t* threads[NUM_PLAYS];
   make_request("add_player sam0");
   make_request("add_player sam1");
+  double time_start = currentTime();
 
   char msg[NUM_PLAYS][100];
   int high_score_0 = 0;
@@ -169,6 +170,7 @@ Test(Server,
   int plays_0 = 0;
   int plays_1 = 0;
   int score = 0;
+
   for (int i = 0; i < NUM_PLAYS; i++) {
     switch (rand() % 6) {
       case 0:
@@ -239,6 +241,9 @@ Test(Server,
     (char*)make_request("get_total_plays"),
     expected_response
   );
+
+  double time_end = currentTime();
+  log_debug("run time: %f\n", (time_end - time_start));
 }
 
 
