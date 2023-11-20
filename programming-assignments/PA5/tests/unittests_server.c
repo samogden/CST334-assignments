@@ -5,7 +5,6 @@
 #include "../src/server.h"
 #include "../src/common.h"
 
-#define NUM_PLAYS 100
 
 Test(Server, is_server_threaded, .init=setup, .fini=teardown, .timeout=3) {
   log_debug("Testing server threading....\n")

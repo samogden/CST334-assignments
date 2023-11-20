@@ -5,6 +5,8 @@
 
 #include <time.h>
 #include <errno.h>
+#include <stdint.h>
+#include "sys/time.h"
 
 #include "common.h"
 
@@ -29,4 +31,12 @@ int msleep(long msec)
     } while (res && errno == EINTR);
 
     return res;
+}
+
+double currentTime() {
+  struct timeval time;
+  gettimeofday(&time, NULL);
+  int64_t s1 = (int64_t)(time.tv_sec) * 1000;
+  int64_t s2 = (time.tv_usec / 1000);
+  return (s1 + s2) / 1000.0;
 }
