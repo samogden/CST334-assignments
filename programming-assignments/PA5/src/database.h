@@ -33,7 +33,7 @@ PlayerDatabase init_db();
 
 
 // Setting
-int do_slow_thing(int how_slow);
+int do_slow_thing(float how_slow);
 
 
 int _add_player(PlayerDatabase* db, char* player_name);

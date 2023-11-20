@@ -40,7 +40,7 @@ DatabaseEntry* get_player(PlayerDatabase db, char* player_name) {
   return NULL;
 }
 
-int do_slow_thing(int how_slow) {
+int do_slow_thing(float how_slow) {
   // Question: What am I using this function for?  Which unit test is it most associated with?
   fsleep(how_slow);
   return how_slow;
