@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "server.h"
+#include "common.h"
 
 // Initialization function for the database
 PlayerDatabase init_db() {
@@ -41,7 +42,7 @@ DatabaseEntry* get_player(PlayerDatabase db, char* player_name) {
 
 int do_slow_thing(int how_slow) {
   // Question: What am I using this function for?  Which unit test is it most associated with?
-  sleep(how_slow);
+  fsleep(how_slow);
   return how_slow;
 }
 

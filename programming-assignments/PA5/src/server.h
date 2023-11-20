@@ -18,6 +18,8 @@
 #include <netdb.h>
 #include <stdbool.h>
 
+#include "common.h"
+
 #define MAX_MESSAGE_LENGTH 256
 #define MAX_ARGS 16
 #define MAX_STR_LENGTH 32
@@ -26,10 +28,6 @@
 #define PORT "5005"
 //bool keep_server_running = true;
 
-
-#define log_debug(...) fprintf(stderr, "DEBUG:"); fprintf(stderr, __VA_ARGS__);
-#define log_info(...)  fprintf(stderr, "INFO:");  fprintf(stderr, __VA_ARGS__);
-#define log_error(...) fprintf(stderr, "ERROR:"); fprintf(stderr, __VA_ARGS__);
 
 extern pthread_t server_thread;
 
@@ -43,9 +41,6 @@ char* exec_request(char** args);
 
 void* make_request(void* msg);
 pthread_t* make_request_async(void* msg);
-
-#define SERVERPORT "5005"  // The port the server will be listening on.
-#define SERVERHOST "localhost"  // Assume localhost for now
 
 
 #endif //PA5_SERVER_H

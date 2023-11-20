@@ -3,6 +3,7 @@
 #include "../src/student_code.h"
 
 #include "../src/server.h"
+#include "../src/common.h"
 
 #define NUM_PLAYS 100
 

@@ -12,8 +12,6 @@
 #define MAX_PLAYERS 64
 #define MAX_CONCURRENT_READERS 4
 
-#define TIME_DELAY 1
-
 typedef struct DatabaseEntry {
   char player_name[MAX_STRING_LENGTH];
   int num_plays;

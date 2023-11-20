@@ -6,6 +6,7 @@
 
 #include "../src/database.h"
 #include "../src/server.h"
+#include "../src/common.h"
 
 typedef struct conds_args_t {
   int delay;
