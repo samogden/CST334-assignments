@@ -32,5 +32,10 @@
         "get_total_plays"
       ]
     }
+    {"suite" : "Server", "test_group" : "Server-EC", "value" : 5, "tests" :
+      [
+        "increment_test_two_users_mixed_workload"
+      ]
+    }, 
   ]
 }
