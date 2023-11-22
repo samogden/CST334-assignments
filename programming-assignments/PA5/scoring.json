@@ -4,8 +4,7 @@
       [
         "is_server_threaded", 
         "increment_test",
-        "increment_test_two_users",
-        "increment_test_two_users_mixed_workload"
+        "increment_test_two_users"
       ]
     }, 
     {"suite" : "Locks", "test_group" : "Locks", "value" : 40, "tests" :
@@ -32,7 +31,7 @@
         "get_total_plays"
       ]
     },
-    {"suite" : "Server-EC", "test_group" : "Server-EC", "value" : 5, "tests" :
+    {"suite" : "Server", "test_group" : "Server-EC", "value" : 5, "tests" :
       [
         "increment_test_two_users_mixed_workload"
       ]
