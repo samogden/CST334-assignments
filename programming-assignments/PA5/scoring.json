@@ -3,7 +3,9 @@
     {"suite" : "Server", "test_group" : "Server", "value" : 20, "tests" :
       [
         "is_server_threaded", 
-        "increment_test_two_users"
+        "increment_test",
+        "increment_test_two_users",
+        "increment_test_two_users_mixed_workload"
       ]
     }, 
     {"suite" : "Locks", "test_group" : "Locks", "value" : 40, "tests" :
