@@ -57,6 +57,21 @@ As a hint, both of these will likely use a recursive approach.
 
 ### Functions you'll be writing
 
+```c
+
+Expression* parse_expression(Tokenizer* t); // 20 points
+Numeral* parse_numeral(Tokenizer* t); // 15 points
+Operator* parse_operator(Tokenizer* t); // 15 points
+
+EvaluationResult evaluate_expression(Expression e); // 10 points
+EvaluationResult evaluate_operator(Operator o, Expression left, Expression right); // 10 points
+EvaluationResult evaluate_numeral(Numeral n); // 10 points
+
+```
+
+Note: some of these functions rely on earlier functions to be written before they can pass any tests.
+
+
 ### Getting started
 
 Setting up this project is very similar to the [previous programming assignments](../), so please check those out if you have questions!
