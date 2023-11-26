@@ -5,7 +5,7 @@
 #include "time.h"
 
 char* generate_random_identifier(int length) {
-  char* str = calloc(length+1, sizeof(char));
+  char* str = calloc(length + 1, sizeof(char));
   for (int i = 0; i < length; i++) {
     str[i] = rand() % ('z' - 'a');
     if (rand() % 2 == 0) {
@@ -17,14 +17,7 @@ char* generate_random_identifier(int length) {
   return str;
 }
 
-Test(
-  Numeral,
-  parse_numeral__literal,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Numeral, parse_numeral__literal, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   for (int i = 0; i < NUM_TEST_REPEATS; i++) {
     int val = rand();
@@ -51,14 +44,7 @@ Test(
   }
 }
 
-Test(
-  Numeral,
-  parse_numeral__multiple_inputs,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Numeral, parse_numeral__multiple_inputs, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   char test_str[MAX_STR_LENGTH];
   int vals[NUM_TEST_REPEATS];
@@ -86,14 +72,7 @@ Test(
   cr_assert(is_done(t));
 }
 
-Test(
-  Numeral,
-  parse_numeral__variable,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Numeral, parse_numeral__variable, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   for (int i = 0; i < NUM_TEST_REPEATS; i++) {
     // Generate a random identifier that contains just alpha characters
@@ -117,14 +96,7 @@ Test(
 }
 
 
-Test(
-  Numeral,
-  parse_numeral__invalid,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Numeral, parse_numeral__invalid, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   for (int i = 0; i < NUM_TEST_REPEATS; i++) {
     int val = rand();
@@ -145,7 +117,7 @@ Test(
      * 2. A tokenizer that hasn't moved forward at all
     */
     cr_assert_null(n);
-    cr_assert( ! is_done(t));
+    cr_assert(!is_done(t));
   }
 
   for (int i = 0; i < NUM_TEST_REPEATS; i++) {
@@ -167,7 +139,7 @@ Test(
      * 2. A tokenizer that hasn't moved forward at all
     */
     cr_assert_null(n);
-    cr_assert( ! is_done(t));
+    cr_assert(!is_done(t));
   }
 }
 

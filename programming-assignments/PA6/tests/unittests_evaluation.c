@@ -5,14 +5,7 @@
 #include "time.h"
 
 
-Test(
-  Evaluation,
-  evaluate__numeral_simple,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Evaluation, evaluate__numeral_simple, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing
   char* test_str = "1";
@@ -25,14 +18,7 @@ Test(
 }
 
 
-Test(
-  Numeral,
-  evaluate__numeral_multiple,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Numeral, evaluate__numeral_multiple, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   for (int i = 0; i < NUM_TEST_REPEATS; i++) {
     int val = rand();
@@ -54,14 +40,7 @@ Test(
 }
 
 
-Test(
-  Evaluation,
-  evaluate__expression_numeral,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Evaluation, evaluate__expression_numeral, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing
   char* test_str = "1";
@@ -73,14 +52,7 @@ Test(
   cr_assert_eq(result.val, 1);
 }
 
-Test(
-  Evaluation,
-  evaluate__expression__addition,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Evaluation, evaluate__expression__addition, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing
   char* test_str = "( 1 + 2 )";
@@ -91,14 +63,8 @@ Test(
   cr_assert_eq(result.eval_type, eval_value);
   cr_assert_eq(result.val, 3);
 }
-Test(
-  Evaluation,
-  evaluate__expression__subtraction,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+
+Test(Evaluation, evaluate__expression__subtraction, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing
   char* test_str = "( 1 - 2 )";
@@ -109,14 +75,8 @@ Test(
   cr_assert_eq(result.eval_type, eval_value);
   cr_assert_eq(result.val, -1);
 }
-Test(
-  Evaluation,
-  evaluate__expression__multiplication,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+
+Test(Evaluation, evaluate__expression__multiplication, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing
   char* test_str = "( 1 * 2 )";
@@ -128,14 +88,7 @@ Test(
   cr_assert_eq(result.val, 2);
 }
 
-Test(
-  Evaluation,
-  evaluate__expression__division,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Evaluation, evaluate__expression__division, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing
   char* test_str = "( 1 / 2 )";
@@ -147,14 +100,7 @@ Test(
   cr_assert_eq(result.val, 0);
 }
 
-Test(
-  Evaluation,
-  evaluate__expression__division__rounding,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Evaluation, evaluate__expression__division__rounding, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing
   char* test_str = "( 2 / 2 )";
@@ -166,14 +112,7 @@ Test(
   cr_assert_eq(result.val, 1);
 }
 
-Test(
-  Evaluation,
-  evaluate__expression__err_dividebyzero,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Evaluation, evaluate__expression__err_dividebyzero, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing
   char* test_str = "( 1 / 0 )";
@@ -186,14 +125,7 @@ Test(
 }
 
 
-Test(
-  Evaluation,
-  evaluate__expression_complex,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Evaluation, evaluate__expression_complex, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing
   char* test_str = "( 1 + ( ( 2 * 3 ) - ( 3 / 1 ) ) )";
@@ -205,14 +137,7 @@ Test(
   cr_assert_eq(result.val, 4);
 }
 
-Test(
-  Evaluation,
-  evaluate__expression_complex_error,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Evaluation, evaluate__expression_complex_error, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing
   char* test_str = "( 1 + ( ( 2 * 3 ) - ( 3 / ( 1 - 1 ) ) ) )";

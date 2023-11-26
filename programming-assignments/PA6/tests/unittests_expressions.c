@@ -5,14 +5,7 @@
 #include "time.h"
 
 
-Test(
-  Expressions,
-  parse_expression__simple,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Expressions, parse_expression__simple, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   char* test_str = "1";
 
@@ -48,14 +41,7 @@ Test(
 }
 
 
-Test(
-  Expressions,
-  parse_expression__addition_literal,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Expressions, parse_expression__addition_literal, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   char* test_str = "( 1 + 2 )";
 

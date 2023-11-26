@@ -59,7 +59,10 @@ As a hint, both of these will likely use a recursive approach.
 
 ```c
 
-Expression* parse_expression(Tokenizer* t); // 20 points
+// Note: You don't need to write this function, but it needs to work
+Expression* parse(char* str_to_parse); // 5 points
+
+Expression* parse_expression(Tokenizer* t); // 15 points
 Numeral* parse_numeral(Tokenizer* t); // 15 points
 Operator* parse_operator(Tokenizer* t); // 15 points
 

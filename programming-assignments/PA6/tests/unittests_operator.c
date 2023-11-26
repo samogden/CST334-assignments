@@ -5,20 +5,13 @@
 #include "time.h"
 
 
-Test(
-  Operator,
-  parse_operator__addition,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Operator, parse_operator__addition, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Tokenize our operator
   Tokenizer t = init__tokenizer("+");
 
   // Parse our operator
-  Operator *o = parse_operator(&t);
+  Operator* o = parse_operator(&t);
 
   /*
    * We should now have two things:
@@ -30,20 +23,13 @@ Test(
   cr_assert(is_done(t));
 }
 
-Test(
-  Operator,
-  parse_operator__subtraction,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Operator, parse_operator__subtraction, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Tokenize our operator
   Tokenizer t = init__tokenizer("-");
 
   // Parse our operator
-  Operator *o = parse_operator(&t);
+  Operator* o = parse_operator(&t);
 
   /*
    * We should now have two things:
@@ -56,20 +42,13 @@ Test(
 }
 
 
-Test(
-  Operator,
-  parse_operator__multiplication,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Operator, parse_operator__multiplication, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Tokenize our operator
   Tokenizer t = init__tokenizer("*");
 
   // Parse our operator
-  Operator *o = parse_operator(&t);
+  Operator* o = parse_operator(&t);
 
   /*
    * We should now have two things:
@@ -81,20 +60,13 @@ Test(
   cr_assert(is_done(t));
 }
 
-Test(
-  Operator,
-  parse_operator__division,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Operator, parse_operator__division, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Tokenize our operator
   Tokenizer t = init__tokenizer("/");
 
   // Parse our operator
-  Operator *o = parse_operator(&t);
+  Operator* o = parse_operator(&t);
 
   /*
    * We should now have two things:
@@ -106,21 +78,14 @@ Test(
   cr_assert(is_done(t));
 }
 
-Test(
-  Operator,
-  parse_operator__invalid1,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Operator, parse_operator__invalid1, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
 
   for (int i = 0; i < NUM_TEST_REPEATS; i++) {
     // Pick a random character that is not one of our known operators
     char c;
     do {
-      c = (rand() % (1<<sizeof(char))) + 1;
+      c = (rand() % (1 << sizeof(char))) + 1;
     } while (c == '+' || c == '-' || c == '*' || c == '/');
 
     // Create a test string using our random character
@@ -131,7 +96,7 @@ Test(
     Tokenizer t = init__tokenizer(test_str);
 
     // Parse our operator
-    Operator *o = parse_operator(&t);
+    Operator* o = parse_operator(&t);
 
     /*
      * We should now have two things:
@@ -144,14 +109,7 @@ Test(
   }
 }
 
-Test(
-  Operator,
-  parse_operator__invalid2,
-  .init=setup,
-  .fini=teardown,
-  .timeout=3,
-  .disabled=false
-    ) {
+Test(Operator, parse_operator__invalid2, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   char valid_operators[] = {'+', '-', '*', '/'};
 
@@ -159,7 +117,7 @@ Test(
     // Pick a random character that is not one of our known operators
     char c;
     do {
-      c = (rand() % (1<<sizeof(char))) + 1;
+      c = (rand() % (1 << sizeof(char))) + 1;
     } while (c == '+' || c == '-' || c == '*' || c == '/');
 
     // Create a test string using our random character
@@ -167,7 +125,7 @@ Test(
     sprintf(
       test_str,
       "%c%c",
-      valid_operators[rand()%4],
+      valid_operators[rand() % 4],
       c
     );
 
@@ -175,7 +133,7 @@ Test(
     Tokenizer t = init__tokenizer(test_str);
 
     // Parse our operator
-    Operator *o = parse_operator(&t);
+    Operator* o = parse_operator(&t);
 
     /*
      * We should now have two things:
