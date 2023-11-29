@@ -13,7 +13,7 @@ To do this we'll be implementing the below grammar:
 <Expression> -> <Numeral> | ( <Expression> <Operator> <Expression> )
 <Numeral> -> <Literal> | <Variable>
 <Operator> -> + | - | * | /
-<Literal> -> [1-9][0-9]*
+<Literal> -> [0-9][0-9]*
 <Variable> -> [a-zA-Z]+
 ```
 
