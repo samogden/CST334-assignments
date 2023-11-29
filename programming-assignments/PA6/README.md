@@ -10,7 +10,7 @@ Your mission is to set it up so it can do two main things
 To do this we'll be implementing the below grammar:
 
 ```
-<Expression> -> <Numeral> | ( <Expression> <Operator> <Expression> )
+<Expression> ::= <Numeral> | ( <Expression> <Operator> <Expression> )
 <Numeral> ::= <Literal> | <Variable>
 <Operator> ::= + | - | * | /
 <Literal> ::= [1-9][0-9]*
