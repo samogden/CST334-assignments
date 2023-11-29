@@ -9,12 +9,12 @@ Your mission is to set it up so it can do two main things
 
 To do this we'll be implementing the below grammar:
 
-```shell
-<Expression> -> <Numeral> | ( <Expression> <Operator> <Expression> )
-<Numeral> -> <Literal> | <Variable>
-<Operator> -> + | - | * | /
+```
+<Expression> ::= <Numeral> | ( <Expression> <Operator> <Expression> )
+<Numeral> ::= <Literal> | <Variable>
+<Operator> ::= + | - | * | /
 <Literal> -> [0-9][0-9]*
-<Variable> -> [a-zA-Z]+
+<Variable> ::= [a-zA-Z]+
 ```
 
 This grammar will accept equations that look like `( 1 + 1 )`.
