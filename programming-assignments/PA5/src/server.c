@@ -110,7 +110,7 @@ void* client_handler(void* arg) {
 
   char* output_buffer = malloc(MAX_MESSAGE_LENGTH+1);
   memset(output_buffer, 0, MAX_MESSAGE_LENGTH+1);
-  memcpy(output_buffer, response, MAX_MESSAGE_LENGTH+1);
+  memcpy(output_buffer, response, MAX_MESSAGE_LENGTH);
 
   // We can now send it back.
   ssize_t num_bytes_sent = send(client_socket_fd, output_buffer, bytes_received+1, 0);
@@ -121,6 +121,9 @@ void* client_handler(void* arg) {
 
 //  log_info("Closing client (%d)\n----------------\n", client_socket_fd);
 
+  free (input_buffer);
+  free(output_buffer);
+  free(response);
   return NULL;
 }
 
@@ -219,6 +222,7 @@ void* make_request(void* msg) {
   recv(sockfd, buffer, sizeof(buffer), 0);
 
   close(sockfd);
+  free(buffer);
 
   return buffer;
 }
