@@ -2,8 +2,8 @@
 // Created by Sam Ogden on 11/20/23.
 //
 
-#ifndef PA5_COMMON_H
-#define PA5_COMMON_H
+#ifndef COMMON_H
+#define COMMON_H
 
 #include "stdlib.h"
 #include "stdio.h"
@@ -28,4 +28,4 @@ bool is_str_alpha(char* str);
 bool is_str_num(char* str);
 bool is_str_alphanum(char* str);
 
-#endif //PA5_COMMON_H
+#endif //COMMON_H
