@@ -156,7 +156,7 @@ Test(Server,
      increment_test_two_users_mixed_workload,
      .init=setup,
      .fini=teardown,
-     .timeout=(NUM_PLAYS+10) * TIME_DELAY // The duration, plus a few extra for the tests below
+     .timeout=(NUM_PLAYS+5) * TIME_DELAY // The duration, plus a few extra for the tests below
        ) {
   log_debug("Testing server increment_test_two_users_mixed_workload....\n")
   pthread_t* threads[NUM_PLAYS];
