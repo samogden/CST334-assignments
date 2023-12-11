@@ -118,7 +118,7 @@ Test(Operator, parse_operator__invalid2, .init=setup, .fini=teardown, .timeout=3
     char c;
     do {
       c = (rand() % (1 << sizeof(char))) + 1;
-    } while (c == '+' || c == '-' || c == '*' || c == '/');
+    } while (c == '+' || c == '-' || c == '*' || c == '/' || c == ' ');
 
     // Create a test string using our random character
     char* test_str = calloc(MAX_IDENTIFIER_LENGTH, sizeof(char));
