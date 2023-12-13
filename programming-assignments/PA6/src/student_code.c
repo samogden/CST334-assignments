@@ -76,7 +76,7 @@ EvaluationResult evaluate_expression(Expression e) {
 EvaluationResult evaluate_operator(Operator o, Expression left, Expression right) {
   EvaluationResult result;
   // todo
-  // Question: What errors might we throw?  What does each mean?
+  // Question: What errors might we throw?  What does each mean?  Hint, look at unit_tests and .h files.
   return result;
 }
 

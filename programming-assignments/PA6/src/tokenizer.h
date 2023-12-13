@@ -18,7 +18,10 @@ typedef struct Tokenizer {
 
 Tokenizer init__tokenizer(char* str_in);
 
+// Advance one token (aka "burn a token")
 void next_token(Tokenizer* t);
+
+// Say whether we have tokens left or not
 bool is_done(Tokenizer t);
 
 #endif //PA6_TOKENIZER_H
