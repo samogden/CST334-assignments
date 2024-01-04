@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-g -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/
+CFLAGS=-g -Wall -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -lcriterion
 
 # Source files and object files
 SRCS = $(wildcard src/*.c)
@@ -24,6 +24,10 @@ unit_tests: unit_tests.c bin $(OBJS) $(TEST)
 debug: debug.c bin $(OBJS) $(TEST)
 	$(CC) $(CFLAGS) debug.c -o $@ $(OBJS)
 
+# Rule to build the calculator executable
+calculator: calculator.c bin $(OBJS) $(TEST)
+	$(CC) $(CFLAGS) calculator.c -o $@ $(OBJS)
+
 # Rule to compile .c files into .o files
 bin/%.o: src/%.c $(HEADERS) $(TEST)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -33,7 +37,7 @@ grade:
 
 # Clean rule to remove object files and the executable
 clean:
-	rm -rf bin unit_tests debug
+	rm -rf bin unit_tests debug calculator
 
 bin:
 	mkdir -p bin

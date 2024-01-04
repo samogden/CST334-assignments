@@ -1,9 +1,5 @@
-//
-// Created by Sam Ogden on 10/14/23.
-//
-
-#ifndef PA4_DEFINES_H
-#define PA4_DEFINES_H
+#ifndef DEFINES_H
+#define DEFINES_H
 
 #include "stdint.h"
 #include "stdbool.h"
@@ -67,6 +63,4 @@ typedef PageTableEntry PageDirectoryEntry;
 typedef Page PageTableChunk;
 
 
-
-
-#endif //PA4_DEFINES_H
+#endif //DEFINES_H

@@ -2,8 +2,8 @@
 // Created by Sam Ogden on 11/24/23.
 //
 
-#ifndef PA6_TOKENIZER_H
-#define PA6_TOKENIZER_H
+#ifndef TOKENIZER_H
+#define TOKENIZER_H
 
 #include "stdlib.h"
 #include "stdbool.h"
@@ -24,4 +24,4 @@ void next_token(Tokenizer* t);
 // Say whether we have tokens left or not
 bool is_done(Tokenizer t);
 
-#endif //PA6_TOKENIZER_H
+#endif //TOKENIZER_H

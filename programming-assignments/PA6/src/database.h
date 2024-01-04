@@ -2,8 +2,8 @@
 // Created by Sam Ogden on 10/30/23.
 //
 
-#ifndef PA5_DATABASE_H
-#define PA5_DATABASE_H
+#ifndef DATABASE_H
+#define DATABASE_H
 
 //#include "student_code.h"
 #include <pthread.h>
@@ -57,15 +57,4 @@ int _get_total_plays(PlayerDatabase db);
 void pass_to_client_handler(void* arg);
 
 
-#endif //PA5_DATABASE_H
-
-
-/*
- * Set this up so the server has a number of worker threads
- *  q: Ask how many worker threads make sense
- * Have a condition variable to control how many threads we run
- * Have students write the threading start
- * And then we return the value so they have to use join
- *    Cycle through the threads we have and check if they are still running or not
- *
- */
+#endif //DATABASE_H

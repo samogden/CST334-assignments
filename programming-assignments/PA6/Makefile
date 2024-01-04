@@ -24,10 +24,6 @@ unit_tests: unit_tests.c bin $(OBJS) $(TEST)
 debug: debug.c bin $(OBJS) $(TEST)
 	$(CC) $(CFLAGS) debug.c -o $@ $(OBJS)
 
-# Rule to build the calculator executable
-calculator: calculator.c bin $(OBJS) $(TEST)
-	$(CC) $(CFLAGS) calculator.c -o $@ $(OBJS)
-
 # Rule to compile .c files into .o files
 bin/%.o: src/%.c $(HEADERS) $(TEST)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -37,7 +33,7 @@ grade:
 
 # Clean rule to remove object files and the executable
 clean:
-	rm -rf bin unit_tests debug calculator
+	rm -rf bin unit_tests debug
 
 bin:
 	mkdir -p bin

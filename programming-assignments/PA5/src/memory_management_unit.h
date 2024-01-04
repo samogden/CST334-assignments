@@ -1,9 +1,5 @@
-//
-// Created by Sam Ogden on 10/22/23.
-//
-
-#ifndef PA4_MEMORY_MANAGEMENT_UNIT_H
-#define PA4_MEMORY_MANAGEMENT_UNIT_H
+#ifndef MEMORY_MANAGEMENT_UNIT_H
+#define MEMORY_MANAGEMENT_UNIT_H
 
 #include "defines.h"
 #include "stdlib.h"
@@ -31,4 +27,4 @@ AddressMask get_mask(unsigned int num_bits);
 AddressMask single_bit_mask(unsigned int bit_to_mask);
 bool is_bit_set(PageTableEntry pte, unsigned int bit_number);
 
-#endif //PA4_MEMORY_MANAGEMENT_UNIT_H
+#endif //MEMORY_MANAGEMENT_UNIT_H

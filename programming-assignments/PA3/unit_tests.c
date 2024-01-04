@@ -5,12 +5,11 @@
 
 #include <criterion/criterion.h>
 
-#include "tests/unittests_functions.c"
-#include "tests/unittests_alloc.c"
-#include "tests/unittests_free.c"
-
-
-TestSuite(Functions, .disabled=false);
-TestSuite(Alloc, .disabled=false);
-TestSuite(Free, .disabled=false);
-
+#include "tests/unittests_helpers.c"
+#include "tests/unittests_fifo.c"
+#include "tests/unittests_priority.c"
+#include "tests/unittests_lifo.c"
+#include "tests/unittests_sjf.c"
+#include "tests/unittests_stcf.c"
+#include "tests/unittests_rr.c"
+#include "tests/unittests_end2end.c"

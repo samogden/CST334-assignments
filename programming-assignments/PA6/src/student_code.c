@@ -5,90 +5,114 @@
 #include <stdio.h>
 
 #include "student_code.h"
-#include "parser.h"
-#include "string.h"
-#include "common.h"
-
+#include "server.h"
+#include <stdint.h>
 
 /*
- * <Expression> -> <Numeral> | ( <Expression> <Operator> <Expression> )
- * <Numeral> -> <Literal> | <Variable>
- * <Operator> -> + | - | * | /
- * <Literal> -> [1-9][0-9]*
- * <Variable> -> [a-zA-Z]+
+ * This is tested by running two requests at the same time for different length of time.
+ * e.g. 2-second and 3-second.  If it takes 5s then they aren't running concurrently
+ *   but if it takes 3 seconds then they are.
+ * Test a wide range of random times.
  */
-
-/**
- * Takes in a tokenizer and produces an expression based on the production rule:
- * <Expression> -> <Numeral> | ( <Expression> <Operator> <Expression> )
- * @param t tokenizer that _should_ contain more tokens
- * @return
- */
-Expression* parse_expression(Tokenizer* t) {
-  // todo
-  //Question: What should we do if the tokenizer is out of tokens?  Be specific and write some code.
-  return NULL;
+void pass_to_client_handler(void* arg) {
+  // todo: Convert this to run multi-threaded
+  client_handler(arg);
 }
 
 /**
- * Takes in a tokenizer and produces an Numeral based on the production rules:
- * <Numeral> -> <Literal> | <Variable>
- * <Literal> -> [1-9][0-9]*
- * <Variable> -> [a-zA-Z]+
- * @param t
- * @return
+ * Using the database lock, make sure that we can safely read, and adjust variables as needed.
+ * Note that this requires checking the number of current readers and writers, and using the appropriate condition variable.
+ * @param db
  */
-Numeral* parse_numeral(Tokenizer* t) {
+void read_lock(PlayerDatabase* db) {
   // todo
-  return NULL;
+  // Question: What variables do we need to check before we know we can safely read?
 }
 
 /**
- * Takes in a tokenizer and produces an Operator based on the production rule:
- * <Operator> -> + | - | * | /
- * Note that while these are literals, they should not be stored as such
- * @param t
- * @return
+ * Release the lock and adjust any variables that are necessary
+ * Note that this requires checking the number of current readers and writers, and using the appropriate condition variable.
+ * @param db
  */
-Operator* parse_operator(Tokenizer* t) {
+void read_unlock(PlayerDatabase* db) {
   // todo
-  return NULL;
+}
+/**
+ * Using the database lock, make sure that we can safely write, and adjust variables as needed.
+ * Note that this requires checking the number of current readers and writers, and using the appropriate condition variable.
+ * @param db
+ */
+void write_lock(PlayerDatabase* db) {
+  // todo
 }
 
 /**
- * Evaluates the expression by accessing the appropriate value, or recursing and passing into the operator evaluation
- * @param e
- * @return
+ * Release the lock and adjust any variables that are necessary
+ * Note that this requires checking the number of current readers and writers, and using the appropriate condition variable.
+ * @param db
  */
-EvaluationResult evaluate_expression(Expression e) {
-  EvaluationResult result;
+void write_unlock(PlayerDatabase* db) {
   // todo
-  return result;
 }
 
-/**
- * Evaluates the expression by considering what operation and what the values of the passed expressions are
- * @param o
- * @param left
- * @param right
- * @return
- */
-EvaluationResult evaluate_operator(Operator o, Expression left, Expression right) {
-  EvaluationResult result;
-  // todo
-  // Question: What errors might we throw?  What does each mean?  Hint, look at unit_tests and .h files.
-  return result;
+
+// Add a new player
+int add_player(PlayerDatabase* db, char* player_name) {
+  write_lock(db);
+  int return_val = _add_player(db, player_name);
+  write_unlock(db);
+  return return_val;
 }
 
-/**
- * Evaluate a Numeral
- * @param n
- * @return
- */
-EvaluationResult evaluate_numeral(Numeral n) {
-  EvaluationResult result;
-  // todo
-  return result;
+// Update stats for a particular player
+int add_player_score(PlayerDatabase* db, char* player_name, int score) {
+  // Question: Do we realistically need to lock the entire database for this operation?
+  write_lock(db);
+  int return_val = _add_player_score(*db, player_name, score);
+  write_unlock(db);
+  return return_val;
+}
+
+// Get stats for a specific player
+int get_player_plays(PlayerDatabase* db, char* player_name) {
+  read_lock(db);
+  int return_val = _get_player_plays(*db, player_name);
+  read_unlock(db);
+  return return_val;
+}
+
+int get_player_high_score(PlayerDatabase* db, char* player_name) {
+  read_lock(db);
+  int return_val = _get_player_high_score(*db, player_name);
+  read_unlock(db);
+  return return_val;
+}
+
+// Get general statistics
+char* get_best_player(PlayerDatabase* db) {
+  read_lock(db);
+  char* return_val = _get_best_player(*db);
+  read_unlock(db);
+  return return_val;
+}
+int get_num_players(PlayerDatabase* db) {
+  read_lock(db);
+  int return_val = _get_num_players(*db);
+  read_unlock(db);
+  return return_val;
+}
+int get_highest_score(PlayerDatabase* db) {
+  read_lock(db);
+  int return_val = _get_highest_score(*db);
+  read_unlock(db);
+  return return_val;
+}
+
+int get_total_plays(PlayerDatabase* db) {
+  read_lock(db);
+  int return_val = _get_total_plays(*db);
+  read_unlock(db);
+  return return_val;
 }
 
 

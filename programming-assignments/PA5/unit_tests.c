@@ -3,18 +3,11 @@
 //
 
 
-
 #include <criterion/criterion.h>
 
-#include "tests/unittests_locks.c"
-#include "tests/unittests_conditions.c"
-#include "tests/unittests_server.c"
+#include "tests/unittests_functions.c"
+#include "tests/unittests_mmu_pagetable.c"
 
-
-
-#include <pthread.h>
-
-TestSuite(Locks, .disabled=false);
-TestSuite(Conditions, .disabled=false);
-TestSuite(Server, .disabled=false);
+TestSuite(Functions, .disabled=false);
+TestSuite(MMU_PageTable, .disabled=false);
 

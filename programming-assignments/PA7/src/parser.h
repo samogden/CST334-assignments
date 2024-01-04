@@ -2,8 +2,8 @@
 // Created by Sam Ogden on 11/24/23.
 //
 
-#ifndef PA6_PARSER_H
-#define PA6_PARSER_H
+#ifndef PARSER_H
+#define PARSER_H
 
 #include "tokenizer.h"
 
@@ -84,4 +84,4 @@ EvaluationResult evaluate_numeral(Numeral n);
 
 
 
-#endif //PA6_PARSER_H
+#endif //PARSER_H

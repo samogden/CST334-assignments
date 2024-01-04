@@ -2,8 +2,8 @@
 // Created by Sam Ogden on 11/1/23.
 //
 
-#ifndef PA5_SERVER_H
-#define PA5_SERVER_H
+#ifndef SERVER_H
+#define SERVER_H
 
 #include <netinet/in.h>
 #include <stdio.h>
@@ -43,4 +43,4 @@ void* make_request(void* msg);
 pthread_t* make_request_async(void* msg);
 
 
-#endif //PA5_SERVER_H
+#endif //SERVER_H
