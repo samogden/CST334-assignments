@@ -1,78 +1,97 @@
 #ifndef __student_code_h__
 #define __student_code_h__
 
-#include <stdbool.h>
+#include "defines.h"
+#include "memory_management_unit.h"
 
-#define ERR_OUT_OF_MEMORY  (-1)
-#define ERR_BAD_ARGUMENTS  (-2)
-#define ERR_SYSCALL_FAILED (-3)
-#define ERR_CALL_FAILED    (-4)
-#define ERR_UNINITIALIZED   (-5)
-
-// Question: How many bytes is this?
-#define MAX_ARENA_SIZE (0x7FFFFFFF)
-
-extern int statusno;
-
-//Note: size represents the number of bytes available for allocation and does
-//not include the header bytes.
-typedef struct __node_t {
-  size_t size;
-  bool is_free;
-  struct __node_t *fwd;
-  struct __node_t *bwd;
-} node_t;
-
-// Provided functions
-extern int init(size_t size);
-extern int destroy();
-void print_header(node_t *header);
-
-// Functions to write
+/* Page Helpers */
 /**
- * Finds the first available free chunk that is big enough to support the requested size allocation.
- * @param size
- * @param starting_node
+ * Checks whether the given page table entry represents a valid entry or not.  Note that this is done by checking the leading bits.
+ * @param pte
  * @return
  */
-node_t * find_first_free_chunk(size_t size, node_t* starting_node);
+bool is_entry_valid(PageTableEntry pte);
 
 /**
- * Takes in the selected chunk of free memory and prepares it for usage, potentially by splitting it up into smaller pieces.
- * @param node -- the chunk to prepare
- * @param size
- */
-void split_node(node_t* node, size_t size);
-
-/**
- * Given a pointer to an object to free, returns the associated header containing size
- * @param ptr
+ * Checks whether the given page table entry can be read or not.  Note that this is done by checking the leading bits.
+ * @param pte
  * @return
  */
-node_t* get_header(void* ptr);
+bool is_read_enabled(PageTableEntry pte);
 
 /**
- * Given two nodes, coalesces them into a single node, or sets a number of errors as appropriate
- * @param front
- * @param back
- */
-void coalesce_nodes(node_t* front, node_t* back);
-
-// Full functions
-/**
- * Allocates a block of memory of the given size
- * @param size
+ * Checks whether the given page table entry can be written or not.  Note that this is done by checking the leading bits.
+ * @param pte
  * @return
  */
-extern void* mem_alloc(size_t size);
+bool is_write_enabled(PageTableEntry pte);
 
 /**
- * Frees a block of memory pointed to by ptr
- * @param ptr
+ * Checks whether the given page table entry can be read or not.  Note that this is done by checking the leading bits.
+ * @param pte
+ * @return
  */
-extern void mem_free(void *ptr);
+bool is_execute_enabled(PageTableEntry pte);
 
+/* MMU Helpers*/
+/**
+ * Given a page table entry, with metadata bits, remove the metadata bits to leave just the PFN we need to index into the physical memory
+ * @param pte
+ * @return
+ */
+PFN convert_PageTableEntry_to_PFN(PageTableEntry pte); // Removes the extra information
+/**
+ * Search for the next available page frame that we can allocate for a mapped page.
+ * @param m
+ * @return
+ */
+PFN find_free_page(MMU m);
 
+/* Page Table Functions */
+/**
+ * Map a new page into the page page table by finding a free page frame and setting the appropriate metadata.
+ * @param m
+ * @param vpn
+ * @param can_read
+ * @param can_write
+ * @param can_exec
+ */
+PFN map_page__MMU_pagetable(MMU* m, VPN vpn, bool can_read, bool can_write, bool can_exec);
 
+/**
+ * Search the page table for the entry related to the given virtual address.
+ * @param m
+ * @param vpn
+ * @return
+ */
+PageTableEntry get_pagetableentry__MMU_pagetable(MMU m, VirtualAddress vpn);
+
+/* End to End functions that are the same regardless of MMU type */
+/**
+ * Given an MMU and a virtual address search for the corresponding page in physical memory.  Note that checks should be done for permissions.
+ * @param m
+ * @param a
+ * @param for_read
+ * @param for_write
+ * @param for_execute
+ * @return
+ */
+Page* get_page(MMU m, VirtualAddress a, bool for_read, bool for_write, bool for_execute);
+
+/**
+ * Write a byte to the given virtual address
+ * @param m
+ * @param va
+ * @param val
+ */
+void write_byte(MMU m, VirtualAddress va, char val);
+
+/**
+ * Read a byte from the given virtual address
+ * @param m
+ * @param va
+ * @return
+ */
+char read_byte(MMU m, VirtualAddress va);
 
 #endif

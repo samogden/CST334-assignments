@@ -1,64 +1,60 @@
-#include <fcntl.h>
-#include <stdio.h>
-#include <sys/mman.h>
-#include <unistd.h>
-#include <stdio.h>
 
 #include "student_code.h"
 
-
-
-bool is_entry_valid(PageTableEntry pte) {
-  // todo;
-}
-
-bool is_read_enabled(PageTableEntry pte) {
-  // todo
-  // Question: Implement this function.  Hint: it can take as little as 1 line.
-}
-
-bool is_write_enabled(PageTableEntry pte) {
-  // todo
-}
-
-bool is_execute_enabled(PageTableEntry pte) {
-  // todo
+void finalize_stats(SCHEDULER_STATS* stats) {
+    // todo
 }
 
 
-PFN find_free_page(MMU m) {
-  // todo
+void mark_process_start(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float time_slice) {
+    // todo
 }
 
-PFN convert_PageTableEntry_to_PFN(PageTableEntry pte) {
-  // todo
+void mark_process_run(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float time_slice) {
+    // todo
 }
 
-
-/*
- * Page Table Functions
- */
-PageTableEntry get_pagetableentry__MMU_pagetable(MMU m, VPN vpn) {
-  // todo
+void mark_process_end(SCHEDULER_STATS* stats, PROCESS* p, float end_time, float time_slice_remaining) {
+    // todo
 }
 
-PFN map_page__MMU_pagetable(MMU* m, VPN vpn, bool can_read, bool can_write, bool can_exec) {
-  // todo
+int compare_priority(PROCESS p1, PROCESS p2) {
+    return (int)p2.priority - (int)p1.priority;
 }
 
-
-/*
- * Page Directory Functions
- */
-
-Page* get_page(MMU m, VirtualAddress va, bool for_read, bool for_write, bool for_execute) {
-  // todo
+PROCESS* priority_process_selector(PROCESS_LIST* pl) {
+    PROCESS *p;
+    p = get_minimum(pl, compare_priority);
+    return p;
 }
 
-char read_byte(MMU m, VirtualAddress va) {
-  // todo
+PROCESS* fifo_process_selector(PROCESS_LIST* pl) {
+    PROCESS *p;
+    // todo
+    return p;
 }
 
-void write_byte(MMU m, VirtualAddress va, char val) {
-  // todo
+PROCESS* rr_process_selector(PROCESS_LIST* pl) {
+    PROCESS* p;
+    // todo
+    return p;
 }
+
+PROCESS* sjf_process_selector(PROCESS_LIST* pl) {
+    PROCESS* p;
+    // todo
+    return p;
+}
+
+PROCESS* lifo_process_selector(PROCESS_LIST* pl) {
+    PROCESS* p;
+    // todo
+    return p;
+}
+
+PROCESS* stcf_process_selector(PROCESS_LIST* pl) {
+    PROCESS *p;
+    // todo
+    return p;
+}
+
