@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 8/7/23.
-//
 
 #ifndef CST334_ASSIGNMENTS_SOLUTIONS_PROCESS_H
 #define CST334_ASSIGNMENTS_SOLUTIONS_PROCESS_H

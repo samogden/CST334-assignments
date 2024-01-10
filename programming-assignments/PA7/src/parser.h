@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 11/24/23.
-//
 
 #ifndef PARSER_H
 #define PARSER_H

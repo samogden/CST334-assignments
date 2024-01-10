@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 9/26/23.
-//
 
 #include <criterion/criterion.h>
 

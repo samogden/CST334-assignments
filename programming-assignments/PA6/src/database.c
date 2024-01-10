@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 10/30/23.
-//
 
 #include "database.h"
 #include <unistd.h>

@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 8/28/23.
-//
 
 #include "student_code.h"
 

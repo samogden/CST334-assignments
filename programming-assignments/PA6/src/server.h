@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 11/1/23.
-//
 
 #ifndef SERVER_H
 #define SERVER_H

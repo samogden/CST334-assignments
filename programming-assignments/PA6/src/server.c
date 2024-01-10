@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 11/1/23.
-//
 
 #include "server.h"
 #include "database.h"

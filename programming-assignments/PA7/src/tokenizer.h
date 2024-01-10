@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 11/24/23.
-//
 
 #ifndef TOKENIZER_H
 #define TOKENIZER_H

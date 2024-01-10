@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 8/7/23.
-//
 
 #include "process.h"
 

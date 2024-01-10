@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 11/20/23.
-//
 
 #ifndef COMMON_H
 #define COMMON_H

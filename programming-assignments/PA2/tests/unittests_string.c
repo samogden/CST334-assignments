@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 9/2/23.
-//
 
 #include <criterion/criterion.h>
 #include <limits.h>

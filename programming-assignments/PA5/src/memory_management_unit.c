@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 10/22/23.
-//
 
 #include "memory_management_unit.h"
 #include "student_code.h"

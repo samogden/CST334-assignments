@@ -1,6 +1,3 @@
-//
-// Created by Sam Ogden on 8/8/23.
-//
 
 #ifndef CST334_ASSIGNMENTS_SOLUTIONS_TESTS_H
 #define CST334_ASSIGNMENTS_SOLUTIONS_TESTS_H
