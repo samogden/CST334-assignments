@@ -9,8 +9,6 @@
 #include "../src/process_scheduling.h"
 #include "../src/student_code.h"
 
-TestSuite(SJF, .disabled=false);
-
 Test(SJF, e0) {
     PROCESS *p0 = create_process(1.0f, 0.0f, 0.0f);
     PROCESS_LIST *pl = create_process_list();

@@ -9,8 +9,6 @@
 #include "../src/process_list.h"
 #include "../src/process_scheduling.h"
 
-TestSuite(HelperFunctions, .disabled=false);
-
 Test(HelperFunctions, mark_process_start, .disabled=false) {
     SCHEDULER_STATS* s = get_empty_stats_block();
     PROCESS *p = create_process(1.0f, 0, 0.0f);

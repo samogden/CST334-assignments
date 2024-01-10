@@ -8,8 +8,6 @@
 
 #include "../src/student_code.h"
 
-TestSuite(Processes, .disabled=false);
-
 Test(Processes, fork_and_return_child) {
     int parent_pid = getpid();
     int child_pid = fork_and_return_child();

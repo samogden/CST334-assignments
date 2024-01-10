@@ -13,7 +13,6 @@
 
 #include "../src/student_code.h"
 
-TestSuite(Syscalls, .disabled=false);
 
 Test(Syscalls, open_file_to_read) {
     remove("/tmp/temp.txt");

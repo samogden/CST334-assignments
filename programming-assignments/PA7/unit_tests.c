@@ -1,9 +1,6 @@
-//
-// Created by Sam Ogden on 9/2/23.
-//
-
 #include <criterion/criterion.h>
 #include <signal.h>
+#include "src/common.h"
 #include "time.h"
 
 #include "tests/unittests_numeral.c"
@@ -11,6 +8,12 @@
 #include "tests/unittests_expressions.c"
 #include "tests/unittests_parser.c"
 #include "tests/unittests_evaluation.c"
+
+TestSuite(Numeral, .disabled=false);
+TestSuite(Operator, .disabled=false);
+TestSuite(Expression, .disabled=false);
+TestSuite(Parser, .disabled=false);
+TestSuite(Evaluation, .disabled=false);
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
 // PRE_TEST: occurs after the test initialization, but before the test is run.
@@ -39,10 +42,4 @@ ReportHook(TEST_CRASH)(struct criterion_test_stats *stats) {
       log_error("%d\n", stats->signal);
   }
 }
-
-TestSuite(Numeral, .disabled=false);
-TestSuite(Operator, .disabled=false);
-TestSuite(Expression, .disabled=false);
-TestSuite(Parser, .disabled=false);
-TestSuite(Evaluation, .disabled=false);
 

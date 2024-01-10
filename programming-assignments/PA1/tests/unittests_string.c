@@ -6,9 +6,8 @@
 #include <limits.h>
 #include "../src/student_code.h"
 
-TestSuite(String, .disabled=false);
 
-Test(String, get_str_length) {
+Test(String, get_str_length, .disabled=false) {
     char test_str1[] = "hello";
     char test_str2[] = "out";
     char test_str3[] = "there";
@@ -17,13 +16,13 @@ Test(String, get_str_length) {
     cr_assert(get_str_length(test_str3) == strlen(test_str3));
 }
 
-Test(String, copy_str) {
+Test(String, copy_str, .disabled=false) {
     char test_str[] = "hello";
     cr_assert(test_str != copy_str(test_str));
     cr_assert(strcmp(test_str, copy_str(test_str)) == 0);
 }
 
-Test(String, truncate_str) {
+Test(String, truncate_str, .disabled=false) {
     int canary_before = INT_MAX;
     char test_str[] = "hello";
     int canary_after = INT_MAX;
@@ -43,7 +42,7 @@ Test(String, truncate_str) {
     cr_assert(strcmp(test_str, "hell") == 0);
 }
 
-Test(String, to_uppercase) {
+Test(String, to_uppercase, .disabled=false) {
     char test_str[] = "HeLlo";
     to_uppercase(test_str);
     for (int i = 0; i < strlen(test_str); i++) {
@@ -51,7 +50,7 @@ Test(String, to_uppercase) {
     }
 }
 
-Test(String, to_lowercase) {
+Test(String, to_lowercase, .disabled=false) {
     char test_str[] = "HeLlo";
     to_lowercase(test_str);
     for (int i = 0; i < strlen(test_str); i++) {
@@ -59,12 +58,12 @@ Test(String, to_lowercase) {
     }
 }
 
-Test(String, find_first_index) {
+Test(String, find_first_index, .disabled=false) {
     char test_str[] = "helLo";
     cr_assert(find_first_index(test_str, 'l') == 2);
 }
 
-Test(String, find_last_index) {
+Test(String, find_last_index, .disabled=false) {
     char test_str[] = "helLo";
-    cr_assert(find_last_index(test_str, 'l') == 3);
+    cr_assert(find_last_index(test_str, 'l') == 3); // Note case sensitivity
 }

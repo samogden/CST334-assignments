@@ -137,63 +137,8 @@ int remove_person(Group* group, Person* person_to_remove);          // 1 point
 
 ***NOTE:***
 You will need to change the `struct Group` definition in `student_code.h` to pass the unit tests.
-The `void*` types are placeholders for you to change.
+The `void*` types are placeholders for you to change in the struct in order to get unit tests to pass.
 
-### Processes 
-***(30 points)***
-
-In class we will be learning about process management, where we start and stop processes.
-The core of this will be handled by the OS but when using C there are two main functions that are essential for us to learn how to use well: `fork()` and `exec()`.
-
-`fork()` starts a new process that is, at it's core, exactly the same as our process.
-They have an identical memory layout and the same program state with two differences.
-1. The PID of the child process is different.
-2. The return code of `fork()` in the child is 0, while in the parent process it is the PID of the child process.
-
-`exec()` will replace the existing process with a new one -- it completely erases the memory of the process and resets the PC back to start at the beginning of the process.
-Calling it without `fork`'ing off a new process will lead to the original process being lost, so we need to start a new child process first.
-Using it properly relies on checking error codes, and then getting the response of the child function.
-
-***Question:*** What makes a process distinct from the program code?
-
-#### Specific todos and point values
-
-```c
-int fork_and_return_child();    // 10 points
-int fork_and_return_parent();   // 10 points
-int make_exec_call(int* errno); // 10 points
-```
-
-
-### System Calls 
-***(10 points)***
-
-Below the standard library provided by `stdli.h` is a set of [system calls](https://man7.org/linux/man-pages/man2/syscalls.2.html) that allow direct interfacing with the operating system below.
-This is how programs actually interface with the operating systems -- they make system calls and the operating system takes over to actually do the work.
-Many of the calls are very specific, and often have wrappers of their own.
-***In this section you need to call them manually, not with the wrappers, which I will work to call out whenever possible.***
-
-There are some helpful instructions [here](https://jameshfisher.com/2018/02/19/how-to-syscall-in-c/).
-
-One important thing to remember is that [different platforms use different numbers for system calls](https://stackoverflow.com/a/30291003), meaning that running on your computer and my computer requires you to use the symbolic constant instead of the system call number (e.g. `SYS_gettid` instead of [186](https://www.mail-archive.com/osv-dev@googlegroups.com/msg06206.html)).
-This is part of how to make C more portable.
-
-***Question:***: When we make system calls in C what are we doing?
-
-#### Specific todos and point values
-
-```c
-FILE* open_file_to_read(char* path_to_file);        // 2 point
-FILE* open_file_to_write(char* path_to_file);       // 2 point
-FILE* open_file_to_readwrite(char* path_to_file);   // 1 point
-void write_str_to_fid(char* str, FILE* fid);        // 2 points
-char* read_str_from_fid(FILE* fid);                 // 2 points
-void close_fid(FILE* fid);                          // 1 point
-```
-
-Note that for these functions you ***cannot*** use the "nice" file functions defined in `unistd.h` such as `fopen()` or `flcose()`.
-Instead, you must use the systemcalls `open()` and `close()`.
-The key difference is that functions that start with "f" are generally off limits.
 
 
 ## Conclusion

@@ -6,7 +6,6 @@
 #include <limits.h>
 #include "../src/student_code.h"
 
-TestSuite(String, .disabled=false);
 
 Test(String, get_str_length) {
     char test_str1[] = "hello";
