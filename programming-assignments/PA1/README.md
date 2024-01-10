@@ -1,4 +1,4 @@
-# CST334 Project 1
+# CST334 Project: Intro to C
 
 ## Background
 

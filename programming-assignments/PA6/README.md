@@ -1,4 +1,4 @@
-# CST334 Project 6: Databases and concurrency!
+# CST334 Project: Databases and concurrency!
 
 ## Assignment Description
 

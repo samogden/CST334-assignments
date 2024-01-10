@@ -1,4 +1,4 @@
-# CST334 Project 7: Building a calculator
+# CST334 Project: Building a calculator
 
 ## Assignment Description
 

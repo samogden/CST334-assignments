@@ -1,4 +1,4 @@
-# CST334 Project 4: Memory Allocation
+# CST334 Project: Memory Allocation
 
 ## Assignment Description
 

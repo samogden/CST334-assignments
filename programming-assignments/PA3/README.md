@@ -1,4 +1,4 @@
-# CST334 Project 3: Process Scheduling
+# CST334 Project: Process Scheduling
 
 ## Background
 

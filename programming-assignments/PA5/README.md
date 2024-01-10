@@ -1,4 +1,4 @@
-# CST334 Project 5: Let's build an MMU!
+# CST334 Project: Let's build an MMU!
 
 ## Assignment Description
 
