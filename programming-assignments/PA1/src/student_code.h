@@ -5,6 +5,7 @@
 #define GROUP_MAX_SIZE 50
 
 #include "stdio.h"
+#include "stdbool.h""
 
 // String Functions
 int get_str_length(char* str);
@@ -38,17 +39,22 @@ int free_spaces_in_group(Group group);
 int add_person(Group* group, Person* person_to_add); // Reject if group is full
 int remove_person(Group* group, Person* person_to_remove); // Reject if person isn't in group
 
-//Processes
-int fork_and_return_child();
-int fork_and_return_parent();
-int make_exec_call(char* program_to_call, char** arguments, int* errno);
+/*
+ * Caesar Cipher
+ */
+char shift_left(char input_char, int shift_size);
+char shift_right(char input_char, int shift_size);
+char* encrypt_caesar(char* input_str, int shift_size);
+char* decrypt_caesar(char* input_str, int shift_size);
 
-// System Calls
-FILE* open_file_to_read(char* path_to_file);
-FILE* open_file_to_write(char* path_to_file);
-FILE* open_file_to_readwrite(char* path_to_file);
-void write_str_to_fid(char* str, FILE* fid);
-char* read_str_from_fid(FILE* f, int max_chars);
-void close_fid(FILE* fid);
+/*
+ * General substitution Cipher
+ */
+
+bool is_reversible(int* encryption_key);
+char* decryption_key(int* encryption_key);
+void encrypt_substitution(char* input_str, char* encryption_key);
+void decrypt_substitution(char* input_str, char* decryption_key);
+
 
 #endif //PROJECTS_STUDENT_CODE_H

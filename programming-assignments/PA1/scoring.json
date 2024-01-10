@@ -1,15 +1,5 @@
 {
   "tests" : [
-    {"suite" : "Processes", "test_group" : "fork_and_return_child",   "value" : 10 },
-    {"suite" : "Processes", "test_group" : "fork_and_return_parent",  "value" : 10 },
-    {"suite" : "Processes", "test_group" : "make_exec_call",          "value" : 10,
-      "tests" : [
-        "make_exec_call__fully_qualified_no_args",
-        "make_exec_call__fully_qualified_w_args",
-        "make_exec_call__unqualified_no_args",
-        "make_exec_call__unqualified_w_args"
-      ]
-    },
     {"suite" : "String",    "test_group" : "get_str_length",          "value" : 4 },
     {"suite" : "String",    "test_group" : "copy_str",                "value" : 4 },
     {"suite" : "String",    "test_group" : "truncate_str",            "value" : 3 },
@@ -23,12 +13,6 @@
     {"suite" : "Struct",    "test_group" : "num_people_in_group",     "value" : 2 },
     {"suite" : "Struct",    "test_group" : "free_spaces_in_group",    "value" : 2 },
     {"suite" : "Struct",    "test_group" : "add_person",              "value" : 3 },
-    {"suite" : "Struct",    "test_group" : "remove_person",           "value" : 1 },
-    {"suite" : "Syscalls",  "test_group" : "open_file_to_read",       "value" : 2 },
-    {"suite" : "Syscalls",  "test_group" : "open_file_to_write",      "value" : 2 },
-    {"suite" : "Syscalls",  "test_group" : "open_file_to_readwrite",  "value" : 1 },
-    {"suite" : "Syscalls",  "test_group" : "write_str_to_fid",        "value" : 2 },
-    {"suite" : "Syscalls",  "test_group" : "read_str_from_fid",       "value" : 2 },
-    {"suite" : "Syscalls",  "test_group" : "close_fid",               "value" : 1 }
+    {"suite" : "Struct",    "test_group" : "remove_person",           "value" : 1 }
   ]
 }

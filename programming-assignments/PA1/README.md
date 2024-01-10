@@ -139,6 +139,35 @@ int remove_person(Group* group, Person* person_to_remove);          // 1 point
 You will need to change the `struct Group` definition in `student_code.h` to pass the unit tests.
 The `void*` types are placeholders for you to change in the struct in order to get unit tests to pass.
 
+### Caesar Cipher
+
+C is ideal for low-level bit manipulation, making it perfect for playing around with encryption.
+We're going to be doing this through the [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher), which is one of the earliest known encryption ciphers.
+The core idea of a caesar cipher is that you "shift" the letter of the input by some amount.
+For instance, a caesar cipher with shift of 1 would change 'a' to 'b' and 'z' to 'a'.
+
+Your job is to implement these functions!
+
+```c
+char shift_left(char input_char, int shift_size);
+char shift_right(char input_char, int shift_size);
+void encrypt_caesar(char* input_str, int shift_size);
+void decrypt_caesar(char* input_str, int shift_size);
+```
+
+### General substitution cipher (bonus)
+
+This general substituion cipher will take in a list of shifts and make the appropriate replacements.
+Since it is extra credit details are left to you to figure out, but some unit tests are provided.
+
+```c
+bool is_reversible(int[] encryption_key);
+int decryption_key(int[] encryption_key);
+void encrypt_substitution(char* input_str, int[] encryption_key);
+void decrypt_substitution(char* input_str, int[] decryption_key);
+
+```
+
 
 
 ## Conclusion
