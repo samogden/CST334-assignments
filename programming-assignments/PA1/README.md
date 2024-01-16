@@ -162,9 +162,9 @@ Since it is extra credit details are left to you to figure out, but some unit te
 
 ```c
 bool is_reversible(int[] encryption_key);
-int decryption_key(int[] encryption_key);
+int* get_decryption_key(int[] encryption_key);
 void encrypt_substitution(char* input_str, int[] encryption_key);
-void decrypt_substitution(char* input_str, int[] decryption_key);
+void decrypt_substitution(char* input_str, int[] get_decryption_key);
 
 ```
 

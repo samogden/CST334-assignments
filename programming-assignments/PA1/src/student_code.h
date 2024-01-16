@@ -52,9 +52,9 @@ char* decrypt_caesar(char* input_str, int shift_size);
  */
 
 bool is_reversible(int* encryption_key);
-char* decryption_key(int* encryption_key);
-void encrypt_substitution(char* input_str, char* encryption_key);
-void decrypt_substitution(char* input_str, char* decryption_key);
+int* get_decryption_key(int* encryption_key);
+void encrypt_substitution(char* input_str, int* encryption_key);
+void decrypt_substitution(char* input_str, int* decryption_key);
 
 
 #endif //PROJECTS_STUDENT_CODE_H
