@@ -108,8 +108,6 @@ Test(SubstitutionCipher, decrypt_substitution, .disabled=false) {
   /*
    * Performs the decryption
    */
-
-
   int decryption_key[26];
   memset(decryption_key, 0, sizeof(int));
 

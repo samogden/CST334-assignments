@@ -12,9 +12,9 @@
  * @return The lenght of the inpurt string
  */
 int get_str_length(char* str) {
-    // todo
-    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    return -1;
+  // todo
+  // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
+  return -1;
 }
 
 /**
@@ -23,9 +23,9 @@ int get_str_length(char* str) {
  * @return a new char* that copies the input string str
  */
 char* copy_str(char* str) {
-    // todo
-    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    return NULL;
+  // todo
+  // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
+  return NULL;
 }
 
 /**
@@ -34,8 +34,8 @@ char* copy_str(char* str) {
  * @param new_length The length of the output string.
  */
 void truncate_string(char* str, int new_length) {
-    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    // todo
+  // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
+  // todo
 }
 
 /**
@@ -43,7 +43,7 @@ void truncate_string(char* str, int new_length) {
  * @param str A null-terminated input string
  */
 void to_uppercase(char* str) {
-    // todo
+  // todo
 }
 
 /**
@@ -51,7 +51,7 @@ void to_uppercase(char* str) {
  * @param str A null-terminated input string
  */
 void to_lowercase(char* str) {
-    // todo
+  // todo
 }
 
 /**
@@ -61,9 +61,9 @@ void to_lowercase(char* str) {
  * @return The index of the first usage of the target character in the string
  */
 int find_first_index(char* str, char target) {
-    // todo
-    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    return -1;
+  // todo
+  // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
+  return -1;
 }
 
 /**
@@ -73,9 +73,9 @@ int find_first_index(char* str, char target) {
  * @return The index of the last usage of the target character in the string
  */
 int find_last_index(char* str, char target) {
-    // todo
-    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    return -1;
+  // todo
+  // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
+  return -1;
 }
 
 
@@ -90,7 +90,7 @@ int find_last_index(char* str, char target) {
  * @return A Person struct containing the new person
  */
 Person person_make_new(char* first_name, char* last_name, int age) {
-    // todo
+  // todo
 }
 /**
  * Return a string containing the full name and age of the person in the format "First Last (age)"
@@ -98,9 +98,9 @@ Person person_make_new(char* first_name, char* last_name, int age) {
  * @return A string containing the name of the person
  */
 char* person_to_string(Person person) {
-    // todo
-    // hint: sprintf
-    return NULL;
+  // todo
+  // hint: sprintf
+  return NULL;
 }
 
 /**
@@ -109,7 +109,7 @@ char* person_to_string(Person person) {
  * @return A new Group struct
  */
 Group group_make_new(char* group_name) {
-    // todo
+  // todo
 }
 
 /**
@@ -118,8 +118,8 @@ Group group_make_new(char* group_name) {
  * @return The number of users in the group
  */
 int num_people_in_group(Group group) {
-    // todo
-    return -1;
+  // todo
+  return -1;
 }
 /**
  * Get the number of free spaces remaining in the group
@@ -127,8 +127,8 @@ int num_people_in_group(Group group) {
  * @return The number of free spaces in the group
  */
 int free_spaces_in_group(Group group) {
-    // todo
-    return -1;
+  // todo
+  return -1;
 }
 
 /**
@@ -138,8 +138,8 @@ int free_spaces_in_group(Group group) {
  * @return The number of free spaces after add the new person, -1 if the group was already full
  */
 int add_person(Group* group, Person* person_to_add) {
-    // todo
-    return -1;
+  // todo
+  return -1;
 }
 
 /**
@@ -149,121 +149,105 @@ int add_person(Group* group, Person* person_to_add) {
  * @return The number of people remaining in the group, -1 if the person was not in the group
  */
 int remove_person(Group* group, Person* person_to_remove) {
-    // todo
-    return -1;
+  // todo
+  return -1;
 }
 
-/*************
- * Processes *
- *************/
-/**
- * Fork off a process and return the child's PID *from the child process*
- * @return the PID of the child process
+
+
+/*
+ * Caesar Cipher
  */
-int fork_and_return_child() {
-    // todo
-    /*
-     * Question:
-     * Is this even possible?
-     * If it is then make it so, if it isn't then write a quick paragraph telling me why it isn't possible using the ideas of `fork(...)` discussed in class
-     * Write this up here instead of code and ignore the failing unit-test -- I'll grade based on this answer instead.
-     */
-    return -1;
-}
-
 /**
- * Fork off a process and return the child's PID *from the parent process*
- * @return the PID of the child process
- */
-int fork_and_return_parent() {
-    // todo
-    return -1;
-}
-
-/**
- * Fork a process and then call exec to run the program
- * @param program_to_call Name of the program to call
- * @param arguments Arguments to pass to the program we're calling
- * @param errno Error code if necessary.  Set to 0 for success, 1 for failure to fork, 2 for failure to exec
- * @return Exit code of the program run via the exec call (hint: look for *status)
- */
-int make_exec_call(char* program_to_call, char** arguments, int* errno) {
-    // todo
-    return -1;
-}
-
-/****************
- * System Calls *
- ****************/
-
-/**
- * Open a file to read using the `open(...)` call in C
- * @param path_to_file The null terminated path to the file to open
- * @return A FILE point object
- */
-FILE* open_file_to_read(char* path_to_file) {
-    // todo
-    // hint: https://stackoverflow.com/a/1658517
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-    return NULL;
-}
-
-/**
- * Open a file to write using the `open(...)` call in C
- * @param path_to_file The null terminated path to the file to open
- * @return A FILE point object
- */
-FILE* open_file_to_write(char* path_to_file) {
-    // todo
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-    return NULL;
-}
-
-/**
- * Open a file to read or write using the `open(...)` call in C
- * @param path_to_file The null terminated path to the file to open
- * @return A FILE point object
- */
-FILE* open_file_to_readwrite(char* path_to_file) {
-    // todo
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-    return NULL;
-}
-
-/**
- * Given a FID, write the given string to the fid using the `write(...)` system call
- * @param str A null-terminuated string
- * @param fid A FILE file descriptor
- */
-void write_str_to_fid(char* str, FILE* f) {
-    // todo
-    // hint: https://linuxhint.com/write-system-call-c/
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-}
-
-/**
- * Given a file descriptor, read a newline-terminated string from a file
- * @param f A FILE file descriptor
- * @param max_chars Maximum characters to read
+ * Shift a character 'left' by the shift amount by subtracting the shift size.
+ *  e.g. 'a' with a shift_size = 1 will become 'z'
+ * @param input_char
+ * @param shift_size
  * @return
  */
-char* read_str_from_fid(FILE* f, int max_chars) {
-    // todo
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-    return NULL;
+char shift_left(char input_char, int shift_size) {
+  // todo
+  return 0;
 }
 
 /**
- * Given a file descriptor, close the FID
- * @param f The file descriptor to close using the `close(...)` system call
+ * Shift a character 'right' by the shift amount by subtracting the shift size.
+ *  e.g. 'z' with a shift_size = 1 will become 'a'
+ * @param input_char
+ * @param shift_size
+ * @return
  */
-void close_fid(FILE* f) {
-    // todo
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
+char shift_right(char input_char, int shift_size) {
+  // todo
+  return 0;
 }
+
+/**
+ * Encrypts a string using a given shift.  Note: All characters should be converted to lowercase
+ * @param input_str
+ * @param shift_size
+ * @return
+ */
+char* encrypt_caesar(char* input_str, int shift_size) {
+  // todo
+  return NULL;
+}
+
+/**
+ * Decrypts a string using a given shift.  Note: All characters should be converted to lowercase
+ * @param input_str
+ * @param shift_size
+ * @return
+ */
+char* decrypt_caesar(char* input_str, int shift_size) {
+  // todo
+  return NULL;
+}
+
+/*
+ * General substitution Cipher
+ */
+
+/**
+ * Returns true if a given encryption key has a valid decryption key.
+ * @param encryption_key
+ * @return
+ */
+bool is_reversible(int* encryption_key) {
+  // todo
+  return false;
+}
+
+/**
+ * Generates a decryption key based on the encryption key, if one exists.  Otherwise returns NULL
+ * @param encryption_key
+ * @return
+ */
+int* get_decryption_key(int* encryption_key) {
+  // todo
+  return NULL;
+}
+
+/**
+ * Takes the input string and the encryption key and encrypts the input string in place
+ * @param input_str
+ * @param encryption_key
+ */
+void encrypt_substitution(char* input_str, int* encryption_key) {
+  // todo
+  return;
+}
+
+/**
+ * Takes an encrypted input string and a decryption key and decrypts a string in place
+ * @param input_str
+ * @param decryption_key
+ */
+void decrypt_substitution(char* input_str, int* decryption_key) {
+  // todo
+  return;
+}
+
+
+
+

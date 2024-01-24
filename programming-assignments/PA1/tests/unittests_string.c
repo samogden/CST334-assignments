@@ -62,5 +62,5 @@ Test(String, find_first_index, .disabled=false) {
 
 Test(String, find_last_index, .disabled=false) {
     char test_str[] = "helLo";
-    cr_assert(find_last_index(test_str, 'l') == 3); // Note case sensitivity
+    cr_assert(find_last_index(test_str, 'l') == 3); // Note case insensitivity
 }

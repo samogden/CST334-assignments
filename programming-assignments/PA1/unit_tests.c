@@ -4,6 +4,8 @@
 
 #include "tests/unittests_string.c"
 #include "tests/unittests_struct.c"
+#include "tests/unittests_caesar.c"
+#include "tests/unittests_substitution.c"
 
 
 TestSuite(String, .disabled=false);
