@@ -8,9 +8,9 @@ This means we'll not only be trying out building our own structs, but also will 
 ## Overview
 
 There are four parts to this homework, each worth a different amount of the overall grade.
-These four are [strings](#strings), [system calls](#system-calls), [structs](#structs), and [processes](#processes).
+These four are [strings](#strings), [system calls](#system-calls), [caesar cipher](#caesar-cipher), and [substitution cipher](#general-substitution-cipher-bonus-points).
 
-Note that each of these sections has a few questions at the beginning of them that you should answer for the Programming Assignment #1 Checkpoint on Canvas.
+Note that throughout the code there are a few questions that you should answer for the PA1 checkpoint.
 
 ## Getting started
 
@@ -29,7 +29,7 @@ Then, navigate using your terminal on your local machine to your working directo
 docker run -it -v ${PWD}:/tmp/programming samogden/csumb:cst334
 ```
 
-***Question:*** What are the differences between these commands and the ones for lab1?  What do they mean?
+***Question:*** What are the differences between these commands and the ones for lab1?  What do the differences mean?
 
 
 Once the docker shell starts change to the appropriate directory (e.g. run `cd programming`) and update your github files:
@@ -98,8 +98,6 @@ In this section you should practice using string functions and mimic them on you
 Note that some of these functions (e.g. `copy_str` and `length_of_str`) are available in the c string library, but you should implement your own version of them.
 I will reiterate this in the code itself, and use of these standard functions will result in a 0 for these problems.
 
-***Question:*** How do we know that we've gotten to the end of a c-string?
-
 #### Specific todos and point values
 
 ```c
@@ -119,8 +117,6 @@ Structs in C are contiguous memory objects, where we group together more primati
 They are similar to objects in object-oriented languages, but consist of only the data instead of the associated functions as well.
 With that said, we can also have functions associated with them, albeit with a more verbose usage (i.e. a longer and more explicit set of input parameters).
 In this section we'll practice both designing new structs, but also see how to use them and how to make functions for them.
-
-***Question:*** When thinking about fields in object-oriented programming and fields in c-structs what are the key differences?
 
 #### Specific todos and point values
 

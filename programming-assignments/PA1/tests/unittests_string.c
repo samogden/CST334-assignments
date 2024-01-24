@@ -62,5 +62,6 @@ Test(String, find_first_index, .disabled=false) {
 
 Test(String, find_last_index, .disabled=false) {
     char test_str[] = "helLo";
-    cr_assert(find_last_index(test_str, 'l') == 3); // Note case insensitivity
+    // Question: What is this unit test actually testing?  What implications are there?
+    cr_assert(find_last_index(test_str, 'l') == 3);
 }
