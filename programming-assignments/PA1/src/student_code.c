@@ -101,7 +101,7 @@ Person person_make_new(char* first_name, char* last_name, int age) {
 char* person_to_string(Person person) {
   // todo
   // hint: sprintf
-  return NULL;
+  return "";
 }
 
 /**

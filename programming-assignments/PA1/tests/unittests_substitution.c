@@ -20,7 +20,7 @@ Test(SubstitutionCipher, is_reversible, .disabled=false) {
 
   // But then if two values are the same, it won't work.  Why not?
   encrpytion_key[0] = 0;
-  encrpytion_key[1] = 1;
+  encrpytion_key[1] = 0;
   cr_assert_not(is_reversible(encrpytion_key));
 }
 
