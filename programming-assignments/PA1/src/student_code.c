@@ -26,7 +26,7 @@ int get_str_length(char* str) {
 char* copy_str(char* str) {
   // todo
   // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-  return NULL;
+  return "";
 }
 
 /**
