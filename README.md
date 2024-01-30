@@ -14,7 +14,7 @@ This repository will be used both for in-class work and homework assignments.
 ## Working ahead
 
 Note that while you are welcome to work ahead, programming assignments are not guaranteed to be considered "stable" until they are assigned.
-Therefore, you are welcome to get an early start but make sure you test before you submit assignemnts to ensure they still work.
+Therefore, you are welcome to get an early start but make sure you test before you submit assignments to ensure they still work.
 
 ## Helpful hints
 
