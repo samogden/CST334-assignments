@@ -31,18 +31,6 @@ docker run -it -v ${PWD}:/tmp/programming samogden/csumb:cst334
 
 ***Question:*** What are the differences between these commands and the ones for lab1?  What do the differences mean?
 
-
-Once the docker shell starts change to the appropriate directory (e.g. run `cd programming`) and update your github files:
-```shell
-git stash
-git pull
-git stash pop
-```
-
-Note: these git instructions might give you an error talking about different users.
-This is a side effect of the new docker image I recently pushed (and you pulled).
-Take the steps advised in them in this case, but in future cases you might not want to ignore such warnings.
-
 And then change to the appropriate directory:
 ```shell
 cd /tmp/programming/programming-assignments/PA1
