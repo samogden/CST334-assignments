@@ -173,6 +173,3 @@ void decrypt_substitution(char* input_str, int[] get_decryption_key); // 1 point
 Good luck!
 Remember, don't pour too much time into low-value functions!
 Those are the ones that I expect to be the difficult or less important, but cool nevertheless!
-
-p.s. - due to the timing there isn't an extra credit part to this assignment (as far as I'm aware).  Next time!
-
