@@ -1,54 +1,78 @@
+#ifndef __student_code_h__
+#define __student_code_h__
 
-#ifndef PROJECTS_STUDENT_CODE_H
-#define PROJECTS_STUDENT_CODE_H
+#include <stdbool.h>
 
-#define GROUP_MAX_SIZE 50
+#define ERR_OUT_OF_MEMORY  (-1)
+#define ERR_BAD_ARGUMENTS  (-2)
+#define ERR_SYSCALL_FAILED (-3)
+#define ERR_CALL_FAILED    (-4)
+#define ERR_UNINITIALIZED   (-5)
 
-#include "stdio.h"
+// Question: How many bytes is this?
+#define MAX_ARENA_SIZE (0x7FFFFFFF)
 
-// String Functions
-int get_str_length(char* str);
-char* copy_str(char* str);
-void truncate_string(char* str, int new_length);
-void to_uppercase(char* str);
-void to_lowercase(char* str);
-int find_first_index(char* str, char target);
-int find_last_index(char* str, char target);
+extern int statusno;
 
-// Structs
-typedef struct Person {
-    char first_name[50];
-    char last_name[50];
-    int age;
-} Person;
+//Note: size represents the number of bytes available for allocation and does
+//not include the header bytes.
+typedef struct __node_t {
+  size_t size;
+  bool is_free;
+  struct __node_t *fwd;
+  struct __node_t *bwd;
+} node_t;
 
-typedef struct Group {
-    // We want a group of up to GROUP_MAX_SIZE, with a count of how many people we have
-    void* group_name; // todo: Make a field to name the group called "group_name"
-    void *group_members[GROUP_MAX_SIZE]; // todo: Make a field to store up to GROUP_MAX_SIZE people called "group_members"
-    void* num_members; // todo: Make a field to track how many members we have called "num_members"
-} Group;
+// Provided functions
+extern int init(size_t size);
+extern int destroy();
+void print_header(node_t *header);
 
-Person person_make_new(char* first_name, char* last_name, int age);
-char* person_to_string(Person person);
+// Functions to write
+/**
+ * Finds the first available free chunk that is big enough to support the requested size allocation.
+ * @param size
+ * @param starting_node
+ * @return
+ */
+node_t * find_first_free_chunk(size_t size, node_t* starting_node);
 
-Group group_make_new(char* group_name);
-int num_people_in_group(Group group);
-int free_spaces_in_group(Group group);
-int add_person(Group* group, Person* person_to_add); // Reject if group is full
-int remove_person(Group* group, Person* person_to_remove); // Reject if person isn't in group
+/**
+ * Takes in the selected chunk of free memory and prepares it for usage, potentially by splitting it up into smaller pieces.
+ * @param node -- the chunk to prepare
+ * @param size
+ */
+void split_node(node_t* node, size_t size);
 
-//Processes
-int fork_and_return_child();
-int fork_and_return_parent();
-int make_exec_call(char* program_to_call, char** arguments, int* errno);
+/**
+ * Given a pointer to an object to free, returns the associated header containing size
+ * @param ptr
+ * @return
+ */
+node_t* get_header(void* ptr);
 
-// System Calls
-FILE* open_file_to_read(char* path_to_file);
-FILE* open_file_to_write(char* path_to_file);
-FILE* open_file_to_readwrite(char* path_to_file);
-void write_str_to_fid(char* str, FILE* fid);
-char* read_str_from_fid(FILE* f, int max_chars);
-void close_fid(FILE* fid);
+/**
+ * Given two nodes, coalesces them into a single node, or sets a number of errors as appropriate
+ * @param front
+ * @param back
+ */
+void coalesce_nodes(node_t* front, node_t* back);
 
-#endif //PROJECTS_STUDENT_CODE_H
+// Full functions
+/**
+ * Allocates a block of memory of the given size
+ * @param size
+ * @return
+ */
+extern void* mem_alloc(size_t size);
+
+/**
+ * Frees a block of memory pointed to by ptr
+ * @param ptr
+ */
+extern void mem_free(void *ptr);
+
+
+
+
+#endif

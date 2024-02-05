@@ -2,11 +2,15 @@
 #include <signal.h>
 #include "src/common.h"
 
-#include "tests/unittests_functions.c"
-#include "tests/unittests_mmu_pagetable.c"
+#include "tests/unittests_string.c"
+#include "tests/unittests_struct.c"
+#include "tests/unittests_processes.c"
+#include "tests/unittests_syscalls.c"
 
-TestSuite(Functions, .disabled=false);
-TestSuite(MMU_PageTable, .disabled=false);
+
+TestSuite(Syscalls, .disabled=false);
+TestSuite(String, .disabled=false);
+TestSuite(Processes, .disabled=false);
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
 // PRE_TEST: occurs after the test initialization, but before the test is run.
@@ -35,3 +39,4 @@ ReportHook(TEST_CRASH)(struct criterion_test_stats *stats) {
       log_error("%d\n", stats->signal);
   }
 }
+

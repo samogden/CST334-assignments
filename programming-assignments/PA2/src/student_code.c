@@ -1,269 +1,199 @@
+#include <fcntl.h>
+#include <stdio.h>
+#include <sys/mman.h>
+#include <unistd.h>
 
 #include "student_code.h"
 
+int statusno, _initialized;
 
-/***********
- * Strings *
- ***********/
+node_t *_chunklist;
+void *_arena_start, *_arena_end;
 
-/**
- * This function takes in a c-string and returns it's length.  It **does not** use the strlen(...) function in string.h
- * @param str The string that we will be finding the length of.  It will be null terminated
- * @return The lenght of the inpurt string
- */
-int get_str_length(char* str) {
-    // todo
-    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    return -1;
+
+void print_header(node_t *header){
+  //Note: These printf statements may produce a segmentation fault if the buff
+  //pointer is incorrect, e.g., if buff points to the start of the arena.
+  printf("Header->size: %lu\n", header->size);
+  printf("Header->fwd: %p\n", header->fwd);
+  printf("Header->bwd: %p\n", header->bwd);
+  printf("Header->is_free: %d\n", header->is_free);
 }
 
-/**
- * Returns a pointer to a copy of the original string.  It **does not** use strcpy or any related function (but may use strlen)
- * @param str An input string that is null terminated
- * @return a new char* that copies the input string str
- */
-char* copy_str(char* str) {
+
+int init(size_t size) {
+  if(size > (size_t) MAX_ARENA_SIZE) {
+    return ERR_BAD_ARGUMENTS;
+  }
+
+
+  // Find pagesize and increase allocation to match some multiple a page size
+  // Question: Why is it good to match our allocation to the size of the page?
+  int pagesize = getpagesize();
+
+  if (pagesize <= 0)
+    return ERR_CALL_FAILED;
+
+  //Align to page size
+  if( size % pagesize != 0 ) {
+    // Calculate how much we need to increase to match the size of a page
+    size -= size % pagesize;
+    size += pagesize;
+  }
+
+  // Open up /dev/zero to zero-init our memory.
+  int fd=open("/dev/zero",O_RDWR);
+  if (fd == -1) {
+    return ERR_SYSCALL_FAILED;
+  }
+  // Map memory from /dev/zero using mmap()
+  _arena_start = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+
+  if (_arena_start == MAP_FAILED) {
+    return ERR_SYSCALL_FAILED;
+  }
+
+  _arena_end = _arena_start + size;
+  _initialized = 1;
+
+  _chunklist = _arena_start;
+  _chunklist -> size = size - sizeof(node_t);
+
+  //  mmap sets the initial memory value
+  // to zero so the fwd pointer of the is already null, but
+  // it doesn't hurt to make that clear
+  _chunklist -> fwd = NULL;
+  _chunklist -> bwd = NULL;
+  _chunklist -> is_free = true;
+
+   return size;
+}
+
+int destroy() {
+
+  if (_initialized == 0) {
+    return ERR_UNINITIALIZED; 
+  }
+
+  // Remove arena with munmap()
+  if(munmap(_arena_start, _arena_end - _arena_start) == -1) {
+    return ERR_SYSCALL_FAILED;
+  }
+
+  // Question: Are there memory leaks here?
+
+  // Clean up variables
+  _arena_start = NULL;
+  _arena_end = NULL;
+  _chunklist = NULL;
+  _initialized = 0;
+
+  return 0;
+}
+
+
+node_t * find_first_free_chunk(size_t size, node_t* starting_node) {
+  // todo
+}
+
+void split_node(node_t* node, size_t size) {
+
+  node_t* next = node->fwd;
+
+  if (node->size == size){
+    // Then the node is exactly the right size
     // todo
-    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
+  } else if(node->size - size < sizeof(node_t)){
+    // Then the node is bigger than requested, but too small to split
+    // todo
+  }
+  else {
+    // If the requested memory does not take up the entire free chunk, we need to
+    // to split that chunk and add a new node to the free list.
+
+    // todo
+  }
+
+  // Update header to correct size and state
+  // todo
+}
+
+node_t* get_header(void* ptr) {
+  // todo
+  return NULL;
+}
+
+void coalesce_nodes(node_t* front, node_t* back) {
+  if (front > back) {
+    // Check to make sure they're in the right order
+    // todo
+    return;
+  }
+  if (front == back) {
+    // Check to make sure they aren't the same node
+    // todo
+    return;
+  }
+  if (front == NULL || back == NULL) {
+    // Then one of them is already the end of the list
+    // todo
+    return;
+  }
+  if ( ! (front->is_free && back->is_free)) {
+    // Then one of them isn't free
+    // todo
+    return;
+  }
+  // We want to do two things: skip over the second node and update size.
+  // todo
+}
+
+
+void* mem_alloc(size_t size){
+
+  // Check to make sure we are initialized, and if not set statusno and return NULL;
+  if(_initialized == 0) {
+    // todo
     return NULL;
-}
+  }
 
-/**
- * Truncates a string to a the given length, not including the null terminator.  If the given length is longer than the original string the original string is returned unchanged.
- * @param str A null-terminated input string
- * @param new_length The length of the output string.
- */
-void truncate_string(char* str, int new_length) {
-    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    // todo
-}
+  // Find a free chunk of memory
+  node_t* node = NULL; // todo
 
-/**
- * Converts a given string, str, to all uppercase letters
- * @param str A null-terminated input string
- */
-void to_uppercase(char* str) {
+  // If finding a node returned NULL then we're out of memory
+  if (node == NULL) {
     // todo
-}
-
-/**
- * Converts a given string, str, to all lowercase letters
- * @param str A null-terminated input string
- */
-void to_lowercase(char* str) {
-    // todo
-}
-
-/**
- * Finds the index of the first usage of a target character, starting from 0.  If it doesn't exist return -1
- * @param str A null-terminated input string
- * @param target A character to find in string
- * @return The index of the first usage of the target character in the string
- */
-int find_first_index(char* str, char target) {
-    // todo
-    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    return -1;
-}
-
-/**
- * Finds the index of the last usage of a target character, starting from 0.  If it doesn't exist return -1
- * @param str A null-terminated input string
- * @param target A character to find in string
- * @return The index of the last usage of the target character in the string
- */
-int find_last_index(char* str, char target) {
-    // todo
-    // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-    return -1;
-}
-
-
-/**************
- * Structures *
- **************/
-/**
- * Create a new person object and return the object
- * @param first_name The first name of the new person as a null-terminated string
- * @param last_name The last name of the new person as a null-terminated string
- * @param age The age of the person as an int
- * @return A Person struct containing the new person
- */
-Person person_make_new(char* first_name, char* last_name, int age) {
-    // todo
-}
-/**
- * Return a string containing the full name and age of the person in the format "First Last (age)"
- * @param person The person to get the relevant string for
- * @return A string containing the name of the person
- */
-char* person_to_string(Person person) {
-    // todo
-    // hint: sprintf
     return NULL;
+  }
+
+  // Split node to be the appropriate size, since there's no guarantee a free node is the right size already
+  // todo
+
+  //todo: fix this return to point at the memory we just allocated
+  return NULL;
 }
 
-/**
- * A function to create a new empty group
- * @param group_name A null-terminuated string to name the new group
- * @return A new Group struct
- */
-Group group_make_new(char* group_name) {
+void mem_free(void *ptr){
+
+  if (ptr == NULL){
+    return;
+  }
+
+  if (ptr < _arena_start || ptr > _arena_end){
+    // Then the pointer is outside of the arena
     // todo
+    return;
+  }
+
+  // Step backward from the pointer to look at the node header
+  // todo
+
+  // Free the memory
+  // todo
+
+  // Coalesce together the chunks
+  // todo
+
 }
 
-/**
- * A function to find the total number of people in the group
- * @param group A Group struct that contains some number of people
- * @return The number of users in the group
- */
-int num_people_in_group(Group group) {
-    // todo
-    return -1;
-}
-/**
- * Get the number of free spaces remaining in the group
- * @param group A Group struct that contains some number of people
- * @return The number of free spaces in the group
- */
-int free_spaces_in_group(Group group) {
-    // todo
-    return -1;
-}
 
-/**
- * Add a person to the group if possible and return the total number of free space in the group. Otherwise return -1.
- * @param group A group struct that contains some number of people
- * @param person_to_add The person to add to the group
- * @return The number of free spaces after add the new person, -1 if the group was already full
- */
-int add_person(Group* group, Person* person_to_add) {
-    // todo
-    return -1;
-}
-
-/**
- * Remove a person from the group if they are in the group, otherwise return -1
- * @param group A Group struct that contains some number of people
- * @param person_to_remove A person to remove from the group
- * @return The number of people remaining in the group, -1 if the person was not in the group
- */
-int remove_person(Group* group, Person* person_to_remove) {
-    // todo
-    return -1;
-}
-
-/*************
- * Processes *
- *************/
-/**
- * Fork off a process and return the child's PID *from the child process*
- * @return the PID of the child process
- */
-int fork_and_return_child() {
-    // todo
-    /*
-     * Question:
-     * Is this even possible?
-     * If it is then make it so, if it isn't then write a quick paragraph telling me why it isn't possible using the ideas of `fork(...)` discussed in class
-     * Write this up here instead of code and ignore the failing unit-test -- I'll grade based on this answer instead.
-     */
-    return -1;
-}
-
-/**
- * Fork off a process and return the child's PID *from the parent process*
- * @return the PID of the child process
- */
-int fork_and_return_parent() {
-    // todo
-    return -1;
-}
-
-/**
- * Fork a process and then call exec to run the program
- * @param program_to_call Name of the program to call
- * @param arguments Arguments to pass to the program we're calling
- * @param errno Error code if necessary.  Set to 0 for success, 1 for failure to fork, 2 for failure to exec
- * @return Exit code of the program run via the exec call (hint: look for *status)
- */
-int make_exec_call(char* program_to_call, char** arguments, int* errno) {
-    // todo
-    return -1;
-}
-
-/****************
- * System Calls *
- ****************/
-
-/**
- * Open a file to read using the `open(...)` call in C
- * @param path_to_file The null terminated path to the file to open
- * @return A FILE point object
- */
-FILE* open_file_to_read(char* path_to_file) {
-    // todo
-    // hint: https://stackoverflow.com/a/1658517
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-    return NULL;
-}
-
-/**
- * Open a file to write using the `open(...)` call in C
- * @param path_to_file The null terminated path to the file to open
- * @return A FILE point object
- */
-FILE* open_file_to_write(char* path_to_file) {
-    // todo
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-    return NULL;
-}
-
-/**
- * Open a file to read or write using the `open(...)` call in C
- * @param path_to_file The null terminated path to the file to open
- * @return A FILE point object
- */
-FILE* open_file_to_readwrite(char* path_to_file) {
-    // todo
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-    return NULL;
-}
-
-/**
- * Given a FID, write the given string to the fid using the `write(...)` system call
- * @param str A null-terminuated string
- * @param fid A FILE file descriptor
- */
-void write_str_to_fid(char* str, FILE* f) {
-    // todo
-    // hint: https://linuxhint.com/write-system-call-c/
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-}
-
-/**
- * Given a file descriptor, read a newline-terminated string from a file
- * @param f A FILE file descriptor
- * @param max_chars Maximum characters to read
- * @return
- */
-char* read_str_from_fid(FILE* f, int max_chars) {
-    // todo
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-    return NULL;
-}
-
-/**
- * Given a file descriptor, close the FID
- * @param f The file descriptor to close using the `close(...)` system call
- */
-void close_fid(FILE* f) {
-    // todo
-    // Note: You cannot use `fopen()` for this assignment.  Instead you must use `open(...)` and `fdopen(...)`
-    // Failure to do so will result in a 0 for this function!
-}
