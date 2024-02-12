@@ -85,7 +85,7 @@ Test(Server,
 }
 
 
-Test(Server, increment_test_two_users, .init=setup, .fini=teardown, .timeout=NUM_PLAYS*2 * TIME_DELAY, .disabled=false) {
+Test(Server, increment_test_two_users, .init=setup, .fini=teardown, .timeout=NUM_PLAYS*2*TIME_DELAY, .disabled=false) {
   log_debug("Testing server increment_test_two_users....\n")
   pthread_t* threads[NUM_PLAYS];
   make_request("add_player sam0");
@@ -156,7 +156,7 @@ Test(Server,
      increment_test_two_users_mixed_workload,
      .init=setup,
      .fini=teardown,
-     .timeout=(NUM_PLAYS+5) * TIME_DELAY // The duration, plus a few extra for the tests below
+     .timeout=(NUM_PLAYS+5)*TIME_DELAY // The duration, plus a few extra for the tests below
        ) {
   log_debug("Testing server increment_test_two_users_mixed_workload....\n")
   pthread_t* threads[NUM_PLAYS];
