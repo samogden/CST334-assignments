@@ -14,7 +14,7 @@ TARGET = unit_tests
 
 
 all: clean unit_tests
-	./unit_tests -j1
+	./unit_tests -j1 --timeout 60
 
 # Rule to build the executable
 unit_tests: unit_tests.c bin $(OBJS) $(TEST)
