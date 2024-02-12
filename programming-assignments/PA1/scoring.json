@@ -35,26 +35,7 @@
         "find_last_index"
       ]
     }, 
-    {"suite" : "SubstitutionCipher", "test_group" : "is_reversible", "value" : 4, "tests" :
-      [
-        "is_reversible"
-      ]
-    }, 
-    {"suite" : "SubstitutionCipher", "test_group" : "decryption_key", "value" : 4, "tests" :
-      [
-        "decryption_key"
-      ]
-    }, 
-    {"suite" : "SubstitutionCipher", "test_group" : "encrypt_substitution", "value" : 1, "tests" :
-      [
-        "encrypt_substitution"
-      ]
-    }, 
-    {"suite" : "SubstitutionCipher", "test_group" : "decrypt_substitution", "value" : 1, "tests" :
-      [
-        "decrypt_substitution"
-      ]
-    }, 
+    
     {"suite" : "Struct", "test_group" : "person_make_new", "value" : 5, "tests" :
       [
         "person_make_new"
@@ -65,7 +46,7 @@
         "person_to_string"
       ]
     }, 
-    {"suite" : "Struct", "test_group" : "group_make_new", "value" : 8, "tests" :
+    {"suite" : "Struct", "test_group" : "group_make_new", "value" : 4, "tests" :
       [
         "group_make_new"
       ]
@@ -90,6 +71,7 @@
         "remove_person"
       ]
     }, 
+    
     {"suite" : "CaesarCipher", "test_group" : "shift_left", "value" : 10, "tests" : 
       [
         "shift_left"
@@ -108,6 +90,27 @@
     {"suite" : "CaesarCipher", "test_group" : "decrypt_caesar", "value" : 5, "tests" :
       [
         "decrypt_caesar"
+      ]
+    }, 
+    
+    {"suite" : "SubstitutionCipher", "test_group" : "is_reversible", "value" : 4, "tests" :
+      [
+        "is_reversible"
+      ]
+    }, 
+    {"suite" : "SubstitutionCipher", "test_group" : "decryption_key", "value" : 4, "tests" :
+      [
+        "decryption_key"
+      ]
+    }, 
+    {"suite" : "SubstitutionCipher", "test_group" : "encrypt_substitution", "value" : 1, "tests" :
+      [
+        "encrypt_substitution"
+      ]
+    }, 
+    {"suite" : "SubstitutionCipher", "test_group" : "decrypt_substitution", "value" : 1, "tests" :
+      [
+        "decrypt_substitution"
       ]
     }
   ]
