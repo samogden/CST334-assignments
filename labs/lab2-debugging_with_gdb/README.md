@@ -143,7 +143,7 @@ Next, we have some fanciness and then the actual function itself.
 This function is fairly straight forward -- we're just making a new instance of a `Person` struct, setting some parts of it and then returning the memory object.
 The only time we don't do this directly ourselves is when we use the library function `strcpy` which copies null terminated strings from one memory location to another.
 
-***TODO:*** Go check out the documentation for [strcpy](https://pubs.opengroup.org/onlinepubs/009696799/functions/strcpy.html).
+***TODO:*** Go check out the documentation for [strcpy]([https://pubs.opengroup.org/onlinepubs/009696799/functions/strcpy.html](https://linux.die.net/man/3/strcpy)).
 Does anything jump out at you?
 
 Overall, this looks pretty okay and basic.
