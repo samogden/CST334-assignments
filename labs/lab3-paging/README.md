@@ -1,4 +1,4 @@
-# Lab 4: Paging
+# Lab 3: Paging
 
 In this lab we get to practice our paging calculations.
 

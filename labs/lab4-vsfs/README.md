@@ -1,4 +1,4 @@
-# Lab 5: VSFS
+# Lab 4: VSFS
 
 In this lab we'll be exploring VSFS a little bit more by using the simulation available in the docker container.
 
