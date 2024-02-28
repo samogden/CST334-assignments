@@ -71,6 +71,8 @@ Setting up this project is very similar to [PA1](../PA1) and [PA2](../PA2), so p
 
 A thing to note is that `mem_alloc()` and `mem_free()` rely on the other functions, so starting on the other functions is a good idea!
 
+***Question:*** Draw out a picture of the layout of memory when we have a bit of it allocated.  Include all of the pointers in the nodes and indicate which will have to change when we split the node.
+
 ## What to submit
 
 You'll be submitting ***only*** `student_code.c` and `student_code.h`.
