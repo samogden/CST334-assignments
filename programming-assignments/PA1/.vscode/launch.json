@@ -13,7 +13,7 @@
         "pipeTransport": {
             "debuggerPath": "/usr/bin/gdb",
             "pipeProgram": "docker",
-            "pipeArgs": ["exec", "-i", "samogden/csumb:cst334", "sh", "-c"],
+            "pipeArgs": ["exec", "-i", "debug_vsc", "sh", "-c"],
             "pipeCwd": "${workspaceRoot}"
         },
         "MIMode": "gdb",
