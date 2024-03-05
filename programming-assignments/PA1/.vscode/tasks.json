@@ -3,9 +3,9 @@
     "tasks": [
         {
             "__command" : "https://stackoverflow.com/questions/51433937/how-to-compile-debug-a-c-application-in-docker-with-visual-studio-code-on-wind",
-            "label": "build (in container)",
+            "label": "build debug (in container)",
             "type": "shell",
-            "command": "docker run --rm --privileged -v ${workspaceFolder}:/debug samogden/csumb:cst334 sh -c 'cd /debug ; make all'",
+            "command": "docker run --rm --privileged -v ${workspaceFolder}:/debug samogden/csumb:cst334 sh -c 'cd /debug ; make clean debug'",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -27,31 +27,12 @@
             }
         },
         {
-            "label": "clean (in container)",
-            "type": "shell",
-            "command": "docker run --rm --privileged -v ${workspaceFolder}:/debug samogden/csumb:cst334 sh -c 'cd /debug ; make clean'",
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
-            "label": "remove containers",
-            "type": "shell",
-            "command": "docker ps -a -q | % { docker rm $_ }",
-            "problemMatcher": []
-        },
-        {
-            "label": "run the code",
-            "type": "shell",
-            "command": "docker run --rm --privileged -v ${workspaceFolder}:/debug samogden/csumb:cst334 sh -c 'cd /debug ; ./debug '",
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
             "label": "prepare to debug",
             "type": "shell",
             "command": "docker run --rm --privileged -v ${workspaceFolder}:/debug --name debug_vsc -it samogden/csumb:cst334 ",
             "group": "build",
-            "problemMatcher": []
+            "problemMatcher": [],
+            "dependsOn": "build debug (in container)"
         }
     ]
 }

@@ -21,7 +21,6 @@
             "description": "Enable pretty-printing for gdb",
             "text": "-enable-pretty-printing",
             "ignoreFailures": true
-        }],
-        "preLaunchTask": "prepare to debug"
+        }]
     }, ]
 }
