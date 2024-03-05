@@ -4,7 +4,7 @@
         {
             "label": "build (in container)",
             "type": "shell",
-            "command": "docker run --privileged -v $PWD:/debug samogden/csumb:cst334 sh -c \"cd /debug ; make all \"",
+            "command": "docker run --privileged -v ${workspaceFolder}:/debug samogden/csumb:cst334 sh -c 'cd /debug ; make all'",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -28,7 +28,7 @@
         {
             "label": "clean (in container)",
             "type": "shell",
-            "command": "docker run --privileged -v $PWD:/debug samogden/csumb:cst334 sh -c \"cd /debug ; make clean\"",
+            "command": "docker run --privileged -v ${workspaceFolder}:/debug samogden/csumb:cst334 sh -c 'cd /debug ; make clean'",
             "group": "build",
             "problemMatcher": []
         },
@@ -41,14 +41,14 @@
         {
             "label": "run the code",
             "type": "shell",
-            "command": "docker run --privileged -v $PWD:/debug samogden/csumb:cst334 sh -c \"cd /debug ; ./debug \"",
+            "command": "docker run --privileged -v ${workspaceFolder}:/debug samogden/csumb:cst334 sh -c 'cd /debug ; ./debug '",
             "group": "build",
             "problemMatcher": []
         },
         {
             "label": "prepare to debug",
             "type": "shell",
-            "command": "docker run --privileged -v $PWD:/debug --name debug_vsc -it samogden/csumb:cst334 ",
+            "command": "docker run --privileged -v ${workspaceFolder}:/debug --name debug_vsc -it samogden/csumb:cst334 ",
             "group": "build",
             "problemMatcher": []
         }
