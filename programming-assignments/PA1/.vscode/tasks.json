@@ -1,0 +1,56 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build (in container)",
+            "type": "shell",
+            "command": "docker run --privileged -v $PWD:/debug samogden/csumb:cst334 sh -c \"cd /debug ; make all \"",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "clean (in container)",
+            "type": "shell",
+            "command": "docker run --privileged -v $PWD:/debug samogden/csumb:cst334 sh -c \"cd /debug ; make clean\"",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "remove containers",
+            "type": "shell",
+            "command": "docker ps -a -q | % { docker rm $_ }",
+            "problemMatcher": []
+        },
+        {
+            "label": "run the code",
+            "type": "shell",
+            "command": "docker run --privileged -v $PWD:/debug samogden/csumb:cst334 sh -c \"cd /debug ; ./debug \"",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "prepare to debug",
+            "type": "shell",
+            "command": "docker run --privileged -v $PWD:/debug --name debug_vsc -it samogden/csumb:cst334 ",
+            "group": "build",
+            "problemMatcher": []
+        }
+    ]
+}
