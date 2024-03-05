@@ -10,6 +10,8 @@
         "stopAtEntry": true,
         "environment": [],
         "externalConsole": true,
+        "sourceFileMap": { "/debug": "${workspaceFolder}" },
+
         "pipeTransport": {
             "debuggerPath": "/usr/bin/gdb",
             "pipeProgram": "docker",
@@ -21,6 +23,7 @@
             "description": "Enable pretty-printing for gdb",
             "text": "-enable-pretty-printing",
             "ignoreFailures": true
-        }]
+        }],
+        "preLaunchTask": "prepare to debug"
     }, ]
 }

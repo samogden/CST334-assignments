@@ -32,7 +32,8 @@
             "command": "docker run --rm --privileged -v ${workspaceFolder}:/debug --name debug_vsc -it samogden/csumb:cst334 ",
             "group": "build",
             "problemMatcher": [],
-            "dependsOn": "build debug (in container)"
+            "dependsOn": "build debug (in container)",
+            "isBackground": true,
         }
     ]
 }
