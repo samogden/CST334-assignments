@@ -32,7 +32,7 @@ After you have pulled the latest docker container, navigate to your working dire
 
 ```shell
 /Users/ssogden/repos/classes/CST334-assignments/
-$ docker run -it -v ${PWD}:/tmp/lab samogden/csumb:cst334
+$ docker run -it --rm -v ${PWD}:/tmp/lab samogden/csumb:cst334
 [DOCKER] /tmp/ $ 
 ```
 

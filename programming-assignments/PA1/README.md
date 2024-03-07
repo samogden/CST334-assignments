@@ -26,7 +26,7 @@ docker pull samogden/csumb:cst334
 
 Then, navigate using your terminal on your local machine to your working directory (i.e. the github repo `CST334-assignments`) and run the below command to start docker:
 ```shell
-docker run -it -v ${PWD}:/tmp/programming samogden/csumb:cst334
+docker run -it --rm -v ${PWD}:/tmp/programming samogden/csumb:cst334
 ```
 
 ***Question:*** What are the differences between these commands and the ones for lab1?  What do the differences mean?
