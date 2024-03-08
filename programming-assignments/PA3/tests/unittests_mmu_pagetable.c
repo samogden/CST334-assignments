@@ -64,7 +64,7 @@ Test(MMU_PageTable, map_page__MMU_pagetable) {
     cr_assert(is_entry_valid(pte));
     cr_assert(is_read_enabled(pte) == page_to_test % 2 % 3);
     cr_assert(is_write_enabled(pte) == page_to_test % 2 % 5);
-    cr_assert(is_execute_enabled(pte) == page_to_test % 2 % 6);
+    cr_assert(is_execute_enabled(pte) == page_to_test % 2 % 7);
   }
 
   cleanup_MMU(m);
