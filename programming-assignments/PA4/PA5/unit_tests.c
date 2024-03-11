@@ -2,15 +2,23 @@
 #include <signal.h>
 #include "src/common.h"
 
-#include "tests/unittests_string.c"
-#include "tests/unittests_struct.c"
-#include "tests/unittests_processes.c"
-#include "tests/unittests_syscalls.c"
+#include "tests/unittests_helpers.c"
+#include "tests/unittests_fifo.c"
+#include "tests/unittests_priority.c"
+#include "tests/unittests_lifo.c"
+#include "tests/unittests_sjf.c"
+#include "tests/unittests_stcf.c"
+#include "tests/unittests_rr.c"
+#include "tests/unittests_end2end.c"
 
 
-TestSuite(Syscalls, .disabled=false);
-TestSuite(String, .disabled=false);
-TestSuite(Processes, .disabled=false);
+TestSuite(HelperFunctions, .disabled=false);
+TestSuite(STCF, .disabled=false);
+TestSuite(SJF, .disabled=false);
+TestSuite(PRIORITY, .disabled=false);
+TestSuite(LIFO, .disabled=false);
+TestSuite(FIFO, .disabled=false);
+
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
 // PRE_TEST: occurs after the test initialization, but before the test is run.
@@ -39,4 +47,3 @@ ReportHook(TEST_CRASH)(struct criterion_test_stats *stats) {
       log_error("%d\n", stats->signal);
   }
 }
-

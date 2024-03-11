@@ -2,22 +2,15 @@
 #include <signal.h>
 #include "src/common.h"
 
-#include "tests/unittests_helpers.c"
-#include "tests/unittests_fifo.c"
-#include "tests/unittests_priority.c"
-#include "tests/unittests_lifo.c"
-#include "tests/unittests_sjf.c"
-#include "tests/unittests_stcf.c"
-#include "tests/unittests_rr.c"
-#include "tests/unittests_end2end.c"
+#include "tests/unittests_locks.c"
+#include "tests/unittests_conditions.c"
+#include "tests/unittests_server.c"
+#include <pthread.h>
 
 
-TestSuite(HelperFunctions, .disabled=false);
-TestSuite(STCF, .disabled=false);
-TestSuite(SJF, .disabled=false);
-TestSuite(PRIORITY, .disabled=false);
-TestSuite(LIFO, .disabled=false);
-TestSuite(FIFO, .disabled=false);
+TestSuite(Locks, .disabled=false);
+TestSuite(Conditions, .disabled=false);
+TestSuite(Server, .disabled=false);
 
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
@@ -47,3 +40,4 @@ ReportHook(TEST_CRASH)(struct criterion_test_stats *stats) {
       log_error("%d\n", stats->signal);
   }
 }
+
