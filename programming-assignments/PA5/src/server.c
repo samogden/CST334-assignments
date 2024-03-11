@@ -116,8 +116,6 @@ void* client_handler(void* arg) {
   }
   close(client_socket_fd);
 
-//  log_info("Closing client (%d)\n----------------\n", client_socket_fd);
-
   free (input_buffer);
   free(output_buffer);
   free(response);
@@ -219,7 +217,6 @@ void* make_request(void* msg) {
   recv(sockfd, buffer, sizeof(buffer), 0);
 
   close(sockfd);
-  free(buffer);
 
   return buffer;
 }
