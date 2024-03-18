@@ -27,6 +27,8 @@ void print_contents(PROCESS_LIST* pl);
 PROCESS* get_last_used(PROCESS_LIST* pl);
 PROCESS* get_next(PROCESS_LIST* pl);
 PROCESS* get_prev(PROCESS_LIST* pl);
+
+// Question: What's the 2nd parameter passed into this function being used for?
 PROCESS* get_minimum(PROCESS_LIST* pl, int (*compare_function)(PROCESS, PROCESS));
 
 void mark_last_used(PROCESS_LIST*pl, PROCESS* p);

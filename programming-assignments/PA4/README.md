@@ -92,8 +92,6 @@ The core of this simulation happens in `process_scheduling.c` between lines 50 a
     }
 ```
 
-***Question:*** Dig into the assignment code a bit -- what data structure do we use to hold the processes?
-
 Essentially, at each step we pick a model using our selection function (`params.process_selection_func(entered_processes);`) and then use that to run one simulation step.
 Your goal in this assignment is to write these selection functions.
 
@@ -129,6 +127,8 @@ PROCESS* sjf_process_selector(PROCESS_LIST* pl); // 6 points
 PROCESS* lifo_process_selector(PROCESS_LIST* pl); // 6 points
 PROCESS* stcf_process_selector(PROCESS_LIST* pl); // 6 points
 ```
+
+***Question:*** Look at all the unit tests that are being run, specifically at the files.  What order do you think we should look at these unit tests in?  What suite should we consider first, and what suite should we consider last?  Why?
 
 ## Where to start
 

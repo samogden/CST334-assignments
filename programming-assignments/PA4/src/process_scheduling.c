@@ -16,6 +16,7 @@ float run_simulation_step(PROCESS_LIST *pl, PROCESS* p, float curr_time, SCHEDUL
     // Check whether this is the first time we've run the process
     if (p->time_remaining == p->length) {
         // Then this is the first time we've run the process
+        // Question: What parts of the process struct should be updated here, and how should they be updated?  How about the stats struct?
         mark_process_start(stats, p, curr_time, time_slice);
     }
 
