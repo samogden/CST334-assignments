@@ -6,6 +6,8 @@
 #include "process_list.h"
 #include "student_code.h"
 
+#define MAX_TIME 1000.0f
+
 
 float run_simulation_step(PROCESS_LIST *pl, PROCESS* p, float curr_time, SCHEDULER_STATS* stats, float time_slice) {
     // "Run" the process
