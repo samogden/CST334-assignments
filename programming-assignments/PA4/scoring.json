@@ -1,9 +1,8 @@
 {
   "tests" : [
-    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 5, "tests" : ["mark_process_start"]},
-    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 5, "tests" : ["mark_process_run"]},
-    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 5, "tests" : ["mark_process_end"]},
-    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 20, "tests" : ["finalize_stats"]},
+    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 10, "tests" : ["mark_start"]},
+    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 10, "tests" : ["mark_end"]},
+    {"suite" : "HelperFunctions", "test_group" : "HelperFunctions", "value" : 15, "tests" : ["finalize_stats"]},
     {"suite" : "FIFO", "test_group" : "FIFO", "value" : 6, "tests" :
       [
         "e0", 

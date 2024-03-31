@@ -9,30 +9,6 @@
  * @param stats - a stats object that has some fields that are not yet used (or to be overwritten)
  */
 void finalize_stats(SCHEDULER_STATS* stats);
-/**
- * Mark a process as having started and set some metadata
- * @param stats
- * @param p
- * @param curr_time
- * @param time_slice
- */
-void mark_process_start(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float time_slice);
-/**
- * Make a process as running and set some metadata
- * @param stats
- * @param p
- * @param curr_time
- * @param time_slice
- */
-void mark_process_run(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float time_slice);
-/**
- * Mark a process as having completed and set some metadata
- * @param stats
- * @param p
- * @param curr_time
- * @param time_slice_remaining -- length of time left in the slice
- */
-void mark_process_end(SCHEDULER_STATS* stats, PROCESS* p, float end_time, float time_slice_remaining);
 
 /**
  * Select a process from a PROCESS_LIST struct to be run next using the First-In-First-Out selection process
