@@ -10,6 +10,8 @@
 static int listenfd;
 PlayerDatabase db;
 
+pthread_t* server_thread;
+
 
 //start server from https://gist.github.com/laobubu/d6d0e9beb934b60b2e552c2d03e1409e
 void* startServer(void *port) {
@@ -66,22 +68,26 @@ void * run_server(void *pVoid) {
 }
 
 char** parse_request(char* request) {
-  char** args = malloc(MAX_ARGS * sizeof(char*));
+  log_debug("'%s'\n", request);
+  char** args = calloc(MAX_ARGS, sizeof(char*));
 
   if (strlen(request) == 0) {
     args[0] = "";
     args[1] = NULL;
     return args;
   }
-  int curr_arg_index = 0;
-  char* arg = strtok(request, " ");
-  while (arg != NULL) {
-    args[curr_arg_index] = malloc(strlen(arg)+1);
-    strcpy(args[curr_arg_index], arg);
-    arg = strtok(NULL, " ");
-    curr_arg_index++;
+
+  int i = 0;
+  char * token = strtok(request, " ");
+  while( token != NULL ) {
+    printf( " %s\n", token ); //printing each token
+    args[i] = token;
+    // log_debug("\t> %d : %s\n", i, args[i]);
+    i++;
+
+    token = strtok(NULL, " ");
   }
-  args[curr_arg_index] = NULL;
+  args[i] = NULL;
 
   return args;
 }
@@ -125,6 +131,7 @@ void* client_handler(void* arg) {
 char* exec_request(char** args) {
   char* response = calloc(MAX_MESSAGE_LENGTH, 1);
   char* func_name = args[0];
+
   if (func_name == NULL) {
     sprintf( response, "-1");
   } else if (strcmp("add_player", func_name) == 0) {
@@ -134,56 +141,70 @@ char* exec_request(char** args) {
       add_player(&db, args[1])
     );
   } else if (strcmp("add_player_score", func_name) == 0) {
-    sprintf(
-      response,
-      "%d",
-      add_player_score(&db, args[1], atoi(args[2]))
-    );
 
+    if (args[2] == NULL) {
+      sprintf( response, "-1");
+    } else {
+      long int score = strtol(args[2], NULL, 10); // = atoi(args[2]);
+
+      snprintf(
+        response,
+        MAX_STR_LENGTH - 1,
+        "%d",
+        add_player_score(&db, args[1], score)
+      );
+    }
 
   } else if (strcmp("get_player_plays", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       get_player_plays(&db, args[1])
     );
   } else if (strcmp("get_player_high_score", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       get_player_high_score(&db, args[1])
     );
 
 
   } else if (strcmp("get_best_player", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%s",
       get_best_player(&db)
     );
   } else if (strcmp("get_num_players", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       get_num_players(&db)
     );
   } else if (strcmp("get_highest_score", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       get_highest_score(&db)
     );
   } else if (strcmp("get_total_plays", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       get_total_plays(&db)
     );
 
 
   } else if (strcmp("do_slow_thing", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       do_slow_thing((float)atoi(args[1]))
     );
@@ -197,7 +218,6 @@ char* exec_request(char** args) {
 
 
 
-pthread_t server_thread;
 
 void* make_request(void* msg) {
   struct sockaddr_in dest_addr;
@@ -228,10 +248,14 @@ pthread_t* make_request_async(void* msg) {
 }
 
 void setup() {
-  pthread_create(&server_thread, NULL, run_server, "5005");
+  server_thread = malloc(sizeof(pthread_t));
+  pthread_create(server_thread, NULL, run_server, "5005");
+  pthread_detach(*server_thread);
+  fsleep(TIME_DELAY);
 }
 
 void teardown() {
-  pthread_cancel(server_thread);
+  pthread_cancel(*server_thread);
+  free(server_thread);
 }
 
