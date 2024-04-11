@@ -115,7 +115,7 @@ void* client_handler(void* arg) {
   memcpy(output_buffer, response, MAX_MESSAGE_LENGTH);
 
   // We can now send it back.
-  ssize_t num_bytes_sent = send(client_socket_fd, output_buffer, bytes_received+1, 0);
+  ssize_t num_bytes_sent = send(client_socket_fd, output_buffer, strlen(output_buffer)+1, 0);
   if (num_bytes_sent == -1) {
     perror("send error");
   }
@@ -235,19 +235,18 @@ void* make_request(void* msg) {
   char* response_buffer = calloc(sizeof(response_buffer), 1024);
 
   // do-while loop to resend messages that are cut-off early, since SIGPIPE seems to be thrown silently.
+  bool resending = false;
   do {
-
+    if (resending) { log_debug("Resending message (%s)\n", response_buffer); } // else { log_debug("not resending...\n");}
     connect(sockfd,(struct sockaddr*)&dest_addr, sizeof(struct sockaddr));
     num_bits_written = write(sockfd, (char*)msg, strlen(msg));
 
-  write(sockfd, (char*)msg, strlen(msg));
-
-  char* buffer = calloc(sizeof(buffer), 1024);
-  recv(sockfd, buffer, sizeof(buffer), 0);
+    log_debug("sent: '%s' (%ld) (%ld)\n", msg_str, strlen(msg_str), num_bits_written);
     recv(sockfd, response_buffer, sizeof(response_buffer), 0);
 
-  close(sockfd);
     close(sockfd);
+    resending = true;
+  } while (num_bits_written < sizeof(msg_str) || (strcmp(response_buffer, "-1") == 0));
 
 
   return response_buffer;
