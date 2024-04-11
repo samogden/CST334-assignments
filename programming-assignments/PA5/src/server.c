@@ -68,7 +68,6 @@ void * run_server(void *pVoid) {
 }
 
 char** parse_request(char* request) {
-  log_debug("'%s'\n", request);
   char** args = calloc(MAX_ARGS, sizeof(char*));
 
   if (strlen(request) == 0) {
@@ -80,7 +79,7 @@ char** parse_request(char* request) {
   int i = 0;
   char * token = strtok(request, " ");
   while( token != NULL ) {
-    printf( " %s\n", token ); //printing each token
+    // printf( " %s\n", token ); //printing each token
     args[i] = token;
     // log_debug("\t> %d : %s\n", i, args[i]);
     i++;
@@ -220,25 +219,38 @@ char* exec_request(char** args) {
 
 
 void* make_request(void* msg) {
+
+  char* msg_str = (char*)msg;
+
+
   struct sockaddr_in dest_addr;
-
   int sockfd = socket(AF_INET,SOCK_STREAM,0);
-
   dest_addr.sin_family = AF_INET;
   dest_addr.sin_port = htons(strtol(PORT, NULL, 10));
   dest_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
   dest_addr.sin_zero[8]='\0';
 
-  connect(sockfd,(struct sockaddr*)&dest_addr, sizeof(struct sockaddr));
+  // fsleep(0.0001);
+  size_t num_bits_written;
+  char* response_buffer = calloc(sizeof(response_buffer), 1024);
+
+  // do-while loop to resend messages that are cut-off early, since SIGPIPE seems to be thrown silently.
+  do {
+
+    connect(sockfd,(struct sockaddr*)&dest_addr, sizeof(struct sockaddr));
+    num_bits_written = write(sockfd, (char*)msg, strlen(msg));
 
   write(sockfd, (char*)msg, strlen(msg));
 
   char* buffer = calloc(sizeof(buffer), 1024);
   recv(sockfd, buffer, sizeof(buffer), 0);
+    recv(sockfd, response_buffer, sizeof(response_buffer), 0);
 
   close(sockfd);
+    close(sockfd);
 
-  return buffer;
+
+  return response_buffer;
 }
 
 pthread_t* make_request_async(void* msg) {
