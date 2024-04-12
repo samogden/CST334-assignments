@@ -224,9 +224,7 @@ void* make_request(void* msg) {
   char* response_buffer = calloc(sizeof(response_buffer), 1024);
 
   // do-while loop to resend messages that are cut-off early, since SIGPIPE seems to be thrown silently.
-  bool resending = false;
   do {
-    if (resending) { log_debug("Resending message (%s)\n", response_buffer); } // else { log_debug("not resending...\n");}
 
     struct sockaddr_in dest_addr;
     int sockfd = socket(AF_INET,SOCK_STREAM,0);
@@ -236,16 +234,14 @@ void* make_request(void* msg) {
     dest_addr.sin_zero[8]='\0';
 
     connect(sockfd,(struct sockaddr*)&dest_addr, sizeof(struct sockaddr));
-    num_bits_written = write(sockfd, (char*)msg, strlen(msg));
+    num_bits_written = write(sockfd, msg_str, strlen(msg_str));
     if (num_bits_written == -1) {
       // Then something failed and we'll need to resend
       fsleep(TIME_DELAY / 100.0);
     } else {
-      log_debug("sent: '%s' (%ld) (%ld)\n", msg_str, strlen(msg_str), num_bits_written);
       recv(sockfd, response_buffer, sizeof(response_buffer), 0);
     }
     close(sockfd);
-    resending = true;
   } while (num_bits_written < sizeof(msg_str) || (strcmp(response_buffer, "-1") == 0));
 
 
