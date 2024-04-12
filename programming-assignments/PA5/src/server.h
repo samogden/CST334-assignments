@@ -25,9 +25,6 @@
 #define PORT "5005"
 //bool keep_server_running = true;
 
-
-extern pthread_t server_thread;
-
 void setup();
 void teardown();
 
