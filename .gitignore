@@ -3,3 +3,5 @@ bin/
 unit_tests
 .DS_Store
 debug
+logs/
+a.out
