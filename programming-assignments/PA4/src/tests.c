@@ -28,6 +28,8 @@ void test_2proc_0entry_0entry(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats) {
 
 void test_2proc_0entry_1entry(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats) {
 
+    // Question: What is this function doing and where is it used?
+
     PROCESS* p0 = create_process(5.0f, 0, 0.0f);
     PROCESS* p1 = create_process(5.0f, 1, 1.0f);
 

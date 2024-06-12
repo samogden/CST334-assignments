@@ -14,36 +14,34 @@ All while seeing how we can make simple choices for scheduling (hopefully!)
 ### Setting up your environment
 
 To get started, start up your docker environment like you did for [PA1](../PA1).
-Don't forget to either stash or commit any unchanged docker files.
+Don't forget to commit any changed files and then pull the latest updates with a `git pull`.
+Note: If you have changed certain files might get an error that you have a merge conflict.
+There are instructions for fixing them online, such as from [github](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line).
 
-Start docker, navigate to your working directory and update it with a `git pull`.
-
-Once you are all set, change to the appropriate directory for PA3.
+Once you are all set, change to the appropriate directory for PA2.
 
 Now you're ready to get started coding!
-
-***Question:*** Get docker running and upload me a screenshot of you running `tree` in the directory we'll be developing in.
 
 
 ### Testing Code
 
-To test your code you will run two commands; one of them will compile your code and the other will run the unit tests.
+To test your code you will run the `make` command.
 
 #### Building code
 
-The same as before, you can us `make unit_tests` to build the unit tests, or just `make` to make and run the unit tests.
+The same as before, you can use `make unit_tests` to build the unit tests, or just `make` to make and run the unit tests.
 There are different times that you may want to do each of these steps.
 Also, if you run into problems, you may want to call `make clean` to erase your old code.
 
-If you run `make` on the starter code you'll get a huuuuuge output.  
+If you run `make` on the starter code you'll get a ***very*** long output.  
 If we cut it down a bit using a few tricks we've learned in class I can show you the last few lines of it:
 
 ```shell
 [DOCKER] /tmp/programming/ $ make 2>&1 | tail -n5
-[----]   The expression selected == p2 is false.
 [----]
-[FAIL] STCF::e1_e1_e0: (0.00s)
-[====] Synthesis: Tested: 45 | Passing: 1 | Failing: 44 | Crashing: 0
+[FAIL] STCF::test_2proc_0entry_1entry_stcf: (0.00s)
+-----------------------------------
+[====] Synthesis: Tested: 51 | Passing: 1 | Failing: 50 | Crashing: 0
 make: *** [Makefile:17: all] Error 1
 ```
 
@@ -51,12 +49,11 @@ So we see that 44 tests are failing and one is passing.
 Oof.
 But don't worry, there aren't 44 functions this time, I just broke down the tests a little bit more fine-grained this time around.
 
-***Question:*** How many tests are there per function you have to write?  Give me the breakdown per function. 
-
 #### A side note
-I'm actively working to improve the output of the tests to be more clear about what is passing and what is failing.
-It's taking a bit of time, but if nothing else there may be a `make grade` that can calculate your grade so far, assuming everything works out well.
 
+You can check what tests are passing and which are failing with the `make grade` command.
+This will list the tests that pass and fail, as well as an estimated grade.
+Note, this might not be entirely accurate, but in general is very close to the actual grade.
 
 
 ## Assignment description
@@ -122,8 +119,6 @@ while ( (! is_empty(incomplete_processes)) && (curr_time <= MAX_TIME) ) {
   }
 ```
 
-***Question:*** Dig into the assignment code a bit -- what data structure do we use to hold the processes?
-
 Essentially, at each step we pick a model using our selection function (`params.process_selection_func(entered_processes);`) and then use that to run one simulation step.
 Your goal in this assignment is to write these selection functions.
 
@@ -159,6 +154,8 @@ PROCESS* lifo_process_selector(PROCESS_LIST* pl); // 6 points
 PROCESS* stcf_process_selector(PROCESS_LIST* pl); // 6 points
 ```
 
+***Question:*** Look at all the unit tests that are being run, specifically at the files.  What order do you think we should look at these unit tests in?  What suite should we consider first, and what suite should we consider last?  Why?
+
 ## Where to start
 
 I strongly recommend starting by looking at the `priority_process_selector` function that needs fixing.
@@ -193,5 +190,13 @@ p.s. - due to the timing there isn't an extra credit part to this assignment (as
 ## A hint...
 
 This assignment actually doesn't require much code.
-You might need to add a few extra functions, but every function mentioned above is 1-5 lines of code.
+You might need to add a few extra functions as a helper function, but once you have that helper then all the `selector` functions above are 1-5 lines of code.
 If you find yourself with a function longer than ~5 lines think if there may be an easier way, and go back to checking out priority scheduling...
+
+## Another hint...
+
+Don't forget to check out the functions available to you already!
+You can see the functions that I wrote available in the `*.h` files provided!
+While you can only change `student_code.c` and `student_code.h`, you are more than welcome (and encouraged) to use any functions you find in any of the `.h` files that seem useful!
+
+

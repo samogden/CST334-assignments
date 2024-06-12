@@ -10,6 +10,8 @@
 static int listenfd;
 PlayerDatabase db;
 
+pthread_t* server_thread;
+
 
 //start server from https://gist.github.com/laobubu/d6d0e9beb934b60b2e552c2d03e1409e
 void* startServer(void *port) {
@@ -66,29 +68,31 @@ void * run_server(void *pVoid) {
 }
 
 char** parse_request(char* request) {
-  char** args = malloc(MAX_ARGS * sizeof(char*));
+  char** args = calloc(MAX_ARGS, sizeof(char*));
 
   if (strlen(request) == 0) {
     args[0] = "";
     args[1] = NULL;
     return args;
   }
-  int curr_arg_index = 0;
-  char* arg = strtok(request, " ");
-  while (arg != NULL) {
-    args[curr_arg_index] = malloc(strlen(arg)+1);
-    strcpy(args[curr_arg_index], arg);
-    arg = strtok(NULL, " ");
-    curr_arg_index++;
+
+  int i = 0;
+  char * token = strtok(request, " ");
+  while( token != NULL ) {
+    // printf( " %s\n", token ); //printing each token
+    args[i] = token;
+    // log_debug("\t> %d : %s\n", i, args[i]);
+    i++;
+
+    token = strtok(NULL, " ");
   }
-  args[curr_arg_index] = NULL;
+  args[i] = NULL;
 
   return args;
 }
 
 void* client_handler(void* arg) {
   int client_socket_fd = (uintptr_t)arg;
-  //int client_socket_fd = *((int*)client_socket_fd_ptr);
 
   // Prepare buffers
   char* input_buffer = malloc(MAX_MESSAGE_LENGTH+1);
@@ -110,7 +114,7 @@ void* client_handler(void* arg) {
   memcpy(output_buffer, response, MAX_MESSAGE_LENGTH);
 
   // We can now send it back.
-  ssize_t num_bytes_sent = send(client_socket_fd, output_buffer, bytes_received+1, 0);
+  ssize_t num_bytes_sent = send(client_socket_fd, output_buffer, strlen(output_buffer)+1, 0);
   if (num_bytes_sent == -1) {
     perror("send error");
   }
@@ -125,6 +129,7 @@ void* client_handler(void* arg) {
 char* exec_request(char** args) {
   char* response = calloc(MAX_MESSAGE_LENGTH, 1);
   char* func_name = args[0];
+
   if (func_name == NULL) {
     sprintf( response, "-1");
   } else if (strcmp("add_player", func_name) == 0) {
@@ -134,56 +139,70 @@ char* exec_request(char** args) {
       add_player(&db, args[1])
     );
   } else if (strcmp("add_player_score", func_name) == 0) {
-    sprintf(
-      response,
-      "%d",
-      add_player_score(&db, args[1], atoi(args[2]))
-    );
 
+    if (args[2] == NULL) {
+      sprintf( response, "-1");
+    } else {
+      long int score = strtol(args[2], NULL, 10); // = atoi(args[2]);
+
+      snprintf(
+        response,
+        MAX_STR_LENGTH - 1,
+        "%d",
+        add_player_score(&db, args[1], score)
+      );
+    }
 
   } else if (strcmp("get_player_plays", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       get_player_plays(&db, args[1])
     );
   } else if (strcmp("get_player_high_score", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       get_player_high_score(&db, args[1])
     );
 
 
   } else if (strcmp("get_best_player", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%s",
       get_best_player(&db)
     );
   } else if (strcmp("get_num_players", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       get_num_players(&db)
     );
   } else if (strcmp("get_highest_score", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       get_highest_score(&db)
     );
   } else if (strcmp("get_total_plays", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       get_total_plays(&db)
     );
 
 
   } else if (strcmp("do_slow_thing", func_name) == 0) {
-    sprintf(
+    snprintf(
       response,
+      MAX_STR_LENGTH-1,
       "%d",
       do_slow_thing((float)atoi(args[1]))
     );
@@ -196,29 +215,37 @@ char* exec_request(char** args) {
 }
 
 
-
-pthread_t server_thread;
-
 void* make_request(void* msg) {
-  struct sockaddr_in dest_addr;
 
-  int sockfd = socket(AF_INET,SOCK_STREAM,0);
+  char* msg_str = (char*)msg;
 
-  dest_addr.sin_family = AF_INET;
-  dest_addr.sin_port = htons(strtol(PORT, NULL, 10));
-  dest_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-  dest_addr.sin_zero[8]='\0';
+  // fsleep(0.0001);
+  size_t num_bits_written;
+  char* response_buffer = calloc(sizeof(response_buffer), 1024);
 
-  connect(sockfd,(struct sockaddr*)&dest_addr, sizeof(struct sockaddr));
+  // do-while loop to resend messages that are cut-off early, since SIGPIPE seems to be thrown silently.
+  do {
 
-  write(sockfd, (char*)msg, strlen(msg));
+    struct sockaddr_in dest_addr;
+    int sockfd = socket(AF_INET,SOCK_STREAM,0);
+    dest_addr.sin_family = AF_INET;
+    dest_addr.sin_port = htons(strtol(PORT, NULL, 10));
+    dest_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    dest_addr.sin_zero[8]='\0';
 
-  char* buffer = calloc(sizeof(buffer), 1024);
-  recv(sockfd, buffer, sizeof(buffer), 0);
+    connect(sockfd,(struct sockaddr*)&dest_addr, sizeof(struct sockaddr));
+    num_bits_written = write(sockfd, msg_str, strlen(msg_str));
+    if (num_bits_written == -1) {
+      // Then something failed and we'll need to resend
+      fsleep(TIME_DELAY / 100.0);
+    } else {
+      recv(sockfd, response_buffer, sizeof(response_buffer), 0);
+    }
+    close(sockfd);
+  } while (num_bits_written < sizeof(msg_str) || (strcmp(response_buffer, "-1") == 0));
 
-  close(sockfd);
 
-  return buffer;
+  return response_buffer;
 }
 
 pthread_t* make_request_async(void* msg) {
@@ -228,10 +255,14 @@ pthread_t* make_request_async(void* msg) {
 }
 
 void setup() {
-  pthread_create(&server_thread, NULL, run_server, "5005");
+  server_thread = malloc(sizeof(pthread_t));
+  pthread_create(server_thread, NULL, run_server, "5005");
+  pthread_detach(*server_thread);
+  fsleep(TIME_DELAY);
 }
 
 void teardown() {
-  pthread_cancel(server_thread);
+  pthread_cancel(*server_thread);
+  free(server_thread);
 }
 

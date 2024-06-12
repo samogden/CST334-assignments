@@ -39,6 +39,7 @@ Test(Server,
       high_score = score;
     }
     threads[i] = make_request_async(msg[i]);
+    fsleep(TIME_DELAY / 100.0);
   }
   for (int i = 0; i < NUM_PLAYS; i++) {
     pthread_join(*threads[i], NULL);
@@ -106,6 +107,7 @@ Test(Server, increment_test_two_users, .init=setup, .fini=teardown, .timeout=NUM
       high_score = score;
     }
     threads[i] = make_request_async(msg[i]);
+    fsleep(TIME_DELAY / 100.0);
   }
   for (int i = 0; i < NUM_PLAYS; i++) {
     pthread_join(*threads[i], NULL);
@@ -203,6 +205,7 @@ Test(Server,
         break;
     }
     threads[i] = make_request_async(msg[i]);
+    fsleep(TIME_DELAY / 100.0);
   }
   for (int i = 0; i < NUM_PLAYS; i++) {
     pthread_join(*threads[i], NULL);
