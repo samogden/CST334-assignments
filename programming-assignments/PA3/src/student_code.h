@@ -49,7 +49,7 @@ PFN find_free_page(MMU m);
 
 /* Page Table Functions */
 /**
- * Map a new page into the page page table by finding a free page frame and setting the appropriate metadata.
+ * Map a new page into the page table by finding a free page frame and setting the appropriate metadata.
  * @param m
  * @param vpn
  * @param can_read

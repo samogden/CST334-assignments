@@ -34,12 +34,15 @@ Test(Functions, is_execute_enabled) {
   cr_assert(is_execute_enabled(pte));
 }
 
-Test(Functions, convert_PageTableEntry_to_PFN) {
-  PageTableEntry pte = (PageTableEntry)0b1111;
-  pte = pte << (NUM_BITS_IN_BYTE * sizeof(PageTableEntry)-4);
-  cr_assert( pte != 0x0);
-  pte = convert_PageTableEntry_to_PFN(pte);
-  cr_assert( pte == 0x0);
+Test(Functions, find_free_page) {
+  srand ( time(NULL) );
+  MMU* m = malloc(sizeof(MMU));
+  m->page_used = (bool*)malloc(NUM_FRAMES*sizeof(bool));
+  int num_pages_to_preallocate = rand() % (NUM_FRAMES / 2);
+  for (int i = 0; i < num_pages_to_preallocate; i++) {
+    m->page_used[i] = true;
+  }
+  cr_assert(find_free_page(*m) == num_pages_to_preallocate);
 }
 
 Test(Functions, find_free_page) {

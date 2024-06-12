@@ -15,7 +15,7 @@ MMU new__MMU_pagetable() {
   return m;
 }
 
-AddressMask get_mask(unsigned int num_bits) {
+AddressMask get_mask(unsigned int num_bits_to_mask) {
   AddressMask base = 0;
   base = ~base; // Invert all bits so they are all 1s
   return (base >> (NUM_BITS_IN_BYTE*sizeof(AddressBasis) - num_bits)); // Shift all bits to the right until we are left with only the mask we want

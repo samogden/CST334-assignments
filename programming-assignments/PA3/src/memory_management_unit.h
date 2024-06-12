@@ -23,7 +23,7 @@ void cleanup_MMU(MMU m);
 
 
 /* General Helpers */
-AddressMask get_mask(unsigned int num_bits);
+AddressMask get_mask(unsigned int num_bits_to_mask);
 AddressMask single_bit_mask(unsigned int bit_to_mask);
 bool is_bit_set(PageTableEntry pte, unsigned int bit_number);
 
