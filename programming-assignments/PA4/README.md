@@ -63,33 +63,60 @@ This assignment consists of a process scheduling simulation where there are a nu
 For the sake of simplicity, we are running each job in a series of time slices and then selecting a new job when appropriate.  
 Note that this causes a few of our algorithms to behave slightly differently -- for example, SJF now has preemption happen for it, which can lead to slightly different behavior than we saw in class.
 
-The core of this simulation happens in `process_scheduling.c` between lines 50 and 73:
+The core of this simulation happens in `process_scheduling.c` starting at line 21:
 
 ```c
-    while (!is_empty(processes_to_schedule) && curr_time <= MAX_TIME) {
-        printf("TIME: %.2fs\n", curr_time);
-        // While we still have processes to schedule, pick one and run it
+while ( (! is_empty(incomplete_processes)) && (curr_time <= MAX_TIME) ) {
 
-        // First, get jobs that have actually started, based on their entry time
-        PROCESS_LIST* entered_processes = copy_only_entered_processes(processes_to_schedule, curr_time);
+    // Get jobs that have actually started, based on their entry time
+    PROCESS_LIST* entered_processes = get_entered_processes(incomplete_processes, curr_time);
+    // Select a process using our function.
+    // Note: this will be NULL if our entered_processes is empty
+    PROCESS* selected_process = params.process_selection_func(entered_processes);
 
-        // to debug better, uncommenting the next line might help
-        //print_contents(entered_processes);
+    // Start with a time slice that'll end the simulation
+    float next_time_slice = FLT_MAX;
 
-        if (is_empty(entered_processes)) {
-            printf("No jobs ready, skipping time slice");
+    if (params.time_quantum > 0) {
+      // Then we have a defined time slice, and we respect that each time
+      next_time_slice = params.time_quantum;
+    } else {
+
+      // Get the time until the next arrival
+      float time_until_next_arrival = get_next_entry_time(processes_to_schedule, curr_time) - curr_time;
+
+      if (selected_process == NULL) {
+        // Then we want to jump ahead to the next job arrival time since there are no jobs (see note above)
+        next_time_slice = time_until_next_arrival;
+      } else {
+        // Otherwise, if we are preemptable we only run until it arrives
+        if (params.preemptable && time_until_next_arrival < selected_process->time_remaining) {
+          next_time_slice = time_until_next_arrival;
         } else {
-            // Call our function to select our next process to run, passing in a process variable
-            // By passing in a process point we can ensure we're modifying the existing process
-            process_to_run = params.process_selection_func(entered_processes);
-
-            // Run a step of the simulation
-            run_simulation_step(processes_to_schedule, process_to_run, curr_time, stats, params.time_slice);
+          // Otherwise, we simply run until the end of the job
+          next_time_slice = selected_process->time_remaining;
         }
-
-        // Jump forward the length of a time slice
-        curr_time += params.time_slice;
+      }
     }
+
+    if (next_time_slice < MINIMUM_TIME_QUANTUM) {
+      next_time_slice = MINIMUM_TIME_QUANTUM;
+    }
+
+    if (selected_process != NULL) {
+      run(selected_process, stats, curr_time);
+      mark_last_used(processes_to_schedule, selected_process);
+    }
+
+    curr_time += next_time_slice;
+
+    if (selected_process != NULL) {
+      stop(selected_process, stats, curr_time);
+    }
+
+    // todo: fix this memory leak that I know is right here...
+    incomplete_processes = get_incomplete_processes(processes_to_schedule);
+  }
 ```
 
 Essentially, at each step we pick a model using our selection function (`params.process_selection_func(entered_processes);`) and then use that to run one simulation step.
@@ -112,10 +139,9 @@ Your job is to:
 
 ```c
 // Write metric tracking code (35 points total)
-void finalize_stats(SCHEDULER_STATS* stats); // 20 points
-void mark_process_start(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float time_slice); // 5 points
-void mark_process_run(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float time_slice); // 5 points
-void mark_process_end(SCHEDULER_STATS* stats, PROCESS* p, float curr_time, float time_slice); // 5 points
+void finalize_stats(SCHEDULER_STATS* stats); // 15 points
+void mark_start(PROCESS* p, SCHEDULER_STATS* stats, float time_started); // 10 points
+void mark_end(PROCESS* p, SCHEDULER_STATS* stats, float time_completed); // 10 points
 
 // Fix this for 15 points
 PROCESS* priority_process_selector(PROCESS_LIST* pl); // 15 points

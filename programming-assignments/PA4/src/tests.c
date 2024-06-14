@@ -1,6 +1,6 @@
 
 #include "tests.h"
-
+#include "common.h"
 
 void test_1proc_0entry(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats) {
 
@@ -23,6 +23,7 @@ void test_2proc_0entry_0entry(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats) {
     add_process_to_tail(pl, p1);
 
     process_scheduling_loop(params, stats, pl);
+    // print_stats(*stats);
 }
 
 void test_2proc_0entry_1entry(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats) {
@@ -37,6 +38,7 @@ void test_2proc_0entry_1entry(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats) {
     add_process_to_tail(pl, p1);
 
     process_scheduling_loop(params, stats, pl);
+    // print_stats(*stats);
 }
 
 void test_5proc(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats) {
@@ -55,4 +57,5 @@ void test_5proc(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats) {
     add_process_to_tail(pl, p4);
 
     process_scheduling_loop(params, stats, pl);
+    // print_stats(*stats);
 }
