@@ -19,7 +19,7 @@ Additionally, create a google document (or microsoft word, or apple pages, if yo
 
 First, navigate to your working directory in your terminal of choice (e.g. PowerShell on Windows or Terminal on macOS) and type in the following command:
 ```bash
-docker run -it --rm -v ${PWD}:/tmp/lab samogden/csumb:cst334
+docker run -it --rm -v ${PWD}:/tmp/lab samogden/cst334
 ```
 
 This will start docker and mount the current folder inside of it, giving us access to our shared files.

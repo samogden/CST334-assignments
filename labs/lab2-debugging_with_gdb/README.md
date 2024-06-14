@@ -16,11 +16,9 @@ You will be saving screenshots and other responses in this document and submit i
 
 ### Updates to Docker
 
-For this lab, we'll be using our docker container.
-I have made some changes, both to better clarify that docker is running and to include the debug tools that we're using so make sure to pull the latest version.
-
+To pull in any updates to docker, run the below command:
 ```shell
-$ docker pull samogden/csumb:cst334
+$ docker pull samogden/cst334
 ```
 
 As a quick aside, notice how the above command has a `$` at the beginning of it.
@@ -32,7 +30,7 @@ After you have pulled the latest docker container, navigate to your working dire
 
 ```shell
 /Users/ssogden/repos/classes/CST334-assignments/
-$ docker run -it --rm -v ${PWD}:/tmp/lab samogden/csumb:cst334
+$ docker run -it --rm -v ${PWD}:/tmp/lab samogden/cst334
 [DOCKER] /tmp/ $ 
 ```
 

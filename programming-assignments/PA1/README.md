@@ -21,12 +21,12 @@ We will be running similar, but slightly different, commands to get started on t
 
 Before we get started, let's check for updates to the docker image by running:
 ```shell
-docker pull samogden/csumb:cst334
+docker pull samogden/cst334
 ```
 
 Then, navigate using your terminal on your local machine to your working directory (i.e. the github repo `CST334-assignments`) and run the below command to start docker:
 ```shell
-docker run -it --rm -v ${PWD}:/tmp/programming samogden/csumb:cst334
+docker run -it --rm -v ${PWD}:/tmp/programming samogden/cst334
 ```
 
 ***Question:*** What are the differences between these commands and the ones for lab1?  What do the differences mean?

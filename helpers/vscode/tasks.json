@@ -5,7 +5,7 @@
             "__command" : "https://stackoverflow.com/questions/51433937/how-to-compile-debug-a-c-application-in-docker-with-visual-studio-code-on-wind",
             "label": "build debug (in container)",
             "type": "shell",
-            "command": "docker run --rm --privileged -v ${workspaceFolder}:/debug samogden/csumb:cst334 sh -c 'cd /debug ; make clean debug'",
+            "command": "docker run --rm --privileged -v ${workspaceFolder}:/debug samogden/cst334 sh -c 'cd /debug ; make clean debug'",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -29,7 +29,7 @@
         {
             "label": "prepare to debug",
             "type": "shell",
-            "command": "docker run --rm --privileged -v ${workspaceFolder}:/debug --name debug_vsc -it samogden/csumb:cst334 ",
+            "command": "docker run --rm --privileged -v ${workspaceFolder}:/debug --name debug_vsc -it samogden/cst334 ",
             "group": "build",
             "problemMatcher": [],
             "dependsOn": "build debug (in container)",
