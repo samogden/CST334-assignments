@@ -40,28 +40,28 @@ If you don't see that the line starts with `[DOCKER]` then something went awry s
 Don't forget to change to the mounted directory so we have access to our working files!
 
 
-<div style="border:1px solid black;">
-<b>Common Issues</b>
-
-A common issue is not being able to find the correct files or directory.  If this is happening to you, then you are not alone!
-
-The cause of this is usually that you started docker in a slight different way or wound up in a different path than usual.
-
-There are two commands that will help you solve your issue!
-
-1. `pwd` : Tells you the directory you are currently in
-2. `ls` : lists the contents of the current directory
-   - Has some useful flags:
-     - `-l` (for "long") lists more information (details to come in lectures) 
-     - `-a` (for "all") lists _all_ files, including normally hidden files
-   - Can also be called on a directory by passing this in as an _argument_
-     - e.g. `ls dir` will return the contents of the directory.
-
-These can be used to figure out _where_ you are in a file system and where you can move to in it!
-
-p.s. don't forget that you can use `..` to reference the parent directory.  For example, `ls /tmp/lab/..` will tell you the contents of the `/tmp` directory.
-
-</div>
+---
+> <b>Common Issues</b>
+> 
+> A common issue is not being able to find the correct files or directory.  If this is happening to you, then you are not alone!
+> 
+> The cause of this is usually that you started docker in a slight different way or wound up in a different path than usual.
+> 
+> There are two commands that will help you solve your issue!
+> 
+> 1. `pwd` : Tells you the directory you are currently in
+> 2. `ls` : lists the contents of the current directory
+>    - Has some useful flags:
+>      - `-l` (for "long") lists more information (details to come in lectures) 
+>      - `-a` (for "all") lists _all_ files, including normally hidden files
+>    - Can also be called on a directory by passing this in as an _argument_
+>      - e.g. `ls dir` will return the contents of the directory.
+> 
+> These can be used to figure out _where_ you are in a file system and where you can move to in it!
+> 
+> p.s. don't forget that you can use `..` to reference the parent directory.  For example, `ls /tmp/lab/..` will tell you the contents of the `/tmp` directory.
+> 
+---
 
 
 ### Lab files
