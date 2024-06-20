@@ -1,4 +1,4 @@
-# CST334 Lab 2
+# CST334 Lab 1
 
 ## Background
 
@@ -13,31 +13,45 @@ In this lab we'll be talking about compilation flags and we'll be trying out a t
 First things first, create a google document called "Lab1".
 You will be saving screenshots and other responses in this document and submit it on canvas after we're done!
 
+### Step 0: Preparation
 
-### Updates to Docker
+Make sure that you've gone through the steps to install docker and get it running as per the slides on canvas.
 
-To pull in any updates to docker, run the below command:
-```shell
-$ docker pull samogden/cst334
+Additionally, create a google document (or microsoft word, or apple pages, if you prefer) titled "Lab 1"
+
+### Step 1: Start Docker
+
+First, navigate to your working directory in your terminal of choice (e.g. PowerShell on Windows or Terminal on macOS) and type in the following command:
+```bash
+docker run -it --rm -v ${PWD}:/tmp/lab samogden/cst334
 ```
 
-As a quick aside, notice how the above command has a `$` at the beginning of it.
-This is not to be included in the command itself and is just there to indicate that this is text to be entered into a command line.
-You may occasionally see a variation of it that starts with a `# ` that is often used to denote things run in a "root shell", where you have elevated privileges.
-This looks similar to when we have comments so understanding the context is key!
+This will start docker and mount the current folder inside of it, giving us access to our shared files.
 
-After you have pulled the latest docker container, navigate to your working directory and start docker like you did for the last lab.
+Next, run the below command to change directory.
 
-```shell
-/Users/ssogden/repos/classes/CST334-assignments/
-$ docker run -it --rm -v ${PWD}:/tmp/lab samogden/cst334
-[DOCKER] /tmp/ $ 
+```bash
+cd /tmp/lab
 ```
 
-One thing to notice is that our prompt has now changed to more clearly differentiate that we're running within docker.
-If you don't see that the line starts with `[DOCKER]` then something went awry so don't hesitate to reach out.
+Because this folder was mounted with the `-v ${PWD}:/tmp/lab` flag when we started the docker image it is shared with our host operating system allowing us to edit files locally and have the changes automatically appear in the docker image.
 
-Don't forget to change to the mounted directory so we have access to our working files!
+
+### Step 2: Downloading the starter code
+
+Type the following into your terminal:
+```bash
+git clone https://github.com/samogden/CST334-assignments
+```
+
+This will download the a git repository containing the lab data files.
+To change to the directory containing the files for this lab (including a copy of this file) run the below commands.
+
+```bash
+cd CST334-assignments
+cd labs
+cd lab1-debugging_with_gdb
+```
 
 
 ---
