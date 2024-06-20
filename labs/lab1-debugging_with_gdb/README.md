@@ -40,19 +40,29 @@ If you don't see that the line starts with `[DOCKER]` then something went awry s
 Don't forget to change to the mounted directory so we have access to our working files!
 
 
-### Updates to git
+<div style="border:1px solid black;">
+<b>Common Issues</b>
 
-This lab wasn't in your git repo during the last lab so to get it and the associated files you'll have to update your git repo.
-To do this we run instructions similar to our [PA1](../../programming-assignments/PA1) to update our local code.
-This code is the below:
+A common issue is not being able to find the correct files or directory.  If this is happening to you, then you are not alone!
 
-```shell
-git stash     # Save our changes to local files to the side
-git pull      # Pull updates from github
-git stash pop # Put our changes to local files back into place
-```
+The cause of this is usually that you started docker in a slight different way or wound up in a different path than usual.
 
-After running these you should be told that you have a number of updates and lab2 should appear locally.
+There are two commands that will help you solve your issue!
+
+1. `pwd` : Tells you the directory you are currently in
+2. `ls` : lists the contents of the current directory
+   - Has some useful flags:
+     - `-l` (for "long") lists more information (details to come in lectures) 
+     - `-a` (for "all") lists _all_ files, including normally hidden files
+   - Can also be called on a directory by passing this in as an _argument_
+     - e.g. `ls dir` will return the contents of the directory.
+
+These can be used to figure out _where_ you are in a file system and where you can move to in it!
+
+p.s. don't forget that you can use `..` to reference the parent directory.  For example, `ls /tmp/lab/..` will tell you the contents of the `/tmp` directory.
+
+</div>
+
 
 ### Lab files
 
