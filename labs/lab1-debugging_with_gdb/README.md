@@ -270,7 +270,7 @@ Time to get debugging!
 ### Step 2: Checking out our unit tests.
 
 The first thing we should do is go and find out where our tests are failing.
-Let's check out our unit test file.
+Let's check out our unit test file in `tests/tests-person.c`.
 
 ```c
  1	#include <criterion/criterion.h>
