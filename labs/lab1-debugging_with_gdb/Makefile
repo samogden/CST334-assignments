@@ -17,7 +17,7 @@ unit_tests: unit_tests.c bin $(OBJS) $(TEST)
 	$(CC) $(CFLAGS) unit_tests.c -o $@ $(OBJS)
 
 # Rule to build the debug executable
-debug: debug.c bin $(OBJS) $(TEST)
+debug: clean debug.c bin $(OBJS) $(TEST)
 	$(CC) $(CFLAGS) debug.c -o $@ $(OBJS)
 
 # Rule to compile .c files into .o files
