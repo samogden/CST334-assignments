@@ -1,59 +1,64 @@
-//
-// Created by Sam Ogden on 8/8/23.
-//
+#include <fcntl.h>
+#include <stdio.h>
+#include <sys/mman.h>
+#include <unistd.h>
+#include <stdio.h>
 
 #include "student_code.h"
-#include "stdio.h"
 
 
-void mark_start(PROCESS* p, SCHEDULER_STATS* stats, float time_started) {
-  //todo
-}
-void mark_end(PROCESS* p, SCHEDULER_STATS* stats, float time_completed) {
-  //todo
+
+bool is_entry_valid(PageTableEntry pte) {
+  // todo;
 }
 
-void finalize_stats(SCHEDULER_STATS* stats) {
-  //todo
+bool is_read_enabled(PageTableEntry pte) {
+  // todo
+  // Question: Implement this function.  Hint: it can take as little as 1 line.
 }
 
-int compare_priority(PROCESS p1, PROCESS p2) {
-  //todo
-  return (int)p1.priority - (int)p2.priority;
+bool is_write_enabled(PageTableEntry pte) {
+  // todo
 }
 
-PROCESS* fifo_process_selector(PROCESS_LIST* pl) {
-  PROCESS *p = NULL;
-  //todo
-  return p;
+bool is_execute_enabled(PageTableEntry pte) {
+  // todo
 }
 
-PROCESS* rr_process_selector(PROCESS_LIST* pl) {
-  PROCESS *p = NULL;
-  //todo
-  return p;
+
+PFN find_free_page(MMU m) {
+  // todo
 }
 
-PROCESS* sjf_process_selector(PROCESS_LIST* pl) {
-  PROCESS *p = NULL;
-  //todo
-  return p;
+PFN convert_PageTableEntry_to_PFN(PageTableEntry pte) {
+  // todo
 }
 
-PROCESS* priority_process_selector(PROCESS_LIST* pl) {
-  PROCESS *p = NULL;
-  p = get_minimum(pl, compare_priority);
-  return p;
+
+/*
+ * Page Table Functions
+ */
+PageTableEntry get_pagetableentry__MMU_pagetable(MMU m, VPN vpn) {
+  // todo
 }
 
-PROCESS* lifo_process_selector(PROCESS_LIST* pl) {
-  PROCESS *p = NULL;
-  //todo
-  return p;
+PFN map_page__MMU_pagetable(MMU* m, VPN vpn, bool can_read, bool can_write, bool can_exec) {
+  // todo
 }
 
-PROCESS* stcf_process_selector(PROCESS_LIST* pl) {
-  PROCESS *p = NULL;
-  //todo
-  return p;
+
+/*
+ * Page Directory Functions
+ */
+
+Page* get_page(MMU m, VirtualAddress va, bool for_read, bool for_write, bool for_execute) {
+  // todo
+}
+
+char read_byte(MMU m, VirtualAddress va) {
+  // todo
+}
+
+void write_byte(MMU m, VirtualAddress va, char val) {
+  // todo
 }
