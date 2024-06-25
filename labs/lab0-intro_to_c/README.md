@@ -1,4 +1,4 @@
-# CST334 Lab 1: Introduction to C
+# CST334 Lab 0: Introduction to C
 
 The goal of this lab is to get you used to programming in C in your local environment, as well as using a few of the C debugging tools when things go wrong!
 

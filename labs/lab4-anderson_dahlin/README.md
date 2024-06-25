@@ -1,4 +1,4 @@
-# Lab 5: Anderson/Dahlin Method
+# Lab 4: Anderson/Dahlin Method
 
 In this lab we'll be constructing a thread-safe object with the Anderson/Dahlin method.
 The core idea behind this method is that we want to incrementally update our code to first produce thread-safe code, and then produce code that leverages conditional variables.

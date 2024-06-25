@@ -1,4 +1,4 @@
-# Lab 5: Process Scheduling
+# Lab 2: Process Scheduling
 
 In this lab we get to practice process scheduling, and consider how different approaches will lead to different outcomes.
 
