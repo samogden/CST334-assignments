@@ -16,7 +16,7 @@ We are using a variation of the steps found [here](https://deanmalone.net/post/h
 ### Step 1: Set up your own repository and mark it as private
 
 Start setting up a new repository via [this link](https://github.com/new).
-Give it a descriptive name with the format of `cst311-[semester]-[teamname]` and make sure to mark it as a "private" repository.  Below I use `cst311-fall2022-assignments` as my repo name, but you should change what you name yours.
+Give it a descriptive name with the format of `cst334-[semester]` and make sure to mark it as a "private" repository.  Below I use `cst334-summer2024-assignments` as my repo name, but you should change what you name yours.
 This ensures that the only people who can see it are those who you can add -- specifically your teammates. 
 
 <img src="imgs/1-new-repository-page.png" height="600">
@@ -32,7 +32,7 @@ It will warn you that you are cloning an empty repository, which is to be expect
 <img src="imgs/2-clone-empty-repo.png">
 
 Once you have created your new repository change to the directory with the command `cd [repository name]`.  
-For my example repository this would be `cd cst311-fall2022-assignments`.
+For my example repository this would be `cd cst334-summer2024-assignments`.
 
 ### Step 3: Add a new upstream
 
@@ -40,7 +40,7 @@ Add this repository as an "upstream" to your new repository.
 You do this with the following command:
 
 ```shell
-git remote add upstream https://github.com/samogden/CST311online-assignments.git
+git remote add upstream https://github.com/samogden/CST334-assignments-online.git
 # Note: this command may need to be modified if you are currently looking at a different repo than the above.
 ```
 
@@ -59,7 +59,7 @@ remote: Counting objects: 100% (83/83), done.
 remote: Compressing objects: 100% (58/58), done.
 remote: Total 83 (delta 19), reused 70 (delta 15), pack-reused 0
 Unpacking objects: 100% (83/83), 542.80 KiB | 769.00 KiB/s, done.
-From https://github.com/samogden/CST311online-assignments
+From https://github.com/samogden/CST334-assignments-online
  * branch            main       -> FETCH_HEAD
  * [new branch]      main       -> upstream/main
 ```
@@ -78,7 +78,7 @@ Compressing objects: 100% (73/73), done.
 Writing objects: 100% (83/83), 542.31 KiB | 12.33 MiB/s, done.
 Total 83 (delta 19), reused 0 (delta 0), pack-reused 0
 remote: Resolving deltas: 100% (19/19), done.
-To https://github.com/samogden/cst311-fall2022-assignments.git
+To https://github.com/samogden/cst334-summer2024-assignments.git
  * [new branch]      main -> main
 ```
 
