@@ -101,7 +101,10 @@ PROCESS* get_last_used(PROCESS_LIST* pl) {
 }
 
 PROCESS* get_next(PROCESS_LIST* pl) {
-    return pl->processes[(pl->last_used + 1) % pl->num_processes];
+  if (pl->num_processes == 0) {
+    return NULL;
+  }
+  return pl->processes[(pl->last_used + 1) % pl->num_processes];
 }
 
 PROCESS* get_prev(PROCESS_LIST* pl) {
