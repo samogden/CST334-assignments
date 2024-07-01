@@ -75,9 +75,9 @@
         "pri0_pri1_pri1", 
         "pri1_pri0_pri1", 
         "pri1_pri1_pri0",
+        
         "test_2proc_0entry_0entry_rr",
         "test_2proc_0entry_1entry_rr",
-
         "5proc_rr"
       ]
     }

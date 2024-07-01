@@ -15,6 +15,8 @@ typedef struct PROCESS {
 
     unsigned int priority; // Priority value -- lower is more important
 
+    float last_run;
+
 } PROCESS;
 
 PROCESS* create_process(float duration, unsigned int priority, float entry_time);

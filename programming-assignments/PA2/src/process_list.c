@@ -8,7 +8,6 @@
 PROCESS_LIST* create_process_list() {
     PROCESS_LIST * pl = malloc(sizeof(PROCESS_LIST));
     pl->processes = malloc(MAX_NUMBER_PROCESSES * sizeof(PROCESS*));
-    pl->last_used = -1;
     pl->num_processes = 0;
     return pl;
 }
@@ -28,7 +27,6 @@ void add_process_to_tail(PROCESS_LIST* pl, PROCESS* p) {
     }
     pl->processes[pl->num_processes] = p;
     pl->num_processes++;
-    if (pl->last_used == -1) { pl->last_used = 0; }
 }
 
 void add_process_to_head(PROCESS_LIST* pl, PROCESS* p) {
@@ -40,7 +38,6 @@ void add_process_to_head(PROCESS_LIST* pl, PROCESS* p) {
     for (int i = pl->num_processes; i > 0; i--) {
         pl->processes[i] = pl->processes[i-1];
     }
-    pl->last_used++;
     pl->processes[0] = p;
     pl->num_processes++;
 
@@ -60,52 +57,23 @@ void remove_process(PROCESS_LIST* pl, PROCESS* p) {
     for (int i = index; i < pl->num_processes; i++) {
         pl->processes[i] = pl->processes[i+1];
     }
-    if (pl->last_used >= index) {
-        pl->last_used--;
-    }
     pl->num_processes--;
 }
 
 void print_contents(PROCESS_LIST* pl) {
-    fprintf(stderr, "(print_contents) (last_used: %d) ", pl->last_used);
+    fprintf(stderr, "(print_contents)");
     if (is_empty(pl)) {
         fprintf(stderr, "[empty]\n");
         return;
     }
     for (int i = 0; i < pl->num_processes; i++) {
-        if (i == pl->last_used) {
-            fprintf(stderr, "**id=%d**", pl->processes[i]->id);
-        } else {
-            fprintf(stderr, "id=%d", pl->processes[i]->id);
-        }
+        fprintf(stderr, "id=%d", pl->processes[i]->id);
         fprintf(stderr, "(%.1f/%.1f)", pl->processes[i]->time_remaining, pl->processes[i]->duration);
         if (i != (pl->num_processes - 1)) {
             fprintf(stderr, " -> ");
         }
     }
     fprintf(stderr, "\n");
-}
-
-void mark_last_used(PROCESS_LIST* pl, PROCESS* p) {
-    for (int i = 0; i < pl->num_processes; i++) {
-        if (pl->processes[i] == p) {
-            pl->last_used = i;
-            return;
-        }
-    }
-    pl->last_used = -1;
-}
-
-PROCESS* get_last_used(PROCESS_LIST* pl) {
-    return pl->processes[pl->last_used % pl->num_processes];
-}
-
-PROCESS* get_next(PROCESS_LIST* pl) {
-    return pl->processes[(pl->last_used + 1) % pl->num_processes];
-}
-
-PROCESS* get_prev(PROCESS_LIST* pl) {
-    return pl->processes[(pl->last_used - 1) % pl->num_processes];
 }
 
 PROCESS_LIST* get_incomplete_processes(PROCESS_LIST* processes_in) {
@@ -116,7 +84,6 @@ PROCESS_LIST* get_incomplete_processes(PROCESS_LIST* processes_in) {
         add_process_to_tail(incomplete_processes, processes_in->processes[i]);
       }
     }
-    mark_last_used(incomplete_processes, processes_in->processes[processes_in->last_used]);
     return incomplete_processes;
 }
 
@@ -129,7 +96,6 @@ PROCESS_LIST* get_entered_processes(PROCESS_LIST* all_process, float curr_time) 
             entered_processes->processes[entered_processes->num_processes++] = all_process->processes[i_all];
         }
     }
-    mark_last_used(entered_processes, all_process->processes[all_process->last_used]);
     return entered_processes;
 }
 

@@ -19,6 +19,7 @@ PROCESS* create_process(float duration, unsigned int priority, float entry_time)
     p->priority = priority;
     p->entry_time = entry_time;
     p->time_remaining = duration;
+    p->last_run = 0.0;
 
     return p;
 }
