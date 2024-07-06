@@ -42,10 +42,6 @@ The idea, is that we have a list of nodes tracking whether they are free or not,
 
 You will be writing the pieces that find free memory, split chunks, free chunks, coalesce chunks, allocate, and free memory!
 
-Also, there are a few questions scattered throughout the source code that you need to answer for the checkpoint this week!
-I've labeled them with "question".
-Note that these are not _just_ in `student_code.*`.
-
 ### Functions you'll be writing
 
 ```c
