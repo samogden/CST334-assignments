@@ -44,17 +44,3 @@ Test(Functions, find_free_page) {
   }
   cr_assert(find_free_page(*m) == num_pages_to_preallocate);
 }
-
-Test(Functions, find_free_page) {
-  srand ( time(NULL) );
-  MMU* m = malloc(sizeof(MMU));
-  m->page_used = (bool*)malloc(NUM_FRAMES*sizeof(bool));
-  int num_pages_to_preallocate = rand() % (NUM_FRAMES / 2);
-  for (int i = 0; i < num_pages_to_preallocate; i++) {
-    m->page_used[i] = true;
-  }
-  cr_assert(find_free_page(*m) == num_pages_to_preallocate);
-}
-
-
-
