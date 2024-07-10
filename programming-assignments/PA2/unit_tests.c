@@ -12,13 +12,13 @@
 #include "tests/unittests_end2end.c"
 
 
-TestSuite(HelperFunctions,  .disabled=false);
-TestSuite(PRIORITY,         .disabled=false);
-TestSuite(STCF,             .disabled=false);
-TestSuite(SJF,              .disabled=false);
-TestSuite(LIFO,             .disabled=false);
-TestSuite(FIFO,             .disabled=false);
-TestSuite(RR,               .disabled=false);
+TestSuite(HelperFunctions,  .disabled=false, .timeout=60.0);
+TestSuite(PRIORITY,         .disabled=false, .timeout=60.0);
+TestSuite(STCF,             .disabled=false, .timeout=60.0);
+TestSuite(SJF,              .disabled=false, .timeout=60.0);
+TestSuite(LIFO,             .disabled=false, .timeout=60.0);
+TestSuite(FIFO,             .disabled=false, .timeout=60.0);
+TestSuite(RR,               .disabled=false, .timeout=60.0);
 
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
