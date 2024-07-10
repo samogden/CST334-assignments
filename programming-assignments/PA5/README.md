@@ -42,6 +42,10 @@ void write_unlock(PlayerDatabase* db) {
 }
 ```
 
+***Note:***
+When you start some of the tests will already pass.
+These will continue to pass until you implement some of the assigned functions, and them beginning to fail is expected behavior.
+
 #### Scoring
 
 For this assignment, scoring works a little bit differently.  Instead of being scored on the individual functions, I have implemented tests that will test parts of how you implement the functions.

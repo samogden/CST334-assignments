@@ -7,9 +7,9 @@
 #include "tests/unittests_free.c"
 
 
-TestSuite(Functions, .disabled=false);
-TestSuite(Alloc, .disabled=false);
-TestSuite(Free, .disabled=false);
+TestSuite(Functions, .disabled=false, .timeout=10.0);
+TestSuite(Alloc, .disabled=false, .timeout=10.0);
+TestSuite(Free, .disabled=false, .timeout=10.0);
 
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
