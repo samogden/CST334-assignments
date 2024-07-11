@@ -34,6 +34,14 @@ Test(Functions, is_execute_enabled) {
   cr_assert(is_execute_enabled(pte));
 }
 
+Test(Functions, convert_PageTableEntry_to_PFN) {
+  PageTableEntry pte = (PageTableEntry)0b1111;
+  pte = pte << (NUM_BITS_IN_BYTE * sizeof(PageTableEntry)-4);
+  cr_assert( pte != 0x0);
+  pte = convert_PageTableEntry_to_PFN(pte);
+  cr_assert( pte == 0x0);
+}
+
 Test(Functions, find_free_page) {
   srand ( time(NULL) );
   MMU* m = malloc(sizeof(MMU));
