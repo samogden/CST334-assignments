@@ -13,7 +13,7 @@ HEADERS = $(wildcard src/*.h)
 TARGET = unit_tests
 
 
-all: clean unit_tests
+all: clean debug unit_tests
 	./unit_tests -j1 --timeout 30
 
 # Rule to build the executable

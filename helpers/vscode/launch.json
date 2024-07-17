@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+        "name": "(gdb) Pipe Launch",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "/debug/debug",
+        "cwd": "/debug",
+        "args": [],
+        "stopAtEntry": true,
+        "environment": [],
+        "externalConsole": true,
+        "sourceFileMap": { "/debug": "${workspaceFolder}" },
+
+        "pipeTransport": {
+            "debuggerPath": "/usr/bin/gdb",
+            "pipeProgram": "docker",
+            "pipeArgs": ["exec", "-i", "debug_vsc", "sh", "-c"],
+            "pipeCwd": "${workspaceRoot}"
+        },
+        "MIMode": "gdb",
+        "setupCommands": [{
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+        }]
+    }]
+}

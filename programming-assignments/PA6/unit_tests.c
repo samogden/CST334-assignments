@@ -1,17 +1,19 @@
 #include <criterion/criterion.h>
 #include <signal.h>
 #include "src/common.h"
+#include "time.h"
 
-#include "tests/unittests_locks.c"
-#include "tests/unittests_conditions.c"
-#include "tests/unittests_server.c"
-#include <pthread.h>
+#include "tests/unittests_numeral.c"
+#include "tests/unittests_operator.c"
+#include "tests/unittests_expressions.c"
+#include "tests/unittests_parser.c"
+#include "tests/unittests_evaluation.c"
 
-
-TestSuite(Locks, .disabled=false);
-TestSuite(Conditions, .disabled=false);
-TestSuite(Server, .disabled=false);
-
+TestSuite(Numeral, .disabled=false, .timeout=60.0);
+TestSuite(Operator, .disabled=false, .timeout=60.0);
+TestSuite(Expression, .disabled=false, .timeout=60.0);
+TestSuite(Parser, .disabled=false, .timeout=60.0);
+TestSuite(Evaluation, .disabled=false, .timeout=60.0);
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
 // PRE_TEST: occurs after the test initialization, but before the test is run.

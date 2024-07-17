@@ -2,14 +2,23 @@
 #include <signal.h>
 #include "src/common.h"
 
-#include "tests/unittests_functions.c"
-#include "tests/unittests_alloc.c"
-#include "tests/unittests_free.c"
+#include "tests/unittests_helpers.c"
+#include "tests/unittests_fifo.c"
+#include "tests/unittests_priority.c"
+#include "tests/unittests_lifo.c"
+#include "tests/unittests_sjf.c"
+#include "tests/unittests_stcf.c"
+#include "tests/unittests_rr.c"
+#include "tests/unittests_end2end.c"
 
 
-TestSuite(Functions, .disabled=false);
-TestSuite(Alloc, .disabled=false);
-TestSuite(Free, .disabled=false);
+TestSuite(HelperFunctions,  .disabled=false, .timeout=60.0);
+TestSuite(PRIORITY,         .disabled=false, .timeout=60.0);
+TestSuite(STCF,             .disabled=false, .timeout=60.0);
+TestSuite(SJF,              .disabled=false, .timeout=60.0);
+TestSuite(LIFO,             .disabled=false, .timeout=60.0);
+TestSuite(FIFO,             .disabled=false, .timeout=60.0);
+TestSuite(RR,               .disabled=false, .timeout=60.0);
 
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c

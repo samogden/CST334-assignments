@@ -1,54 +1,97 @@
+#ifndef __student_code_h__
+#define __student_code_h__
 
-#ifndef PROJECTS_STUDENT_CODE_H
-#define PROJECTS_STUDENT_CODE_H
+#include "defines.h"
+#include "memory_management_unit.h"
 
-#define GROUP_MAX_SIZE 50
+/* Page Helpers */
+/**
+ * Checks whether the given page table entry represents a valid entry or not.  Note that this is done by checking the leading bits.
+ * @param pte
+ * @return
+ */
+bool is_entry_valid(PageTableEntry pte);
 
-#include "stdio.h"
+/**
+ * Checks whether the given page table entry can be read or not.  Note that this is done by checking the leading bits.
+ * @param pte
+ * @return
+ */
+bool is_read_enabled(PageTableEntry pte);
 
-// String Functions
-int get_str_length(char* str);
-char* copy_str(char* str);
-void truncate_string(char* str, int new_length);
-void to_uppercase(char* str);
-void to_lowercase(char* str);
-int find_first_index(char* str, char target);
-int find_last_index(char* str, char target);
+/**
+ * Checks whether the given page table entry can be written or not.  Note that this is done by checking the leading bits.
+ * @param pte
+ * @return
+ */
+bool is_write_enabled(PageTableEntry pte);
 
-// Structs
-typedef struct Person {
-    char first_name[50];
-    char last_name[50];
-    int age;
-} Person;
+/**
+ * Checks whether the given page table entry can be read or not.  Note that this is done by checking the leading bits.
+ * @param pte
+ * @return
+ */
+bool is_execute_enabled(PageTableEntry pte);
 
-typedef struct Group {
-    // We want a group of up to GROUP_MAX_SIZE, with a count of how many people we have
-    void* group_name; // todo: Make a field to name the group called "group_name"
-    void *group_members[GROUP_MAX_SIZE]; // todo: Make a field to store up to GROUP_MAX_SIZE people called "group_members"
-    void* num_members; // todo: Make a field to track how many members we have called "num_members"
-} Group;
+/* MMU Helpers*/
+/**
+ * Given a page table entry, with metadata bits, remove the metadata bits to leave just the PFN we need to index into the physical memory
+ * @param pte
+ * @return
+ */
+PFN convert_PageTableEntry_to_PFN(PageTableEntry pte); // Removes the extra information
+/**
+ * Search for the next available page frame that we can allocate for a mapped page.
+ * @param m
+ * @return
+ */
+PFN find_free_page(MMU m);
 
-Person person_make_new(char* first_name, char* last_name, int age);
-char* person_to_string(Person person);
+/* Page Table Functions */
+/**
+ * Map a new page into the page table by finding a free page frame and setting the appropriate metadata.
+ * @param m
+ * @param vpn
+ * @param can_read
+ * @param can_write
+ * @param can_exec
+ */
+PFN map_page__MMU_pagetable(MMU* m, VPN vpn, bool can_read, bool can_write, bool can_exec);
 
-Group group_make_new(char* group_name);
-int num_people_in_group(Group group);
-int free_spaces_in_group(Group group);
-int add_person(Group* group, Person* person_to_add); // Reject if group is full
-int remove_person(Group* group, Person* person_to_remove); // Reject if person isn't in group
+/**
+ * Search the page table for the entry related to the given virtual address.
+ * @param m
+ * @param vpn
+ * @return
+ */
+PageTableEntry get_pagetableentry__MMU_pagetable(MMU m, VirtualAddress vpn);
 
-//Processes
-int fork_and_return_child();
-int fork_and_return_parent();
-int make_exec_call(char* program_to_call, char** arguments, int* errno);
+/* End to End functions that are the same regardless of MMU type */
+/**
+ * Given an MMU and a virtual address search for the corresponding page in physical memory.  Note that checks should be done for permissions.
+ * @param m
+ * @param a
+ * @param for_read
+ * @param for_write
+ * @param for_execute
+ * @return
+ */
+Page* get_page(MMU m, VirtualAddress a, bool for_read, bool for_write, bool for_execute);
 
-// System Calls
-FILE* open_file_to_read(char* path_to_file);
-FILE* open_file_to_write(char* path_to_file);
-FILE* open_file_to_readwrite(char* path_to_file);
-void write_str_to_fid(char* str, FILE* fid);
-char* read_str_from_fid(FILE* f, int max_chars);
-void close_fid(FILE* fid);
+/**
+ * Write a byte to the given virtual address
+ * @param m
+ * @param va
+ * @param val
+ */
+void write_byte(MMU m, VirtualAddress va, char val);
 
-#endif //PROJECTS_STUDENT_CODE_H
+/**
+ * Read a byte from the given virtual address
+ * @param m
+ * @param va
+ * @return
+ */
+char read_byte(MMU m, VirtualAddress va);
+
+#endif

@@ -1,13 +1,13 @@
 
 #include "src/student_code.h"
-#include "src/server.h"
+#include "src/tokenizer.h"
+#include "src/common.h"
 
 int main() {
-  setup();
-  pthread_t* t = make_request_async("do_slow_thing 2");
-  char* return_val;
-  pthread_join(*t, (void**)&return_val);
-  printf("Returned: \"%s\"\n", return_val);
-  teardown();
+  Tokenizer t = init__tokenizer("Hello out there");
+  while ( ! is_done(t)) {
+    log_debug("token: %s\n", t.token);
+    next_token(&t);
+  }
   return 0;
 }

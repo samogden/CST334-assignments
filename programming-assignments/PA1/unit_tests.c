@@ -8,10 +8,10 @@
 #include "tests/unittests_substitution.c"
 
 
-TestSuite(String, .disabled=false);
-TestSuite(Struct, .disabled=false);
-TestSuite(CaesarCipher, .disabled=false);
-TestSuite(SubstitutionrCipher, .disabled=false);
+TestSuite(String, .disabled=false, .timeout=60.0);
+TestSuite(Struct, .disabled=false, .timeout=60.0);
+TestSuite(CaesarCipher, .disabled=false, .timeout=60.0);
+TestSuite(SubstitutionrCipher, .disabled=false, .timeout=60.0);
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
 // PRE_TEST: occurs after the test initialization, but before the test is run.

@@ -14,7 +14,7 @@ TARGET = unit_tests
 
 
 all: clean unit_tests
-	./unit_tests -j1 --timeout 30
+	./unit_tests -j1 --timeout 60
 
 # Rule to build the executable
 unit_tests: unit_tests.c bin $(OBJS) $(TEST)
@@ -23,6 +23,10 @@ unit_tests: unit_tests.c bin $(OBJS) $(TEST)
 # Rule to build the debug executable
 debug: debug.c bin $(OBJS) $(TEST)
 	$(CC) $(CFLAGS) debug.c -o $@ $(OBJS)
+
+# Rule to build the calculator executable
+calculator: calculator.c bin $(OBJS) $(TEST)
+	$(CC) $(CFLAGS) calculator.c -o $@ $(OBJS)
 
 # Rule to compile .c files into .o files
 bin/%.o: src/%.c $(HEADERS) $(TEST)
@@ -33,7 +37,7 @@ grade:
 
 # Clean rule to remove object files and the executable
 clean:
-	rm -rf bin unit_tests debug
+	rm -rf bin unit_tests debug calculator
 
 bin:
 	mkdir -p bin
