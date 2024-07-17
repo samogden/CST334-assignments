@@ -1,4 +1,6 @@
 [safe]
-    directory = *
+    directory = /tmp/hw
+    directory = /tmp/lab
+    directory = /tmp/programming
 [pull]
     rebase = false

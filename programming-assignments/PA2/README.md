@@ -165,6 +165,8 @@ I strongly recommend starting by looking at the `priority_process_selector` func
 Look at what it's doing and what functions it is using.
 You need to fix it anyway, and it gives a pattern for a way to approach the other selectors.
 
+***Question:*** Draw out a picture of the layout of memory when we have a bit of it allocated.  Include all of the pointers in the nodes and indicate which will have to change when we split the node.
+
 ## What to submit
 
 You'll be submitting ***only*** `student_code.c` and `student_code.h`.

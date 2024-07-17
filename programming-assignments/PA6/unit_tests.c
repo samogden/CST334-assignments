@@ -9,11 +9,11 @@
 #include "tests/unittests_parser.c"
 #include "tests/unittests_evaluation.c"
 
-TestSuite(Numeral, .disabled=false);
-TestSuite(Operator, .disabled=false);
-TestSuite(Expression, .disabled=false);
-TestSuite(Parser, .disabled=false);
-TestSuite(Evaluation, .disabled=false);
+TestSuite(Numeral, .disabled=false, .timeout=60.0);
+TestSuite(Operator, .disabled=false, .timeout=60.0);
+TestSuite(Expression, .disabled=false, .timeout=60.0);
+TestSuite(Parser, .disabled=false, .timeout=60.0);
+TestSuite(Evaluation, .disabled=false, .timeout=60.0);
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
 // PRE_TEST: occurs after the test initialization, but before the test is run.

@@ -204,21 +204,21 @@ void mem_free(void *ptr){
 
 }
 
-void insert_into_freelist(node_t* chunk, node_t* _chunklist) {
-  // Keep it ordered by address
-  node_t* curr_node = _chunklist
-  while (curr_node != NULL && curr_node > chunk ) {
-    curr_node = curr_node->fwd;
-  }
-  
-  if (curr_node == NULL) {
-    // We're at the very end of the list
-    curr_node->fwd->bwd = chunk;
-    chunk->fwd = curr_node->fwd->bwd;
-    curr_node->fwd = chunk;
-    chunk->bwd = curr_node;
-  } else {
-    // We're in the middle of the list
-  }
-}
+//void insert_into_freelist(node_t* chunk, node_t* _chunklist) {
+//  // Keep it ordered by address
+//  node_t* curr_node = _chunklist
+//  while (curr_node != NULL && curr_node > chunk ) {
+//    curr_node = curr_node->fwd;
+//  }
+//
+//  if (curr_node == NULL) {
+//    // We're at the very end of the list
+//    curr_node->fwd->bwd = chunk;
+//    chunk->fwd = curr_node->fwd->bwd;
+//    curr_node->fwd = chunk;
+//    chunk->bwd = curr_node;
+//  } else {
+//    // We're in the middle of the list
+//  }
+//}
 
