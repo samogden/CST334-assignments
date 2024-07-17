@@ -8,52 +8,6 @@ This allows it to run much faster, but is also much harder to understand.
 
 In this lab we'll be talking about compilation flags and we'll be trying out a tool, `gdb` to help is isolate memory issues and figure out what's going wrong.
 
-## Getting Started
-
-First things first, create a google document called "Lab1".
-You will be saving screenshots and other responses in this document and submit it on canvas after we're done!
-
-### Step 0: Preparation
-
-Make sure that you've gone through the steps to install docker and get it running as per the slides on canvas.
-
-Additionally, create a google document (or microsoft word, or apple pages, if you prefer) titled "Lab 1"
-
-### Step 1: Start Docker
-
-First, navigate to your working directory in your terminal of choice (e.g. PowerShell on Windows or Terminal on macOS) and type in the following command:
-```bash
-docker run -it --rm -v ${PWD}:/tmp/lab samogden/cst334
-```
-
-This will start docker and mount the current folder inside of it, giving us access to our shared files.
-
-Next, run the below command to change directory.
-
-```bash
-cd /tmp/lab
-```
-
-Because this folder was mounted with the `-v ${PWD}:/tmp/lab` flag when we started the docker image it is shared with our host operating system allowing us to edit files locally and have the changes automatically appear in the docker image.
-
-
-### Step 2: Downloading the starter code
-
-Type the following into your terminal:
-```bash
-git clone https://github.com/samogden/CST334-assignments
-```
-
-This will download the a git repository containing the lab data files.
-To change to the directory containing the files for this lab (including a copy of this file) run the below commands.
-
-```bash
-cd CST334-assignments
-cd labs
-cd lab1-debugging_with_gdb
-```
-
-
 ---
 > <b>Common Issues</b>
 > 
