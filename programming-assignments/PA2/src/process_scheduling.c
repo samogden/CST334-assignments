@@ -57,7 +57,7 @@ SCHEDULER_STATS* process_scheduling_loop(SCHEDULER_PARAMS params, SCHEDULER_STAT
 
     if (selected_process != NULL) {
       run(selected_process, stats, curr_time);
-      mark_last_used(processes_to_schedule, selected_process);
+      selected_process->last_run = curr_time;
     }
 
     curr_time += next_time_slice;

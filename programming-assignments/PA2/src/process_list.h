@@ -12,7 +12,6 @@
 typedef struct PROCESS_LIST {
     PROCESS** processes;
     int num_processes;
-    int last_used;
 } PROCESS_LIST;
 
 PROCESS_LIST* create_process_list();
@@ -25,10 +24,6 @@ void add_process_to_head(PROCESS_LIST* pl, PROCESS* p); // Adds a new process to
 void remove_process(PROCESS_LIST* pl, PROCESS* p); // Removes a process from the list
 
 void print_contents(PROCESS_LIST* pl);
-
-PROCESS* get_last_used(PROCESS_LIST* pl);
-PROCESS* get_next(PROCESS_LIST* pl);
-PROCESS* get_prev(PROCESS_LIST* pl);
 
 // Question: What's the 2nd parameter passed into this function being used for?
 PROCESS* get_minimum(PROCESS_LIST* pl, int (*compare_function)(PROCESS, PROCESS));
