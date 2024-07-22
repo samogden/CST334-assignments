@@ -27,12 +27,12 @@ int main() {
     if (result.eval_type == eval_error) {
       log_error("Failed to evaluate.\n");
       switch (result.err_type) {
-        case err_dividebyzero:
+      case err_dividebyzero:
         log_error("Divide by zero detected.\n");
-          break;
-        case err_nonliteralfound:
+        break;
+      case err_nonliteralfound:
         log_error("Non-literal found in expression.\n");
-          break;
+        break;
       }
       continue;
     } else {

@@ -4,13 +4,13 @@
 
 MMU new__MMU_pagetable() {
   MMU m = {
-      .page_pointer = calloc(NUM_PAGES, sizeof(PageTableEntry)),
-      .physical_memory = calloc(NUM_FRAMES, PAGE_SIZE),
-      .page_used = calloc(NUM_FRAMES, sizeof(bool)),
+    .page_pointer = calloc(NUM_PAGES, sizeof(PageTableEntry)),
+    .physical_memory = calloc(NUM_FRAMES, PAGE_SIZE),
+    .page_used = calloc(NUM_FRAMES, sizeof(bool)),
 
       // simple specific functions
-      .get_pagetableentry = get_pagetableentry__MMU_pagetable,
-      .map_page = map_page__MMU_pagetable,
+    .get_pagetableentry = get_pagetableentry__MMU_pagetable,
+    .map_page = map_page__MMU_pagetable,
   };
   return m;
 }

@@ -10,30 +10,30 @@ unsigned int next_id = 0;
 
 PROCESS* create_process(float duration, unsigned int priority, float entry_time) {
 
-    // First, create_process a new object using malloc
-    PROCESS* p = malloc(sizeof(PROCESS));
+  // First, create_process a new object using malloc
+  PROCESS* p = malloc(sizeof(PROCESS));
 
-    // Next, set the fields of the object
-    p->id = next_id++;
-    p->duration = duration;
-    p->priority = priority;
-    p->entry_time = entry_time;
-    p->time_remaining = duration;
-    p->last_run = 0.0;
+  // Next, set the fields of the object
+  p->id = next_id++;
+  p->duration = duration;
+  p->priority = priority;
+  p->entry_time = entry_time;
+  p->time_remaining = duration;
+  p->last_run = 0.0;
 
-    return p;
+  return p;
 }
 
 void delete_process(PROCESS* process) {
-    free(process);
+  free(process);
 }
 
 void describe_process(PROCESS* p) {
-    printf("p->id: %d\n", p->id);
-    printf("p->duration: %f\n", p->duration);
-    printf("p->priority: %d\n", p->priority);
-    printf("p->entry_time: %f\n", p->entry_time);
-    printf("p->time_remaining: %f\n", p->time_remaining);
+  printf("p->id: %d\n", p->id);
+  printf("p->duration: %f\n", p->duration);
+  printf("p->priority: %d\n", p->priority);
+  printf("p->entry_time: %f\n", p->entry_time);
+  printf("p->time_remaining: %f\n", p->time_remaining);
 }
 
 void run(PROCESS* p, SCHEDULER_STATS* stats, float curr_time) {

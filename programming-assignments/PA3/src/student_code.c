@@ -66,7 +66,7 @@ int init(size_t size) {
   _chunklist -> bwd = NULL;
   _chunklist -> is_free = true;
 
-   return size;
+  return size;
 }
 
 int destroy() {

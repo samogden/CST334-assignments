@@ -125,11 +125,11 @@ Test(Alloc, test_allocation_withsplits){
 
 	// Test: Only split if the process of splitting would leaves
 	// enough room for another chunk.
-	init(page_size);
+  init(page_size);
   buff = mem_alloc(64);
 	//This should leave 10 bytes remaining in the arena
   size = page_size - 64 - (sizeof(node_t) * 2) - 10;
-	buff2 = mem_alloc(size);
+  buff2 = mem_alloc(size);
 
   header2 = (node_t *)(buff2 - sizeof(node_t));
 

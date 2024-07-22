@@ -42,10 +42,10 @@ Test(Functions, convert_PageTableEntry_to_PFN) {
   for (int i = 0; i < NUM_REPEATS; i++) {
     VirtualAddress addr_to_test = rand() % PAGE_SIZE;
     PageTableEntry pte = (PageTableEntry)addr_to_test
-      | single_bit_mask(VALID_BIT)
-      | single_bit_mask(READ_BIT)
-      | single_bit_mask(WRITE_BIT)
-      | single_bit_mask(EXEC_BIT);
+    | single_bit_mask(VALID_BIT)
+    | single_bit_mask(READ_BIT)
+    | single_bit_mask(WRITE_BIT)
+    | single_bit_mask(EXEC_BIT);
     cr_assert( pte != addr_to_test);
     pte = convert_PageTableEntry_to_PFN(pte);
     cr_assert( pte == addr_to_test );

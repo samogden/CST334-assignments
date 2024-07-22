@@ -127,7 +127,7 @@ Test(Operator, parse_operator__invalid2, .init=setup, .fini=teardown, .timeout=3
       "%c%c",
       valid_operators[rand() % 4],
       c
-    );
+      );
 
     // Tokenize our test string
     Tokenizer t = init__tokenizer(test_str);

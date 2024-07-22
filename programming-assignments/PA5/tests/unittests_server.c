@@ -19,12 +19,12 @@ Test(Server, is_server_threaded, .init=setup, .fini=teardown, .timeout=3, .disab
 
 
 Test(Server,
-     increment_test,
-     .init=setup,
-     .fini=teardown,
-     .timeout=NUM_PLAYS*2,
-     .disabled=false
-       ) {
+ increment_test,
+ .init=setup,
+ .fini=teardown,
+ .timeout=NUM_PLAYS*2,
+ .disabled=false
+ ) {
   log_debug("Testing server increment_test....\n")
   pthread_t* threads[NUM_PLAYS];
   make_request("add_player sam");
@@ -54,35 +54,35 @@ Test(Server,
   cr_assert_str_eq(
     (char*)make_request("get_player_plays sam"),
     expected_response
-  );
+    );
 
   sprintf(expected_response, "%d", high_score);
   cr_assert_str_eq(
     (char*)make_request("get_player_high_score sam"),
     expected_response
-  );
+    );
 
   cr_assert_str_eq(
     (char*)make_request("get_best_player"),
     "sam"
-  );
+    );
 
   cr_assert_str_eq(
     (char*)make_request("get_num_players"),
     "1"
-  );
+    );
 
   sprintf(expected_response, "%d", 2*NUM_PLAYS);
   cr_assert_str_eq(
     (char*)make_request("get_highest_score"),
     expected_response
-  );
+    );
 
   sprintf(expected_response, "%d", NUM_PLAYS);
   cr_assert_str_eq(
     (char*)make_request("get_total_plays"),
     expected_response
-  );
+    );
 }
 
 
@@ -122,44 +122,44 @@ Test(Server, increment_test_two_users, .init=setup, .fini=teardown, .timeout=NUM
   cr_assert_str_eq(
     (char*)make_request("get_player_plays sam0"),
     expected_response
-  );
+    );
   cr_assert_str_eq(
     (char*)make_request("get_player_plays sam1"),
     expected_response
-  );
+    );
 
   cr_assert_str_eq(
     (char*)make_request("get_best_player"),
     "sam1"
-  );
+    );
 
   cr_assert_str_eq(
     (char*)make_request("get_num_players"),
     "2"
-  );
+    );
 
   sprintf(expected_response, "%d", high_score);
   cr_assert_str_eq(
     (char*)make_request("get_highest_score"),
     expected_response
-  );
+    );
 
   sprintf(expected_response, "%d", NUM_PLAYS);
   cr_assert_str_eq(
     (char*)make_request("get_total_plays"),
     expected_response
-  );
+    );
 }
 
 
 
 
 Test(Server,
-     increment_test_two_users_mixed_workload,
-     .init=setup,
-     .fini=teardown,
+ increment_test_two_users_mixed_workload,
+ .init=setup,
+ .fini=teardown,
      .timeout=(NUM_PLAYS+5)*TIME_DELAY // The duration, plus a few extra for the tests below
-       ) {
+     ) {
   log_debug("Testing server increment_test_two_users_mixed_workload....\n")
   pthread_t* threads[NUM_PLAYS];
   make_request("add_player sam0");
@@ -175,34 +175,34 @@ Test(Server,
 
   for (int i = 0; i < NUM_PLAYS; i++) {
     switch (rand() % 6) {
-      case 0:
-        score = rand() % 1000;
-        sprintf(msg[i], "add_player_score sam0 %d", score);
-        plays_0++;
-        if (score > high_score_0) {
-          high_score_0 = score;
-        }
-        break;
-      case 1:
-        score = rand() % 1000;
-        sprintf(msg[i], "add_player_score sam1 %d", score);
-        plays_1++;
-        if (score > high_score_1) {
-          high_score_1 = score;
-        }
-        break;
-      case 2:
-        sprintf(msg[i], "get_total_plays");
-        break;
-      case 3:
-        sprintf(msg[i], "get_best_player");
-        break;
-      case 4:
-        sprintf(msg[i], "get_player_plays sam0");
-        break;
-      case 5:
-        sprintf(msg[i], "get_num_players");
-        break;
+    case 0:
+      score = rand() % 1000;
+      sprintf(msg[i], "add_player_score sam0 %d", score);
+      plays_0++;
+      if (score > high_score_0) {
+        high_score_0 = score;
+      }
+      break;
+    case 1:
+      score = rand() % 1000;
+      sprintf(msg[i], "add_player_score sam1 %d", score);
+      plays_1++;
+      if (score > high_score_1) {
+        high_score_1 = score;
+      }
+      break;
+    case 2:
+      sprintf(msg[i], "get_total_plays");
+      break;
+    case 3:
+      sprintf(msg[i], "get_best_player");
+      break;
+    case 4:
+      sprintf(msg[i], "get_player_plays sam0");
+      break;
+    case 5:
+      sprintf(msg[i], "get_num_players");
+      break;
     }
     threads[i] = make_request_async(msg[i]);
     fsleep(TIME_DELAY / 100.0);
@@ -220,30 +220,30 @@ Test(Server,
   cr_assert_str_eq(
     (char*)make_request("get_player_plays sam0"),
     expected_response
-  );
+    );
   sprintf(expected_response, "%d", plays_1);
   cr_assert_str_eq(
     (char*)make_request("get_player_plays sam1"),
     expected_response
-  );
+    );
 
   cr_assert_str_eq(
     (char*)make_request("get_num_players"),
     "2"
-  );
+    );
 
   int high_score = (high_score_0 > high_score_1) ? high_score_0 : high_score_1;
   sprintf(expected_response, "%d", high_score);
   cr_assert_str_eq(
     (char*)make_request("get_highest_score"),
     expected_response
-  );
+    );
 
   sprintf(expected_response, "%d", plays_0 + plays_1);
   cr_assert_str_eq(
     (char*)make_request("get_total_plays"),
     expected_response
-  );
+    );
 
   double time_end = currentTime();
   log_debug("run time: %f\n", (time_end - time_start));

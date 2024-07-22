@@ -137,7 +137,7 @@ char* exec_request(char** args) {
       response,
       "%d",
       add_player(&db, args[1])
-    );
+      );
   } else if (strcmp("add_player_score", func_name) == 0) {
 
     if (args[2] == NULL) {
@@ -150,7 +150,7 @@ char* exec_request(char** args) {
         MAX_STR_LENGTH - 1,
         "%d",
         add_player_score(&db, args[1], score)
-      );
+        );
     }
 
   } else if (strcmp("get_player_plays", func_name) == 0) {
@@ -159,14 +159,14 @@ char* exec_request(char** args) {
       MAX_STR_LENGTH-1,
       "%d",
       get_player_plays(&db, args[1])
-    );
+      );
   } else if (strcmp("get_player_high_score", func_name) == 0) {
     snprintf(
       response,
       MAX_STR_LENGTH-1,
       "%d",
       get_player_high_score(&db, args[1])
-    );
+      );
 
 
   } else if (strcmp("get_best_player", func_name) == 0) {
@@ -175,28 +175,28 @@ char* exec_request(char** args) {
       MAX_STR_LENGTH-1,
       "%s",
       get_best_player(&db)
-    );
+      );
   } else if (strcmp("get_num_players", func_name) == 0) {
     snprintf(
       response,
       MAX_STR_LENGTH-1,
       "%d",
       get_num_players(&db)
-    );
+      );
   } else if (strcmp("get_highest_score", func_name) == 0) {
     snprintf(
       response,
       MAX_STR_LENGTH-1,
       "%d",
       get_highest_score(&db)
-    );
+      );
   } else if (strcmp("get_total_plays", func_name) == 0) {
     snprintf(
       response,
       MAX_STR_LENGTH-1,
       "%d",
       get_total_plays(&db)
-    );
+      );
 
 
   } else if (strcmp("do_slow_thing", func_name) == 0) {
@@ -205,7 +205,7 @@ char* exec_request(char** args) {
       MAX_STR_LENGTH-1,
       "%d",
       do_slow_thing((float)atoi(args[1]))
-    );
+      );
 
 
   } else {
