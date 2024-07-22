@@ -1,9 +1,3 @@
-
-#include <criterion/criterion.h>
-#include "../src/helper.h"
-#include "../src/parser.h"
-#include "time.h"
-
 char* generate_random_identifier(int length) {
   char* str = calloc(length + 1, sizeof(char));
   for (int i = 0; i < length; i++) {

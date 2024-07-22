@@ -1,10 +1,3 @@
-
-#include <criterion/criterion.h>
-#include "../src/helper.h"
-#include "../src/parser.h"
-#include "time.h"
-
-
 Test(Evaluation, evaluate__numeral_simple, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Note: these tests won't work without already having completed parsing

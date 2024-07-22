@@ -1,10 +1,3 @@
-
-#include <criterion/criterion.h>
-#include "../src/helper.h"
-#include "../src/parser.h"
-#include "time.h"
-
-
 Test(Parser, parse_simple__good, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   char* test_str = "1";

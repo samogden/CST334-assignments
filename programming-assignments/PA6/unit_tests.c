@@ -1,8 +1,13 @@
 #include <criterion/criterion.h>
 #include <signal.h>
 #include <common.h>
-#include "time.h"
+#include <time.h>
 
+// Include src
+#include "src/helper.h"
+#include "src/parser.h"
+
+// Include unit tests
 #include "tests/unittests_numeral.c"
 #include "tests/unittests_operator.c"
 #include "tests/unittests_expressions.c"

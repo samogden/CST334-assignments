@@ -1,10 +1,3 @@
-
-#include <criterion/criterion.h>
-#include "../src/helper.h"
-#include "../src/parser.h"
-#include "time.h"
-
-
 Test(Operator, parse_operator__addition, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
 
   // Tokenize our operator
