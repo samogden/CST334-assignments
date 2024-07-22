@@ -1,11 +1,3 @@
-
-#include <criterion/criterion.h>
-#include <stdio.h>
-#include "../src/student_code.h"
-#include "../src/defines.h"
-
-#define NUMBER_OF_REPEATS 10
-
 Test(MMU_PageTable, get_pagetableentry__MMU_pagetable) {
   // See the random number
   srand( time(NULL) );

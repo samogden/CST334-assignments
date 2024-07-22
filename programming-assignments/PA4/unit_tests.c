@@ -2,6 +2,14 @@
 #include <signal.h>
 #include <common.h>
 
+// Include src code
+#include "src/student_code.h"
+#include "src/defines.h"
+
+// Define any testing parameters
+#define NUMBER_OF_REPEATS 10
+
+// Include unit tests
 #include "tests/unittests_functions.c"
 #include "tests/unittests_mmu_pagetable.c"
 
