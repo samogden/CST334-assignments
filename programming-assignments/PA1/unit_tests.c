@@ -1,7 +1,12 @@
 #include <criterion/criterion.h>
 #include <signal.h>
 #include <common.h>
+#include <limits.h>
 
+// Pull in our code
+#include "src/student_code.h"
+
+// Pull in our actual tests
 #include "tests/unittests_string.c"
 #include "tests/unittests_struct.c"
 #include "tests/unittests_caesar.c"

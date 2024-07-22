@@ -1,9 +1,3 @@
-
-#include <criterion/criterion.h>
-#include <limits.h>
-#include "../src/student_code.h"
-
-
 Test(String, get_str_length, .disabled=false) {
   char test_str1[] = "hello";
   char test_str2[] = "out";

@@ -1,9 +1,3 @@
-
-#include <criterion/criterion.h>
-#include <limits.h>
-#include "../src/student_code.h"
-
-
 Test(SubstitutionCipher, is_reversible, .disabled=false) {
   // Check to see if the translation table is isomorphic
   int encryption_key[26];

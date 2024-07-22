@@ -1,10 +1,3 @@
-
-
-#include <criterion/criterion.h>
-
-#include "../src/student_code.h"
-
-
 Test(Struct, person_make_new, .disabled=false) {
   Person p = person_make_new("Sam", "Ogden", 35);
   cr_assert(strcmp(p.first_name, "Sam") == 0);

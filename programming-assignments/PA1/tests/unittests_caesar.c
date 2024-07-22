@@ -1,9 +1,3 @@
-
-#include <criterion/criterion.h>
-#include <limits.h>
-#include "../src/student_code.h"
-
-
 Test(CaesarCipher, shift_left, .disabled=false) {
   cr_assert_eq(shift_left('a', 0), 'a');
   cr_assert_eq(shift_left('a', 1), 'z');
