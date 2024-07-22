@@ -11,6 +11,9 @@ All while seeing how we can make simple choices for scheduling (hopefully!)
 
 ## Getting started
 
+Don't forget to run `git pull` before getting started!
+You may need to use `git commit . -m "[your message here]"` first!
+
 ### Setting up your environment
 
 To get started, start up your docker environment like you did for [PA1](../PA1).
