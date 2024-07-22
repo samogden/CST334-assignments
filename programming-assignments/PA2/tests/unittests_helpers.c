@@ -1,11 +1,3 @@
-
-#include <criterion/criterion.h>
-
-#include "../src/student_code.h"
-#include "../src/process.h"
-#include "../src/process_list.h"
-#include "../src/process_scheduling.h"
-
 Test(HelperFunctions, mark_start, .disabled=false) {
   SCHEDULER_STATS* s = get_empty_stats_block();
   PROCESS *p = create_process(1.0f, 0, 0.0f);

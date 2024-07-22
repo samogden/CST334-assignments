@@ -1,16 +1,3 @@
-
-
-#include <criterion/criterion.h>
-
-#include <stdio.h>
-
-#include "../src/process_scheduling.h"
-#include "../src/student_code.h"
-#include "../src/tests.h"
-
-#define FLOAT_EPSILON 0.1
-
-
 Test(FIFO, test_2proc_0entry_0entry_fifo, .disabled=false) {
   SCHEDULER_STATS* stats = get_empty_stats_block();
   SCHEDULER_PARAMS params = (SCHEDULER_PARAMS) {

@@ -1,7 +1,17 @@
 #include <criterion/criterion.h>
 #include <signal.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <stdio.h>
 #include <common.h>
 
+#include "src/process_scheduling.h"
+#include "src/student_code.h"
+
+// Define any important factors for tests
+#define FLOAT_EPSILON 0.1
+
+// Include our unit tests
 #include "tests/unittests_helpers.c"
 #include "tests/unittests_fifo.c"
 #include "tests/unittests_priority.c"
