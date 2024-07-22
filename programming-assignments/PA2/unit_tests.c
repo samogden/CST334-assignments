@@ -5,8 +5,10 @@
 #include <stdio.h>
 #include <common.h>
 
+// Include src
 #include "src/process_scheduling.h"
 #include "src/student_code.h"
+#include "src/tests.h"
 
 // Define any important factors for tests
 #define FLOAT_EPSILON 0.1

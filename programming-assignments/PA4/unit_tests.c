@@ -1,6 +1,7 @@
 #include <criterion/criterion.h>
 #include <signal.h>
 #include <common.h>
+#include <time.h>
 
 // Include src code
 #include "src/student_code.h"

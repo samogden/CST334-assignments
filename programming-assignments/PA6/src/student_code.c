@@ -7,6 +7,7 @@
 #include "student_code.h"
 #include "parser.h"
 #include "string.h"
+#include "helper.h"
 #include <common.h>
 
 
