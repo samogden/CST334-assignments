@@ -1,10 +1,3 @@
-
-#include <criterion/criterion.h>
-#include <limits.h>
-#include <stdio.h>
-#include "../src/student_code.h"
-
-
 void* get_three_nodes() {
   void *memory = malloc(3 * sizeof(node_t));
   node_t* node0;

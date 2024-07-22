@@ -1,11 +1,3 @@
-
-#include <criterion/criterion.h>
-#include <limits.h>
-#include "../src/student_code.h"
-
-#include <stdio.h>
-#include <unistd.h>
-
 Test(Alloc, test_allocation_basic) {
   int size = 0;
   int page_size = getpagesize();

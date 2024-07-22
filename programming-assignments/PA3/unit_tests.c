@@ -1,7 +1,19 @@
 #include <criterion/criterion.h>
+#include <limits.h>
 #include <signal.h>
+#include <assert.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <time.h>
+#include <unistd.h>
 #include <common.h>
 
+// Include student code
+#include "src/student_code.h"
+
+// Include our unit test files
 #include "tests/unittests_functions.c"
 #include "tests/unittests_alloc.c"
 #include "tests/unittests_free.c"

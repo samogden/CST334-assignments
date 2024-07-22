@@ -1,19 +1,3 @@
-
-#include <criterion/criterion.h>
-#include <limits.h>
-#include "../src/student_code.h"
-
-
-#include <assert.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/mman.h>
-#include <time.h>
-#include <unistd.h>
-#include "../src/student_code.h"
-
-
 Test(Free, test_free_basic){
   int size;
   int page_size = getpagesize();
