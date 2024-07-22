@@ -1,10 +1,12 @@
-
 #include <criterion/criterion.h>
+#include<unistd.h>
+#include <stdio.h>
+
 #include "../src/student_code.h"
 
+#include "../src/database.h"
 #include "../src/server.h"
-#include "../src/common.h"
-
+#include "../src/helpers.h"
 
 Test(Server, is_server_threaded, .init=setup, .fini=teardown, .timeout=3, .disabled=false) {
   log_debug("Testing server threading....\n")

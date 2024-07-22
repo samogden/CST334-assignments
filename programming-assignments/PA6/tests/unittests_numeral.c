@@ -1,6 +1,6 @@
 
 #include <criterion/criterion.h>
-#include "../src/common.h"
+#include "../src/helper.h"
 #include "../src/parser.h"
 #include "time.h"
 

@@ -1,6 +1,6 @@
 
 #include "tests.h"
-#include "common.h"
+#include <common.h>
 
 void test_1proc_0entry(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats) {
 

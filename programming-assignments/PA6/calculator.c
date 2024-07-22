@@ -1,7 +1,7 @@
 
 #include "src/student_code.h"
 #include "src/parser.h"
-#include "src/common.h"
+#include <common.h>
 #include <stdio.h>
 #include <stdlib.h>
 

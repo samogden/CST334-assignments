@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "server.h"
-#include "common.h"
+#include "helpers.h"
 
 // Initialization function for the database
 PlayerDatabase init_db() {

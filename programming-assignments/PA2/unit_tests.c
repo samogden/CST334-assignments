@@ -1,6 +1,6 @@
 #include <criterion/criterion.h>
 #include <signal.h>
-#include "src/common.h"
+#include <common.h>
 
 #include "tests/unittests_helpers.c"
 #include "tests/unittests_fifo.c"

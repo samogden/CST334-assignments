@@ -8,7 +8,7 @@
 #include "process.h"
 #include "student_code.h"
 
-#include "common.h"
+#include <common.h>
 
 
 SCHEDULER_STATS* process_scheduling_loop(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats, PROCESS_LIST* processes_to_schedule) {

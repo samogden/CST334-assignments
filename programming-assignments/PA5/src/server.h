@@ -14,8 +14,9 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <stdbool.h>
+#include <common.h>
 
-#include "common.h"
+#include "helpers.h"
 
 #define MAX_MESSAGE_LENGTH 256
 #define MAX_ARGS 16

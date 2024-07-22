@@ -1,7 +1,7 @@
 
 #include "src/student_code.h"
 #include "src/tokenizer.h"
-#include "src/common.h"
+#include <common.h>
 
 int main() {
   Tokenizer t = init__tokenizer("Hello out there");

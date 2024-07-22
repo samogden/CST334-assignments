@@ -1,6 +1,6 @@
 
 #include "parser.h"
-#include "common.h"
+#include <common.h>
 #include "string.h"
 
 Expression* parse(char* str_to_parse){

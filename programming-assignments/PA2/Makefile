@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-g -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/
+CFLAGS=-g -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -I../common/
 
 # Source files and object files
 SRCS = $(wildcard src/*.c)
