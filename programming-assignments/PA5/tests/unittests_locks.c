@@ -1,12 +1,3 @@
-#include <criterion/criterion.h>
-#include<unistd.h>
-#include <stdio.h>
-
-#include "../src/student_code.h"
-
-#include "../src/database.h"
-#include "../src/server.h"
-#include "../src/helpers.h"
 
 typedef struct locks_args_t {
   float delay;
