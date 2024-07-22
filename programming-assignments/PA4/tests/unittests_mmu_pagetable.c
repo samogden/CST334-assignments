@@ -76,7 +76,7 @@ void write_string(MMU m, VirtualAddress va, char* str) {
   for (i = 0; str[i] != '\0'; i++) {
     write_byte(m, va+i, str[i]);
   }
-    write_byte(m, va+i, '\0');
+  write_byte(m, va+i, '\0');
 }
 
 Test(MMU_PageTable, end_to_end) {
