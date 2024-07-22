@@ -19,7 +19,7 @@ void finalize_stats(SCHEDULER_STATS* stats) {
 
 int compare_priority(PROCESS p1, PROCESS p2) {
   //todo
-  return (int)p1.priority - (int)p2.priority;
+  return (int)p2.priority - (int)p1.priority;
 }
 
 PROCESS* fifo_process_selector(PROCESS_LIST* pl) {
