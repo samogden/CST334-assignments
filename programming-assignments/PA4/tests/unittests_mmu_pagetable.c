@@ -31,7 +31,7 @@ Test(MMU_PageTable, get_pagetableentry__MMU_pagetable) {
 }
 
 Test(MMU_PageTable, map_page__MMU_pagetable) {
-  // See the random number
+  // Seed the random number
   srand( time(NULL) );
 
   // Create a new MMU
