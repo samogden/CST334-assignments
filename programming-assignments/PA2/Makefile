@@ -13,11 +13,11 @@ HEADERS = $(wildcard src/*.h)
 TARGET = unit_tests
 
 
-all: clean unit_tests
+all: clean debug unit_tests
 	./unit_tests -j1 --timeout 10
 
 # Rule to build the executable
-unit_tests: unit_tests.c bin $(OBJS) $(TEST)
+unit_tests: clean unit_tests.c bin $(OBJS) $(TEST)
 	$(CC) $(CFLAGS) unit_tests.c -o $@ $(OBJS)
 
 # Rule to build the debug executable
