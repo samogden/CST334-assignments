@@ -5,7 +5,7 @@
 MMU new__MMU_pagetable() {
   MMU m = {
       .page_pointer = calloc(NUM_PAGES, sizeof(PageTableEntry)),
-      .physical_memory = calloc(PHYSICAL_MEMORY_SIZE, 1),
+      .physical_memory = calloc(NUM_FRAMES, PAGE_SIZE),
       .page_used = calloc(NUM_FRAMES, sizeof(bool)),
 
       // simple specific functions
