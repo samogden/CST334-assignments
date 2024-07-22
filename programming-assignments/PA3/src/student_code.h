@@ -2,6 +2,7 @@
 #define __student_code_h__
 
 #include <stdbool.h>
+#include <stddef.h>
 
 #define ERR_OUT_OF_MEMORY  (-1)
 #define ERR_BAD_ARGUMENTS  (-2)
