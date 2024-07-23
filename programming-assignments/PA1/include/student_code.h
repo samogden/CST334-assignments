@@ -1,61 +1,10 @@
+#ifndef STUDENT_CODE_H
+#define STUDENT_CODE_H
 
-#ifndef PROJECTS_STUDENT_CODE_H
-#define PROJECTS_STUDENT_CODE_H
+#include <stdio.h>
+#include <stdbool.h>
 
 #define GROUP_MAX_SIZE 50
-
-#include "stdio.h"
-#include "stdbool.h"
-
-
-/**
- * This function takes in a c-string and returns it's length.  It **does not** use the strlen(...) function in string.h
- * @param str The string that we will be finding the length of.  It will be null terminated
- * @return The lenght of the inpurt string
- */
-int get_str_length(char* str);
-
-/**
- * Returns a pointer to a copy of the original string.  It **does not** use strcpy or any related function (but may use strlen)
- * @param str An input string that is null terminated
- * @return a new char* that copies the input string str
- */
-char* copy_str(char* str);
-
-/**
- * Truncates a string to a the given length, not including the null terminator.  If the given length is longer than the original string the original string is returned unchanged.
- * @param str A null-terminated input string
- * @param new_length The length of the output string.
- */
-void truncate_string(char* str, int new_length);
-
-/**
- * Converts a given string, str, to all uppercase letters
- * @param str A null-terminated input string
- */
-void to_uppercase(char* str);
-
-/**
- * Converts a given string, str, to all lowercase letters
- * @param str A null-terminated input string
- */
-void to_lowercase(char* str);
-
-/**
- * Finds the index of the first usage of a target character, starting from 0.  If it doesn't exist return -1
- * @param str A null-terminated input string
- * @param target A character to find in string
- * @return The index of the first usage of the target character in the string
- */
-int find_first_index(char* str, char target);
-
-/**
- * Finds the index of the last usage of a target character, starting from 0.  If it doesn't exist return -1
- * @param str A null-terminated input string
- * @param target A character to find in string
- * @return The index of the last usage of the target character in the string
- */
-int find_last_index(char* str, char target);
 
 // Structs
 typedef struct Person {
@@ -65,14 +14,76 @@ typedef struct Person {
 } Person;
 
 typedef struct Group {
-    // We want a group of up to GROUP_MAX_SIZE, with a count of how many people we have
     void* group_name; // todo: Pick an appropriate type for this!
     void* group_members[GROUP_MAX_SIZE]; // todo: Pick an appropriate type for this!
     void* num_members; // todo: Pick an appropriate type for this!
 } Group;
 
+/*
+ * String functions
+ */
+
 /**
- * Create a new person object and return the object
+ * This function takes in a c-string and returns it's length.  It **does not** use the strlen(...) function in string.h
+ * @param str The string that we will be finding the length of.  It will be null terminated.
+ * @return The length of the given string
+ */
+int get_str_length(char* str);
+
+/**
+ * Returns a pointer to a new copy of the original string.
+ * It **does not** use strcpy or any related function
+ * @param str An input string that is null terminated.
+ * @return A new char* that contains a copy of the input string str
+ */
+char* copy_str(char* str);
+
+/**
+ * Truncates a string to a the given length of the string excluding the null terminator.
+ * If the given length is longer than the original string the original string is returned unchanged.
+ * @param str A null-terminated input string that will be modified in-place.
+ * @param new_length The target length of the string.
+ */
+void truncate_string(char* str, int new_length);
+
+/**
+ * Converts a given string to all uppercase letters in-place.
+ * @param str A null-terminated input string that will be modified in-place
+ */
+void to_uppercase(char* str);
+
+/**
+ * Converts a string to all lowercase letters in-place.
+ * @param str A null-terminated input string that will be modified in-place
+ */
+void to_lowercase(char* str);
+
+/**
+ * Finds the index of the first usage of a target character in a null-terminated string.
+ * If the character doesn't occur in the string return -1.
+ * @param str A null-terminated input string
+ * @param target A character to find in str
+ * @return The index of the first usage of the target character in the string, or -1 if it doesn't exist in str.
+ */
+int find_first_index(char* str, char target);
+
+/**
+ * Finds the index of the last usage of a target character in a null-terminated string.
+ * If the character doesn't occur in the string return -1.
+ * @param str A null-terminated input string
+ * @param target A character to find in str
+ * @return The index of the last usage of the target character in the string, or -1 if it doesn't exist in str.
+ */
+int find_last_index(char* str, char target);
+
+/*
+ * Struct functions
+ */
+
+/**
+ * Create a new person struct and return the struct
+ * Note: See above for struct definition.
+ * Note: you may need to use functions in the string.h library.
  * @param first_name The first name of the new person as a null-terminated string
  * @param last_name The last name of the new person as a null-terminated string
  * @param age The age of the person as an int
@@ -82,8 +93,8 @@ Person person_make_new(char* first_name, char* last_name, int age);
 
 /**
  * Return a string containing the full name and age of the person in the format "First Last (age)"
- * @param person The person to get the relevant string for
- * @return A string containing the name of the person
+ * @param person The person struct to get the relevant string for
+ * @return A string describing the person of the format "First Last (age)"
  */
 char* person_to_string(Person person);
 
@@ -194,4 +205,4 @@ void encrypt_substitution(char* input_str, int* encryption_key);
 void decrypt_substitution(char* input_str, int* decryption_key);
 
 
-#endif //PROJECTS_STUDENT_CODE_H
+#endif //STUDENT_CODE_H
