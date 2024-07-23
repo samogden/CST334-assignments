@@ -71,12 +71,55 @@ typedef struct EvaluationResult {
 } EvaluationResult;
 
 Expression* parse(char* str_to_parse);
+
+/**
+ * Takes in a tokenizer and produces an expression based on the production rule:
+ * <Expression> -> <Numeral> | ( <Expression> <Operator> <Expression> )
+ * @param t tokenizer that _should_ contain more tokens
+ * @return
+ */
 Expression* parse_expression(Tokenizer* t);
+
+/**
+ * Takes in a tokenizer and produces an Numeral based on the production rules:
+ * <Numeral> -> <Literal> | <Variable>
+ * <Literal> -> [1-9][0-9]*
+ * <Variable> -> [a-zA-Z]+
+ * @param t
+ * @return
+ */
 Numeral* parse_numeral(Tokenizer* t);
+
+/**
+ * Takes in a tokenizer and produces an Operator based on the production rule:
+ * <Operator> -> + | - | * | /
+ * Note that while these are literals, they should not be stored as such
+ * @param t
+ * @return
+ */
 Operator* parse_operator(Tokenizer* t);
 
+/**
+ * Evaluates the expression by accessing the appropriate value, or recursing and passing into the operator evaluation
+ * @param e
+ * @return
+ */
 EvaluationResult evaluate_expression(Expression e);
+
+/**
+ * Evaluates the expression by considering what operation and what the values of the passed expressions are
+ * @param o
+ * @param left
+ * @param right
+ * @return
+ */
 EvaluationResult evaluate_operator(Operator o, Expression left, Expression right);
+
+/**
+ * Evaluate a Numeral
+ * @param n
+ * @return
+ */
 EvaluationResult evaluate_numeral(Numeral n);
 
 

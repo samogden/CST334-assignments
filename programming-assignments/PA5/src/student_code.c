@@ -8,49 +8,24 @@
 #include "server.h"
 #include <stdint.h>
 
-/*
- * This is tested by running two requests at the same time for different length of time.
- * e.g. 2-second and 3-second.  If it takes 5s then they aren't running concurrently
- *   but if it takes 3 seconds then they are.
- * Test a wide range of random times.
- */
 void pass_to_client_handler(void* arg) {
   // todo: Convert this to run multi-threaded
   client_handler(arg);
 }
 
-/**
- * Using the database lock, make sure that we can safely read, and adjust variables as needed.
- * Note that this requires checking the number of current readers and writers, and using the appropriate condition variable.
- * @param db
- */
 void read_lock(PlayerDatabase* db) {
   // todo
   // Question: What variables do we need to check before we know we can safely read?
 }
 
-/**
- * Release the lock and adjust any variables that are necessary
- * Note that this requires checking the number of current readers and writers, and using the appropriate condition variable.
- * @param db
- */
 void read_unlock(PlayerDatabase* db) {
   // todo
 }
-/**
- * Using the database lock, make sure that we can safely write, and adjust variables as needed.
- * Note that this requires checking the number of current readers and writers, and using the appropriate condition variable.
- * @param db
- */
+
 void write_lock(PlayerDatabase* db) {
   // todo
 }
 
-/**
- * Release the lock and adjust any variables that are necessary
- * Note that this requires checking the number of current readers and writers, and using the appropriate condition variable.
- * @param db
- */
 void write_unlock(PlayerDatabase* db) {
   // todo
 }
