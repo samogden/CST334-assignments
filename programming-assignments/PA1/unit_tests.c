@@ -4,7 +4,7 @@
 #include <limits.h>
 
 // Pull in our code
-#include "src/student_code.h"
+#include "student_code.h"
 
 // Pull in our actual tests
 #include "tests/unittests_string.c"
