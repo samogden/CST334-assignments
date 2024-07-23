@@ -3,9 +3,9 @@
 #include <common.h>
 #include <time.h>
 
-// Include src code
-#include "src/student_code.h"
-#include "src/defines.h"
+// Include src headers
+#include "student_code.h"
+#include "defines.h"
 
 // Define any testing parameters
 #define NUMBER_OF_REPEATS 10

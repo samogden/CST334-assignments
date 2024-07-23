@@ -1,6 +1,6 @@
-#include "src/student_code.h"
+#include <stdio.h>
 
-#include "stdio.h"
+#include "student_code.h"
 
 int main() {
 
