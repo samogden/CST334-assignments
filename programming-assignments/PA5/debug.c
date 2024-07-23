@@ -1,6 +1,6 @@
 
-#include "src/student_code.h"
-#include "src/server.h"
+#include "student_code.h"
+#include "server.h"
 
 int main() {
   setup();

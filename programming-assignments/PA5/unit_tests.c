@@ -7,11 +7,10 @@
 #include <stdio.h>
 #include <pthread.h>
 
-#include "src/student_code.h"
-
-#include "src/database.h"
-#include "src/server.h"
-#include "src/helpers.h"
+#include "student_code.h"
+#include "database.h"
+#include "server.h"
+#include "helpers.h"
 
 // Now import out unit tests
 #include "tests/unittests_locks.c"
