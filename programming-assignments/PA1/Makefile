@@ -1,4 +1,3 @@
-
 # Set directories up
 SRC_DIR := ./src
 BUILD_DIR := ./bin

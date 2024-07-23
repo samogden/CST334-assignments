@@ -1,4 +1,4 @@
-#include "src/student_code.h"
+#include "student_code.h"
 #include <common.h>
 
 int main() {
