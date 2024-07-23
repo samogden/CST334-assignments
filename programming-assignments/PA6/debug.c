@@ -1,6 +1,6 @@
 
-#include "src/student_code.h"
-#include "src/tokenizer.h"
+#include "student_code.h"
+#include "tokenizer.h"
 #include <common.h>
 
 int main() {

@@ -1,9 +1,9 @@
-
-#include "src/student_code.h"
-#include "src/parser.h"
-#include <common.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <common.h>
+#include "student_code.h"
+#include "parser.h"
 
 #define MAX_INPUT_LENGTH 1024
 

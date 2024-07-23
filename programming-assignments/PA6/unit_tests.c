@@ -4,8 +4,8 @@
 #include <time.h>
 
 // Include src
-#include "src/helper.h"
-#include "src/parser.h"
+#include "helper.h"
+#include "parser.h"
 
 // Include unit tests
 #include "tests/unittests_numeral.c"
