@@ -11,7 +11,7 @@
 #include <common.h>
 
 // Include student code
-#include "src/student_code.h"
+#include "student_code.h"
 
 // Include our unit test files
 #include "tests/unittests_functions.c"
