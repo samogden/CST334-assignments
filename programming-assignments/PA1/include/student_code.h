@@ -99,37 +99,42 @@ Person person_make_new(char* first_name, char* last_name, int age);
 char* person_to_string(Person person);
 
 /**
- * A function to create a new empty group
- * @param group_name A null-terminuated string to name the new group
- * @return A new Group struct
+ * Creates and returns a new group.
+ * Note: See above for struct definition.  Don't forget to update the field types!
+ * @param group_name A null-terminated string to name the new group.
+ * @return A new Group struct with fields initialized appropriately.
  */
 Group group_make_new(char* group_name);
 
 /**
- * A function to find the total number of people in the group
+ * Returns the total number of people currently in a group
  * @param group A Group struct that contains some number of people
- * @return The number of users in the group
+ * @return The number of users in the group.
  */
 int num_people_in_group(Group group);
 
 /**
- * Get the number of free spaces remaining in the group
+ * Get the number of free spaces remaining in the group.
  * @param group A Group struct that contains some number of people
- * @return The number of free spaces in the group
+ * @return The number of spaces that can still be added to the group.
  */
 int free_spaces_in_group(Group group);
 
 /**
- * Add a person to the group if possible and return the total number of free space in the group. Otherwise return -1.
- * @param group A group struct that contains some number of people
- * @param person_to_add The person to add to the group
- * @return The number of free spaces after add the new person, -1 if the group was already full
+ * Add a person to the group if possible and return the remaining free spaces in the group.
+ * If adding a new member is impossible return -1.
+ * Hint: How do we differentiate between two users who happen to have the same exact name and age?
+ * Hint: Does this connect to the type of the `members` field?
+ * @param group A group struct representing the group to try to add a new member to
+ * @param person_to_add The person to add to try to the group
+ * @return The number of free spaces after add the new person or -1 if the group was already full
  */
 int add_person(Group* group, Person* person_to_add); // Reject if group is full
 
 /**
- * Remove a person from the group if they are in the group, otherwise return -1
- * @param group A Group struct that contains some number of people
+ * Remove a person to the group if possible and return the remaining free spaces in the group.
+ * If removing a new member is impossible return -1.
+ * @param group A group struct to remove a person from
  * @param person_to_remove A person to remove from the group
  * @return The number of people remaining in the group, -1 if the person was not in the group
  */
@@ -139,8 +144,9 @@ int remove_person(Group* group, Person* person_to_remove); // Reject if person i
  * Caesar Cipher
  */
 /**
- * Shift a character 'left' by the shift amount by subtracting the shift size.
+ * Shift a character 'left' by the shift amount.
  *  e.g. 'a' with a shift_size = 1 will become 'z'
+ *  Hint: What are generalized implications of the given unit test?
  * @param input_char
  * @param shift_size
  * @return
@@ -148,7 +154,7 @@ int remove_person(Group* group, Person* person_to_remove); // Reject if person i
 char shift_left(char input_char, int shift_size);
 
 /**
- * Shift a character 'right' by the shift amount by subtracting the shift size.
+ * Shift a character 'right' by the shift amount.
  *  e.g. 'z' with a shift_size = 1 will become 'a'
  * @param input_char
  * @param shift_size
@@ -157,7 +163,7 @@ char shift_left(char input_char, int shift_size);
 char shift_right(char input_char, int shift_size);
 
 /**
- * Encrypts a string using a given shift.  Note: All characters should be converted to lowercase
+ * Encrypts a string using a given shift.
  * @param input_str
  * @param shift_size
  * @return
@@ -165,7 +171,7 @@ char shift_right(char input_char, int shift_size);
 char* encrypt_caesar(char* input_str, int shift_size);
 
 /**
- * Decrypts a string using a given shift.  Note: All characters should be converted to lowercase
+ * Decrypts a string using a given shift.
  * @param input_str
  * @param shift_size
  * @return
@@ -175,9 +181,9 @@ char* decrypt_caesar(char* input_str, int shift_size);
 /*
  * General substitution Cipher
  */
-
 /**
  * Returns true if a given encryption key has a valid decryption key.
+ * Hint: if the string 'ab' encodes to `zz` is there any way to reliably decode it?
  * @param encryption_key
  * @return
  */
@@ -185,6 +191,7 @@ bool is_reversible(int* encryption_key);
 
 /**
  * Generates a decryption key based on the encryption key, if one exists.  Otherwise returns NULL
+ * Hint: Look at what the given decryption key you're checking against is, and what is being done to the strings
  * @param encryption_key
  * @return
  */
