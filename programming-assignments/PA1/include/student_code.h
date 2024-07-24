@@ -148,8 +148,7 @@ int remove_person(Group* group, Person* person_to_remove); // Reject if person i
  *  e.g. 'a' with a shift_size = 1 will become 'z'
  *  Hint: What are generalized implications of the given unit test?
  * @param input_char
- * @param shift_size
- * @return
+ * @param shift_sizev
  */
 char shift_left(char input_char, int shift_size);
 
@@ -158,7 +157,7 @@ char shift_left(char input_char, int shift_size);
  *  e.g. 'z' with a shift_size = 1 will become 'a'
  * @param input_char
  * @param shift_size
- * @return
+ * @return char: the shifted character in range [a,z]
  */
 char shift_right(char input_char, int shift_size);
 
@@ -166,7 +165,7 @@ char shift_right(char input_char, int shift_size);
  * Encrypts a string using a given shift.
  * @param input_str
  * @param shift_size
- * @return
+ * @return char* string encrypted via caeser cipher
  */
 char* encrypt_caesar(char* input_str, int shift_size);
 
@@ -174,7 +173,7 @@ char* encrypt_caesar(char* input_str, int shift_size);
  * Decrypts a string using a given shift.
  * @param input_str
  * @param shift_size
- * @return
+ * @return char* string decrypted via caeser cipher
  */
 char* decrypt_caesar(char* input_str, int shift_size);
 
@@ -185,7 +184,7 @@ char* decrypt_caesar(char* input_str, int shift_size);
  * Returns true if a given encryption key has a valid decryption key.
  * Hint: if the string 'ab' encodes to `zz` is there any way to reliably decode it?
  * @param encryption_key
- * @return
+ * @return bool: whether the encryption key is reversible
  */
 bool is_reversible(int* encryption_key);
 
@@ -193,7 +192,7 @@ bool is_reversible(int* encryption_key);
  * Generates a decryption key based on the encryption key, if one exists.  Otherwise returns NULL
  * Hint: Look at what the given decryption key you're checking against is, and what is being done to the strings
  * @param encryption_key
- * @return
+ * @return int*: decryption key associated with given encryption key
  */
 int* get_decryption_key(int* encryption_key);
 

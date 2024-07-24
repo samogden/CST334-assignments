@@ -1,4 +1,4 @@
-#ifndef __student_code_h__
+  #ifndef __student_code_h__
 #define __student_code_h__
 
 #include <stdbool.h>
@@ -31,47 +31,47 @@ void print_header(node_t *header);
 
 // Functions to write
 /**
- * Finds the first available free chunk that is big enough to support the requested size allocation.
- * @param size
- * @param starting_node
- * @return
+ * Starting at starting_node, find a chunk that is at least `size` in size
+ * @param size - size of requested node
+ * @param starting_node - start point in the free list
+ * @return node_t*: first node in the free list big enough for allocation
  */
-node_t * find_first_free_chunk(size_t size, node_t* starting_node);
+node_t* find_first_free_chunk(size_t size, node_t* starting_node);
 
 /**
- * Takes in the selected chunk of free memory and prepares it for usage, potentially by splitting it up into smaller pieces.
- * @param node -- the chunk to prepare
- * @param size
+ * Prepare node for allocation by splitting, if necessary, or setting metadata.
+ * @param node - the memory chunk to prepare
+ * @param size - the size of the requested memory
  */
 void split_node(node_t* node, size_t size);
 
 /**
  * Given a pointer to an object to free, returns the associated header containing size
- * @param ptr
- * @return
+ * @param ptr: pointer to allocated memory
+ * @return node_t*: given a pointer to allocated memory, return the address of the header
  */
 node_t* get_header(void* ptr);
 
 /**
  * Given two nodes, coalesces them into a single node, or sets a number of errors as appropriate
- * @param front
- * @param back
+ * @param front: node_t* first in the list
+ * @param back: node_t* second in the list
  */
 void coalesce_nodes(node_t* front, node_t* back);
 
 // Full functions
 /**
  * Allocates a block of memory of the given size
- * @param size
+ * @param size: size of block to allocate
  * @return
  */
 extern void* mem_alloc(size_t size);
 
 /**
  * Frees a block of memory pointed to by ptr
- * @param ptr
+ * @param ptr: void* to the memory we want to free
  */
-extern void mem_free(void *ptr);
+extern void mem_free(void* ptr);
 
 
 
