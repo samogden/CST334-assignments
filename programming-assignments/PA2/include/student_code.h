@@ -1,12 +1,13 @@
+#ifndef STUDENT_CODE_H
+#define STUDENT_CODE_H
 
 #include "process_scheduling.h"
 
-#ifndef CST334_ASSIGNMENTS_SOLUTIONS_STUDENT_CODE_H
-#define CST334_ASSIGNMENTS_SOLUTIONS_STUDENT_CODE_H
-
 /**
- * Finalizes the calculation of the stats block, meaning it will calculate things like average turnaround time
- * @param stats - a stats object that has some fields that are not yet used (or to be overwritten)
+ * Finalizes the calculation of the stats block after completion of run.
+ * Hint: what can't we calculate before the end of the run?
+ * Note: Check out the definition of the stats struct in stats.h
+ * @param stats - a stats struct to have remaining fields computed.
  */
 void finalize_stats(SCHEDULER_STATS* stats);
 
@@ -47,4 +48,4 @@ PROCESS* lifo_process_selector(PROCESS_LIST* pl);
  */
 PROCESS* stcf_process_selector(PROCESS_LIST* pl);
 
-#endif //CST334_ASSIGNMENTS_SOLUTIONS_STUDENT_CODE_H
+#endif //STUDENT_CODE_H
