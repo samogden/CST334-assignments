@@ -75,8 +75,8 @@ Expression* parse(char* str_to_parse);
 /**
  * Takes in a tokenizer and produces an expression based on the production rule:
  * <Expression> -> <Numeral> | ( <Expression> <Operator> <Expression> )
- * @param t tokenizer that _should_ contain more tokens
- * @return
+ * @param t (tokenizer): tokenizer projects that we should parse using
+ * @return (Expression*) : Expression struct with all fields properly filled out
  */
 Expression* parse_expression(Tokenizer* t);
 
@@ -85,8 +85,8 @@ Expression* parse_expression(Tokenizer* t);
  * <Numeral> -> <Literal> | <Variable>
  * <Literal> -> [1-9][0-9]*
  * <Variable> -> [a-zA-Z]+
- * @param t
- * @return
+ * @param t (tokenizer): tokenizer projects that we should parse using
+ * @return (Numeral*) : Numeral struct with all fields properly filled out
  */
 Numeral* parse_numeral(Tokenizer* t);
 
@@ -94,31 +94,31 @@ Numeral* parse_numeral(Tokenizer* t);
  * Takes in a tokenizer and produces an Operator based on the production rule:
  * <Operator> -> + | - | * | /
  * Note that while these are literals, they should not be stored as such
- * @param t
- * @return
+ * @param t (tokenizer): tokenizer projects that we should parse using
+ * @return (Operator*) : Operator struct with all fields properly filled out
  */
 Operator* parse_operator(Tokenizer* t);
 
 /**
  * Evaluates the expression by accessing the appropriate value, or recursing and passing into the operator evaluation
- * @param e
- * @return
+ * @param e (Expression): Expression struct to evaluate
+ * @return (EvaluationResult): struct with all fields appropriately set
  */
 EvaluationResult evaluate_expression(Expression e);
 
 /**
  * Evaluates the expression by considering what operation and what the values of the passed expressions are
- * @param o
- * @param left
- * @param right
- * @return
+ * @param o (Operator): Operator struct defining operationg to perform
+ * @param left (Expression): Left-hand-side expression to evaluate
+ * @param right (Expression): Right-hand-side expression to evaluate
+ * @return (EvaluationResult): struct with all fields appropriately set
  */
 EvaluationResult evaluate_operator(Operator o, Expression left, Expression right);
 
 /**
  * Evaluate a Numeral
- * @param n
- * @return
+ * @param n (Numeral): Numeral struct to evaluate value of
+ * @return (EvaluationResult): struct with all fields appropriately set
  */
 EvaluationResult evaluate_numeral(Numeral n);
 
