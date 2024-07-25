@@ -1,19 +1,25 @@
 
+
+#ifndef PROCESS_LIST_H
+#define PROCESS_LIST_H
+
+#include <stdlib.h>
+#include <stdbool.h>
+
 #include "process.h"
 
-#include "stdlib.h"
-#include "stdbool.h"
-
-#ifndef CST334_ASSIGNMENTS_SOLUTIONS_PROCESS_LIST_H
-#define CST334_ASSIGNMENTS_SOLUTIONS_PROCESS_LIST_H
 
 #define MAX_NUMBER_PROCESSES 256
 
 typedef struct PROCESS_LIST {
-    PROCESS** processes;
-    int num_processes;
+    PROCESS** processes; // List of pointers to processes in the current process list
+    int num_processes; // Counter for how many processes we have the in process list currently
 } PROCESS_LIST;
 
+/**
+ * Create a new empty process list struct
+ * @return (PROCESS_LIST*) : a pointer to a new, empty but initialized process list structure
+ */
 PROCESS_LIST* create_process_list();
 void delete_process_list(PROCESS_LIST* pl);
 
@@ -37,4 +43,4 @@ float get_next_entry_time(PROCESS_LIST* all_processes, float curr_time);
 
 
 
-#endif //CST334_ASSIGNMENTS_SOLUTIONS_PROCESS_LIST_H
+#endif //PROCESS_LIST_H
