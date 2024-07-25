@@ -20,8 +20,8 @@
 #include "tests/unittests_server.c"
 
 
-TestSuite(Locks, .disabled=true);
-TestSuite(Conditions, .disabled=true);
+TestSuite(Locks, .disabled=false);
+TestSuite(Conditions, .disabled=false);
 TestSuite(Server, .disabled=false);
 
 
