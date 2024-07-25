@@ -6,66 +6,95 @@
 
 #include "student_code.h"
 
-
-static int listenfd;
 PlayerDatabase db;
-
 pthread_t* server_thread;
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <time.h>
+#include <pthread.h>
 
-//start server from https://gist.github.com/laobubu/d6d0e9beb934b60b2e552c2d03e1409e
-void* startServer(void *port) {
-  struct addrinfo hints, *res, *p;
+#define MAX_ATTEMPTS 1000  // Maximum number of attempts to find an open port
+#define BACKLOG 10  // Maximum number of pending connections in the queue
 
+int create_server_socket(int *port) {
+    int sockfd;
+    struct sockaddr_in server_addr;
+    int attempts = 0;
 
-  // getaddrinfo for host
-  memset (&hints, 0, sizeof(hints));
-  hints.ai_family = AF_INET;
-  hints.ai_socktype = SOCK_STREAM;
-  hints.ai_flags = AI_PASSIVE;
-  if (getaddrinfo( NULL, (char*)port, &hints, &res) != 0) {
-    perror ("getaddrinfo() error");
-    exit(1);
-  }
+    // Create socket
+    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        perror("socket");
+        return -1;
+    }
 
-  // socket and bind
-  for (p = res; p!=NULL; p=p->ai_next) {
-    int option = 1;
-    listenfd = socket (p->ai_family, p->ai_socktype, 0);
-    setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
-    if (listenfd == -1) continue;
-    if (bind(listenfd, p->ai_addr, p->ai_addrlen) == 0) break;
-  }
-  if (p==NULL) {
-    perror ("socket() or bind()");
-    exit(1);
-  }
+    // Initialize server address structure
+    memset(&server_addr, 0, sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = INADDR_ANY;
 
-  freeaddrinfo(res);
+    // Seed the random number generator
+    srand(time(NULL));
 
-  // listen for incoming connections
-  if ( listen (listenfd, 1000000) != 0 )
-  {
-    perror("listen() error");
-    exit(1);
-  }
-  log_info("Listening...\n");
-  return NULL;
+    // Try binding to a random port
+    while (attempts < MAX_ATTEMPTS) {
+        *port = rand() % 64512 + 1024;  // Random port between 1024 and 65535
+        server_addr.sin_port = htons(*port);
+
+        if (bind(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) == 0) {
+            // Successfully bound to a port
+            if (listen(sockfd, BACKLOG) < 0) {
+                perror("listen");
+                close(sockfd);
+                return -1;
+            }
+            return sockfd;  // Return the socket file descriptor
+        }
+
+        attempts++;
+    }
+
+    // Failed to bind to any port after MAX_ATTEMPTS
+    close(sockfd);
+    return -1;
 }
 
-void * run_server(void *pVoid) {
+void *start_server_thread(void *arg) {
+    server_info_t *server_info = (server_info_t *)arg;
+    int sockfd = server_info->sockfd;
 
-  db = init_db();
+    struct sockaddr_in client_addr;
+    socklen_t client_addr_len = sizeof(client_addr);
+    int client_sockfd;
 
-  startServer(PORT);
+    // printf("Server bound to port: %d\n", server_info->port);
+    // printf("Server listening for connections...\n");
 
-  // ACCEPT connections
-  // Help from https://stackoverflow.com/a/45642760
-  while (true) {
-    int connfd = accept(listenfd, (struct sockaddr*)NULL, NULL);
-    pass_to_client_handler((void *)(uintptr_t)connfd);
-  }
+    while (1) {
+        // Accept a connection
+        client_sockfd = accept(sockfd, (struct sockaddr *)&client_addr, &client_addr_len);
+        if (client_sockfd < 0) {
+            perror("accept");
+            close(sockfd);
+            free(server_info);
+            return NULL;
+        }
+
+        // int connfd = accept(listenfd, (struct sockaddr*)NULL, NULL);
+        pass_to_client_handler((void *)(uintptr_t)client_sockfd);
+    }
+
+    // Close the server socket
+    close(sockfd);
+    free(server_info);
+    return NULL;
 }
+
+
 
 char** parse_request(char* request) {
   char** args = calloc(MAX_ARGS, sizeof(char*));
@@ -120,7 +149,7 @@ void* client_handler(void* arg) {
   }
   close(client_socket_fd);
 
-  free (input_buffer);
+  free(input_buffer);
   free(output_buffer);
   free(response);
   return NULL;
@@ -215,54 +244,38 @@ char* exec_request(char** args) {
 }
 
 
-void* make_request(void* msg) {
+server_info_t* setup() {
+  db = init_db();
+  server_info_t* server_info = malloc(sizeof(server_info_t));
 
-  char* msg_str = (char*)msg;
+  if (server_info == NULL) {
+      perror("malloc");
+      return NULL;
+  }
 
-  // fsleep(0.0001);
-  size_t num_bits_written;
-  char* response_buffer = calloc(sizeof(response_buffer), 1024);
+  server_info->sockfd = create_server_socket(&server_info->port);
 
-  // do-while loop to resend messages that are cut-off early, since SIGPIPE seems to be thrown silently.
-  do {
+  if (server_info->sockfd == -1) {
+      printf("Failed to bind to any port\n");
+      free(server_info);
+      return NULL;
+  }
 
-    struct sockaddr_in dest_addr;
-    int sockfd = socket(AF_INET,SOCK_STREAM,0);
-    dest_addr.sin_family = AF_INET;
-    dest_addr.sin_port = htons(strtol(PORT, NULL, 10));
-    dest_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    dest_addr.sin_zero[8]='\0';
+  // Create a new thread to run the server
+  if (pthread_create(&server_info->server_thread, NULL, start_server_thread, server_info) != 0) {
+      perror("pthread_create");
+      close(server_info->sockfd);
+      free(server_info);
+      return NULL;
+  }
 
-    connect(sockfd,(struct sockaddr*)&dest_addr, sizeof(struct sockaddr));
-    num_bits_written = write(sockfd, msg_str, strlen(msg_str));
-    if (num_bits_written == -1) {
-      // Then something failed and we'll need to resend
-      fsleep(TIME_DELAY / 100.0);
-    } else {
-      recv(sockfd, response_buffer, sizeof(response_buffer), 0);
-    }
-    close(sockfd);
-  } while (num_bits_written < sizeof(msg_str) || (strcmp(response_buffer, "-1") == 0));
-
-
-  return response_buffer;
-}
-
-pthread_t* make_request_async(void* msg) {
-  pthread_t* t = malloc(sizeof(pthread_t));
-  pthread_create(t, NULL, make_request, msg);
-  return t;
-}
-
-void setup() {
-  server_thread = malloc(sizeof(pthread_t));
-  pthread_create(server_thread, NULL, run_server, "5005");
-  pthread_detach(*server_thread);
+  pthread_detach(server_info->server_thread);
   fsleep(TIME_DELAY);
+  return server_info;
 }
 
-void teardown() {
-  pthread_cancel(*server_thread);
-  free(server_thread);
+void teardown(server_info_t* info) {
+  pthread_cancel(info->server_thread);
+  free(info);
 }
 
