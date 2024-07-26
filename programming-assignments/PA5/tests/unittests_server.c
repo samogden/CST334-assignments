@@ -243,8 +243,24 @@ Test(Server,
 
   for (int i = 0; i < NUM_PLAYS; i++) {
     msgs[i].port = server_info->port;
-    switch (rand() % 6) {
+    int modulo_base = 6;
+    if (i % 2 == 0) {
+      modulo_base = 4; // Then limit to only read operations
+    }
+    switch (rand() % modulo_base) {
     case 0:
+      sprintf(msgs[i].msg, "get_total_plays");
+      break;
+    case 1:
+      sprintf(msgs[i].msg, "get_best_player");
+      break;
+    case 2:
+      sprintf(msgs[i].msg, "get_player_plays sam0");
+      break;
+    case 3:
+      sprintf(msgs[i].msg, "get_num_players");
+      break;
+    case 4:
       score = rand() % 1000;
       sprintf(msgs[i].msg, "add_player_score sam0 %d", score);
       plays_0++;
@@ -252,25 +268,13 @@ Test(Server,
         high_score_0 = score;
       }
       break;
-    case 1:
+    case 5:
       score = rand() % 1000;
       sprintf(msgs[i].msg, "add_player_score sam1 %d", score);
       plays_1++;
       if (score > high_score_1) {
         high_score_1 = score;
       }
-      break;
-    case 2:
-      sprintf(msgs[i].msg, "get_total_plays");
-      break;
-    case 3:
-      sprintf(msgs[i].msg, "get_best_player");
-      break;
-    case 4:
-      sprintf(msgs[i].msg, "get_player_plays sam0");
-      break;
-    case 5:
-      sprintf(msgs[i].msg, "get_num_players");
       break;
     }
     threads[i] = make_request_async(&msgs[i]);
