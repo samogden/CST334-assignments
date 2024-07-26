@@ -29,7 +29,7 @@ Test(Server,
  increment_test,
  // .init=setup,
  // .fini=teardown,
- .timeout=NUM_PLAYS*2,
+ .timeout=(1 + NUM_PLAYS + 6)*TIME_DELAY + 4*TIME_DELAY, // hint: why is this my timeout?
  .disabled=false
  ) {
   server_info_t* server_info = setup();
@@ -118,7 +118,7 @@ Test(
   increment_test_two_users,
   // .init=setup,
   // .fini=teardown,
-  .timeout=NUM_PLAYS*2*TIME_DELAY,
+  .timeout=(2 + NUM_PLAYS + 6)*TIME_DELAY + 4*TIME_DELAY, // hint: why is this my timeout?
   .disabled=false
 ) {
   server_info_t* server_info = setup();
