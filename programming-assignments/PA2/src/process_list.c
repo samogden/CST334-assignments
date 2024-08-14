@@ -29,37 +29,6 @@ void add_process_to_tail(PROCESS_LIST* pl, PROCESS* p) {
   pl->num_processes++;
 }
 
-void add_process_to_head(PROCESS_LIST* pl, PROCESS* p) {
-
-  if (pl->num_processes >= MAX_NUMBER_PROCESSES) {
-    return; // truthfully we should fail here
-  }
-
-  for (int i = pl->num_processes; i > 0; i--) {
-    pl->processes[i] = pl->processes[i-1];
-  }
-  pl->processes[0] = p;
-  pl->num_processes++;
-
-}
-
-void remove_process(PROCESS_LIST* pl, PROCESS* p) {
-  if (is_empty(pl)) { return; } // If the list is empty, then we simply can return
-
-  // First find the index of the given process
-  int index = -1;
-  for (index = 0; index < pl->num_processes; index++) {
-    if (pl->processes[index] == p) { break; }
-  }
-  if (index == -1) { return; } // It wasn't in the list of processes anyway
-
-  // We want to move everything _after_ the index forward one step
-  for (int i = index; i < pl->num_processes; i++) {
-    pl->processes[i] = pl->processes[i+1];
-  }
-  pl->num_processes--;
-}
-
 void print_contents(PROCESS_LIST* pl) {
   fprintf(stderr, "(print_contents)");
   if (is_empty(pl)) {

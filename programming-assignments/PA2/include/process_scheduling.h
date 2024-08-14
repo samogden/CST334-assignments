@@ -1,8 +1,8 @@
 
 #include "process_list.h"
 
-#ifndef CST334_ASSIGNMENTS_PROCESS_SCHEDULING_H
-#define CST334_ASSIGNMENTS_PROCESS_SCHEDULING_H
+#ifndef SCHEDULING_H
+#define SCHEDULING_H
 
 #define MAX_TIME 1000.0f
 #define MINIMUM_TIME_QUANTUM 0.000001f
@@ -13,13 +13,29 @@ typedef struct SCHEDULER_PARAMS {
   PROCESS* (* process_selection_func)(PROCESS_LIST*);
 } SCHEDULER_PARAMS;
 
+/**
+ * Gives an entry stats block that we can use to track the simulation
+ * @return
+ */
 SCHEDULER_STATS* get_empty_stats_block();
+
+/**
+ * (Helper function) prints out the stats block (generally for debugging)
+ * @param stats
+ */
 void print_stats(SCHEDULER_STATS stats);
 
-SCHEDULER_STATS* process_scheduling_loop(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats,
-                                         PROCESS_LIST* processes_to_schedule); // Main processing loop that will increment until there are no processes left.  Returns stats block
+/**
+ * Run the given scheduling approach until all jobs have been processed
+ * @param params : SCHEDULE_PARAMS struct defining simulation parameters, such as scheduling policy
+ * @param stats
+ * @param processes_to_schedule
+ * @return
+ */
+SCHEDULER_STATS* process_scheduling_loop(
+  SCHEDULER_PARAMS params,
+  SCHEDULER_STATS* stats,
+  PROCESS_LIST* processes_to_schedule
+);
 
-
-
-
-#endif //CST334_ASSIGNMENTS_SOLUTIONS_PROCESS_SCHEDULING_H
+#endif //SCHEDULING_H
