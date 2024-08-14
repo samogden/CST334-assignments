@@ -32,7 +32,7 @@ void print_stats(SCHEDULER_STATS stats);
  * @param processes_to_schedule
  * @return
  */
-SCHEDULER_STATS* process_scheduling_loop(
+SCHEDULER_STATS* main_simulation_loop(
   SCHEDULER_PARAMS params,
   SCHEDULER_STATS* stats,
   PROCESS_LIST* processes_to_schedule

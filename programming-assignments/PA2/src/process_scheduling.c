@@ -11,7 +11,7 @@
 #include <common.h>
 
 
-SCHEDULER_STATS* process_scheduling_loop(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats, PROCESS_LIST* processes_to_schedule) {
+SCHEDULER_STATS* main_simulation_loop(SCHEDULER_PARAMS params, SCHEDULER_STATS* stats, PROCESS_LIST* processes_to_schedule) {
 
   fprintf(stderr, "\nStarting processing loop\n");
   float curr_time = 0.0f; // Record the current time of the simulation
