@@ -1,28 +1,28 @@
 Test(Functions, is_entry_valid) {
   PageTableEntry pte = 1;
   cr_assert( !is_entry_valid(pte));
-  pte = pte | single_bit_mask(VALID_BIT);
+  pte = pte | get_mask_single_bit(VALID_BIT);
   cr_assert(is_entry_valid(pte));
 }
 
 Test(Functions, is_read_enabled) {
   PageTableEntry pte = 1;
   cr_assert( !is_read_enabled(pte));
-  pte = pte | single_bit_mask(READ_BIT);
+  pte = pte | get_mask_single_bit(READ_BIT);
   cr_assert(is_read_enabled(pte));
 }
 
 Test(Functions, is_write_enabled) {
   PageTableEntry pte = 1;
   cr_assert( !is_write_enabled(pte));
-  pte = pte | single_bit_mask(WRITE_BIT);
+  pte = pte | get_mask_single_bit(WRITE_BIT);
   cr_assert(is_write_enabled(pte));
 }
 
 Test(Functions, is_execute_enabled) {
   PageTableEntry pte = 1;
   cr_assert( !is_execute_enabled(pte));
-  pte = pte | single_bit_mask(EXEC_BIT);
+  pte = pte | get_mask_single_bit(EXEC_BIT);
   cr_assert(is_execute_enabled(pte));
 }
 
@@ -31,10 +31,10 @@ Test(Functions, convert_PageTableEntry_to_PFN) {
   for (int i = 0; i < NUMBER_OF_REPEATS; i++) {
     VirtualAddress addr_to_test = rand() % PAGE_SIZE;
     PageTableEntry pte = (PageTableEntry)addr_to_test
-    | single_bit_mask(VALID_BIT)
-    | single_bit_mask(READ_BIT)
-    | single_bit_mask(WRITE_BIT)
-    | single_bit_mask(EXEC_BIT);
+                         | get_mask_single_bit(VALID_BIT)
+                         | get_mask_single_bit(READ_BIT)
+                         | get_mask_single_bit(WRITE_BIT)
+                         | get_mask_single_bit(EXEC_BIT);
     cr_assert( pte != addr_to_test);
     pte = convert_PageTableEntry_to_PFN(pte);
     cr_assert( pte == addr_to_test );
