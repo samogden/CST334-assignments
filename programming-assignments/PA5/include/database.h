@@ -63,37 +63,83 @@ void write_lock(PlayerDatabase* db);
  */
 void write_unlock(PlayerDatabase* db);
 
-
-
-// Initialization function for the database
+/**
+ * Initialize the database.  Must be called prior to using database
+ * @return
+ */
 PlayerDatabase init_db();
 
-// Setting
+/**
+ * Add in a delay to the database in order to force threading to be important
+ * @param how_slow : delay in seconds
+ * @return
+ */
 int do_slow_thing(float how_slow);
 
-// Functions for the server
-void pass_to_client_handler(void* arg);
-
-// Add a new player
+/**
+ * Adds a player to the database, with some delay
+ * @param db
+ * @param player_name
+ * @return
+ */
 int add_player(PlayerDatabase* db, char* player_name);
 
-// set stats for a specific player
+/**
+ * Adds a player score to the database, with some delay
+ * @param db
+ * @param player_name
+ * @param score
+ * @return
+ */
 int add_player_score(PlayerDatabase* db, char* player_name, int score);
 
-// Get stats for a specific player
+/**
+ * Gets the score of a particular player, with some delay
+ * @param db
+ * @param player_name
+ * @return
+ */
 int get_player_plays(PlayerDatabase* db, char* player_name);
+
+/**
+ * Gets the highest score of a given player, with some delay
+ * @param db
+ * @param player_name
+ * @return
+ */
 int get_player_high_score(PlayerDatabase* db, char* player_name);
 
-
-// Get some statistics
+/**
+ * Finds the player with the highest score across the entire database
+ * @param db
+ * @return
+ */
 char* get_best_player(PlayerDatabase* db);
+
+/**
+ * finds how many players are registered in the database
+ * @param db
+ * @return
+ */
 int get_num_players(PlayerDatabase* db);
+
+/*
+ * Finds the highest score for any player in the database
+ */
 int get_highest_score(PlayerDatabase* db);
+
+/**
+ * finds how many games have been played across the entire database
+ * @param db
+ * @return
+ */
 int get_total_plays(PlayerDatabase* db);
 
+/**
+ * Returns the entry associated with a particular player name in the database
+ * @param player_name
+ * @return
+ */
 DatabaseEntry* get_player(PlayerDatabase, char* player_name);
-
-
-
 
 #endif //DATABASE_H

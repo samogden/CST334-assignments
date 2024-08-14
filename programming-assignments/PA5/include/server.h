@@ -32,12 +32,30 @@ typedef struct {
 
 //bool keep_server_running = true;
 
+/**
+ * Setup a server and return the the connectioned server_info_t struct
+ * @return
+ */
 server_info_t* setup();
+
+/**
+ * Shutdown a server after we are done with it
+ * @param info
+ */
 void teardown(server_info_t* info);
 
-void* startServer(void* port);
-void* run_server();
+/**
+ * Function to handle the client requests
+ * @param client_socket_fd
+ * @return
+ */
 void* client_handler(void* client_socket_fd);
+
+/**
+ * Execute the client request
+ * @param args
+ * @return
+ */
 char* exec_request(char** args);
 
 

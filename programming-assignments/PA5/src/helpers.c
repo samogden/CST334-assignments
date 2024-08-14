@@ -30,7 +30,7 @@ int msleep(long msec)
   return res;
 }
 
-double currentTime() {
+double get_current_time() {
   struct timeval time;
   gettimeofday(&time, NULL);
   int64_t s1 = (int64_t)(time.tv_sec) * 1000;

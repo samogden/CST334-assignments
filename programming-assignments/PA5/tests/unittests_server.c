@@ -232,7 +232,7 @@ Test(Server,
   strcpy(addplayer_msg->msg, "add_player sam1");
   make_request(addplayer_msg);
 
-  double time_start = currentTime();
+  double time_start = get_current_time();
 
   client_msg msgs[NUM_PLAYS];
   int high_score_0 = 0;
@@ -333,7 +333,7 @@ Test(Server,
     expected_response
     );
 
-  double time_end = currentTime();
+  double time_end = get_current_time();
   log_debug("run time: %f\n", (time_end - time_start));
 
   teardown(server_info);

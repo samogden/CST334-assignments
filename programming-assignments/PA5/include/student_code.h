@@ -4,5 +4,8 @@
 #include <pthread.h>
 #include "database.h"
 
+/*
+ * Find the function headers in the various other header files!
+ */
 
 #endif

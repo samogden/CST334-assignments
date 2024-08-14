@@ -8,7 +8,17 @@
 
 #define NUM_PLAYS 50
 
+/**
+ * Function to sleep for a number of milliseconds
+ * @param msec
+ * @return
+ */
 int msleep(long msec);
-double currentTime();
+
+/**
+ * Get the current time
+ * @return
+ */
+double get_current_time();
 
 #endif //HELPERS_H

@@ -100,7 +100,7 @@ Test(Conditions, add_player, .timeout=6*TIME_DELAY) {
   PlayerDatabase db = init_db();
 
   // Start timer to make sure that we run for as long as we'd expect to
-  start_time = currentTime();
+  start_time = get_current_time();
 
   // Lock the mutex
   db.readers = MAX_CONCURRENT_READERS;
@@ -115,7 +115,7 @@ Test(Conditions, add_player, .timeout=6*TIME_DELAY) {
 
   // Call the function we are testing the lock on
   add_player(&db, "Sam");
-  end_time = currentTime();
+  end_time = get_current_time();
   elapsed_time = end_time - start_time;
 
   // Check to make sure that the delay time is bigger than the time delay, so we actually locked.
@@ -132,7 +132,7 @@ Test(Conditions, add_player_score, .timeout=6*TIME_DELAY) {
   PlayerDatabase db = init_db();
 
   // Start timer to make sure that we run for as long as we'd expect to
-  start_time = currentTime();
+  start_time = get_current_time();
 
   // Lock the mutex
   db.readers = MAX_CONCURRENT_READERS;
@@ -147,7 +147,7 @@ Test(Conditions, add_player_score, .timeout=6*TIME_DELAY) {
 
   // Call the function we are testing the lock on
   add_player_score(&db, "Sam", 10);
-  end_time = currentTime();
+  end_time = get_current_time();
   elapsed_time = end_time - start_time;
 
   // Check to make sure that the delay time is bigger than the time delay, so we actually locked.
@@ -165,7 +165,7 @@ Test(Conditions, get_player_plays, .timeout=6*TIME_DELAY) {
   PlayerDatabase db = init_db();
 
   // Start timer to make sure that we run for as long as we'd expect to
-  start_time = currentTime();
+  start_time = get_current_time();
 
   // Lock the mutex
   db.readers = MAX_CONCURRENT_READERS;
@@ -180,7 +180,7 @@ Test(Conditions, get_player_plays, .timeout=6*TIME_DELAY) {
 
   // Call the function we are testing the lock on
   get_player_plays(&db, "Sam");
-  end_time = currentTime();
+  end_time = get_current_time();
   elapsed_time = end_time - start_time;
 
   // Check to make sure that the delay time is bigger than the time delay, so we actually locked.
@@ -197,7 +197,7 @@ Test(Conditions, get_player_high_score, .timeout=6*TIME_DELAY) {
   PlayerDatabase db = init_db();
 
   // Start timer to make sure that we run for as long as we'd expect to
-  start_time = currentTime();
+  start_time = get_current_time();
 
   // Lock the mutex
   db.readers = MAX_CONCURRENT_READERS;
@@ -212,7 +212,7 @@ Test(Conditions, get_player_high_score, .timeout=6*TIME_DELAY) {
 
   // Call the function we are testing the lock on
   get_player_high_score(&db, "Sam");
-  end_time = currentTime();
+  end_time = get_current_time();
   elapsed_time = end_time - start_time;
 
   // Check to make sure that the delay time is bigger than the time delay, so we actually locked.
@@ -229,7 +229,7 @@ Test(Conditions, get_best_player, .timeout=6*TIME_DELAY) {
   PlayerDatabase db = init_db();
 
   // Start timer to make sure that we run for as long as we'd expect to
-  start_time = currentTime();
+  start_time = get_current_time();
 
   // Lock the mutex
   db.readers = MAX_CONCURRENT_READERS;
@@ -244,7 +244,7 @@ Test(Conditions, get_best_player, .timeout=6*TIME_DELAY) {
 
   // Call the function we are testing the lock on
   get_best_player(&db);
-  end_time = currentTime();
+  end_time = get_current_time();
   elapsed_time = end_time - start_time;
 
   // Check to make sure that the delay time is bigger than the time delay, so we actually locked.
@@ -261,7 +261,7 @@ Test(Conditions, get_num_players, .timeout=6*TIME_DELAY) {
   PlayerDatabase db = init_db();
 
   // Start timer to make sure that we run for as long as we'd expect to
-  start_time = currentTime();
+  start_time = get_current_time();
 
   // Lock the mutex
   db.readers = MAX_CONCURRENT_READERS;
@@ -276,7 +276,7 @@ Test(Conditions, get_num_players, .timeout=6*TIME_DELAY) {
 
   // Call the function we are testing the lock on
   get_num_players(&db);
-  end_time = currentTime();
+  end_time = get_current_time();
   elapsed_time = end_time - start_time;
 
   // Check to make sure that the delay time is bigger than the time delay, so we actually locked.
@@ -293,7 +293,7 @@ Test(Conditions, get_highest_score, .timeout=6*TIME_DELAY) {
   PlayerDatabase db = init_db();
 
   // Start timer to make sure that we run for as long as we'd expect to
-  start_time = currentTime();
+  start_time = get_current_time();
 
   // Lock the mutex
   db.readers = MAX_CONCURRENT_READERS;
@@ -308,7 +308,7 @@ Test(Conditions, get_highest_score, .timeout=6*TIME_DELAY) {
 
   // Call the function we are testing the lock on
   get_highest_score(&db);
-  end_time = currentTime();
+  end_time = get_current_time();
   elapsed_time = end_time - start_time;
 
   // Check to make sure that the delay time is bigger than the time delay, so we actually locked.
@@ -325,7 +325,7 @@ Test(Conditions, get_total_plays, .timeout=6*TIME_DELAY) {
   PlayerDatabase db = init_db();
 
   // Start timer to make sure that we run for as long as we'd expect to
-  start_time = currentTime();
+  start_time = get_current_time();
 
   // Lock the mutex
   db.readers = MAX_CONCURRENT_READERS;
@@ -340,7 +340,7 @@ Test(Conditions, get_total_plays, .timeout=6*TIME_DELAY) {
 
   // Call the function we are testing the lock on
   get_total_plays(&db);
-  end_time = currentTime();
+  end_time = get_current_time();
   elapsed_time = end_time - start_time;
 
   // Check to make sure that the delay time is bigger than the time delay, so we actually locked.

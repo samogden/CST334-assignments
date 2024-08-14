@@ -27,7 +27,18 @@ typedef struct {
   char msg[MAX_MSG_LENGTH+1];
 } client_msg;
 
-void* make_request(void* msg); // struct client_msg
+/**
+ * Make a request to the server
+ * @param msg : pointer to a client_msg struct
+ * @return
+ */
+void* make_request(void* msg);
+
+/**
+ * Make a request to the server asynchronously
+ * @param msg : pointer to a client_msg struct
+ * @return
+ */
 pthread_t* make_request_async(void* msg);
 
 #endif //CLIENT_H
