@@ -6,10 +6,12 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <pthread.h>
+#include <string.h>
 
 #include "student_code.h"
 #include "database.h"
 #include "server.h"
+#include "client.h"
 #include "helpers.h"
 
 // Now import out unit tests

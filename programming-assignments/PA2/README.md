@@ -159,6 +159,9 @@ PROCESS* stcf_process_selector(PROCESS_LIST* pl); // 6 points
 
 ***Question:*** Look at all the unit tests that are being run, specifically at the files.  What order do you think we should look at these unit tests in?  What suite should we consider first, and what suite should we consider last?  Why?
 
+***Note:***
+There's a bunch more functions in `student_code.c` that you'll need to write along the way!
+
 ## Where to start
 
 I strongly recommend starting by looking at the `priority_process_selector` function that needs fixing.

@@ -145,7 +145,7 @@ def parse_flags() -> Namespace:
 
 def run_unittests(path_to_assignment_directory):
   os.chdir(path_to_assignment_directory)
-  proc = subprocess.Popen(["./unit_tests", "-j1", "--json", "--timeout", "60"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  proc = subprocess.Popen(["./unit_tests", "--json", "--timeout", "60"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   proc.wait()
   stdout = proc.stdout.read().decode('latin-1')
   stderr = proc.stderr.read().decode('latin-1')
