@@ -37,6 +37,13 @@ bool is_write_enabled(PageTableEntry pte);
  */
 bool is_execute_enabled(PageTableEntry pte);
 
+/**
+ * Given a VirtualAddress, return the VPN associated with it
+ * @param va
+ * @return (VPN) of the the Virtual Address
+ */
+VPN get_vpn_from_va(VirtualAddress va);
+
 /* MMU Helpers*/
 /**
  * Given a page table entry, with metadata bits, remove the metadata bits to leave just the PFN

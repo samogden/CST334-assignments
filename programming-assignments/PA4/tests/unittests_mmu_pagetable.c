@@ -19,7 +19,7 @@ Test(MMU_PageTable, get_pagetableentry__MMU_pagetable) {
     cr_assert(get_pagetableentry__MMU_pagetable(m, page_to_test) == page_to_test);
   }
 
-  cleanup_MMU(m);
+  MMU_destroy(m);
 }
 
 Test(MMU_PageTable, map_page__MMU_pagetable) {
@@ -59,7 +59,7 @@ Test(MMU_PageTable, map_page__MMU_pagetable) {
     cr_assert(is_execute_enabled(pte) == page_to_test % 2 % 7);
   }
 
-  cleanup_MMU(m);
+  MMU_destroy(m);
 }
 
 

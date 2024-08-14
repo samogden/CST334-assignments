@@ -25,6 +25,11 @@
       "convert_PageTableEntry_to_PFN"
     ]
     },
+    {"suite" : "Functions", "test_group" : "get_vpn_from_va", "value" : 10, "tests" :
+    [
+      "convert_PageTableEntry_to_PFN"
+    ]
+    },
     {"suite" : "Functions", "test_group" : "find_free_page", "value" : 10, "tests" :
     [
       "find_free_page"
@@ -41,7 +46,7 @@
       ]
     },
 
-    {"suite" : "MMU_PageTable", "test_group" : "end_to_end", "value" : 20, "tests" :
+    {"suite" : "MMU_PageTable", "test_group" : "end_to_end", "value" : 10, "tests" :
       [
         "end_to_end"
       ]

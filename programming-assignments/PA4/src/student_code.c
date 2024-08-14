@@ -25,6 +25,9 @@ bool is_execute_enabled(PageTableEntry pte) {
   // todo
 }
 
+VPN get_vpn_from_va(VirtualAddress va) {
+  // todo
+}
 
 PFN find_free_page(MMU m) {
   // todo

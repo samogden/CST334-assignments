@@ -26,6 +26,14 @@ Test(Functions, is_execute_enabled) {
   cr_assert(is_execute_enabled(pte));
 }
 
+Test(Functions, get_vpn_from_va) {
+  srand(time(NULL));
+  for (int i = 0; i < NUMBER_OF_REPEATS; i++) {
+    VirtualAddress va = rand() % (1<<(NUM_VPN_BITS+NUM_OFFSET_BITS));
+    cr_assert( get_vpn_from_va(va) == (va >> (NUM_OFFSET_BITS)));
+  }
+}
+
 Test(Functions, convert_PageTableEntry_to_PFN) {
   srand ( time(NULL) );
   for (int i = 0; i < NUMBER_OF_REPEATS; i++) {
