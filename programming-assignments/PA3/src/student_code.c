@@ -2,12 +2,15 @@
 #include <stdio.h>
 #include <sys/mman.h>
 #include <unistd.h>
+#include <stdio.h>
 
+#include <common.h>
 #include "student_code.h"
 
 int statusno, _initialized;
 
-node_t *_chunklist;
+node_t *_free_list;
+size_t num_free_chunks = 0;
 void *_arena_start, *_arena_end;
 
 
@@ -56,15 +59,13 @@ int init(size_t size) {
   _arena_end = _arena_start + size;
   _initialized = 1;
 
-  _chunklist = _arena_start;
-  _chunklist -> size = size - sizeof(node_t);
+  _free_list = _arena_start;
+  _free_list->size = size - sizeof(node_t);
 
-  //  mmap sets the initial memory value
-  // to zero so the fwd pointer of the is already null, but
-  // it doesn't hurt to make that clear
-  _chunklist -> fwd = NULL;
-  _chunklist -> bwd = NULL;
-  _chunklist -> is_free = true;
+  // Set up the initial free element
+  _free_list->fwd = NULL;
+  _free_list->bwd = NULL;
+  _free_list -> is_free = true;
 
   return size;
 }
@@ -72,7 +73,7 @@ int init(size_t size) {
 int destroy() {
 
   if (_initialized == 0) {
-    return ERR_UNINITIALIZED; 
+    return ERR_UNINITIALIZED;
   }
 
   // Remove arena with munmap()
@@ -80,19 +81,19 @@ int destroy() {
     return ERR_SYSCALL_FAILED;
   }
 
-  // Question: Are there memory leaks here?
+  // Question: Are there memory leaks?
 
   // Clean up variables
   _arena_start = NULL;
   _arena_end = NULL;
-  _chunklist = NULL;
+  _free_list = NULL;
   _initialized = 0;
 
   return 0;
 }
 
 
-node_t * find_first_free_chunk(size_t size, node_t* starting_node) {
+node_t * find_first_free_chunk(size_t size, node_t* free_list) {
   // todo
 }
 
@@ -150,7 +151,6 @@ void coalesce_nodes(node_t* front, node_t* back) {
 
 
 void* mem_alloc(size_t size){
-
   // Check to make sure we are initialized, and if not set statusno and return NULL;
   if(_initialized == 0) {
     // todo
@@ -176,6 +176,7 @@ void* mem_alloc(size_t size){
 void mem_free(void *ptr){
 
   if (ptr == NULL){
+    // Then we can't free it
     return;
   }
 
@@ -197,28 +198,12 @@ void mem_free(void *ptr){
   
   // Insert chunk into free list
   // todo
-  // insert_into_freelist(chunk, _chunklist);
 
   // Coalesce together the chunks
   // todo
 
 }
 
-//void insert_into_freelist(node_t* chunk, node_t* _chunklist) {
-//  // Keep it ordered by address
-//  node_t* curr_node = _chunklist
-//  while (curr_node != NULL && curr_node > chunk ) {
-//    curr_node = curr_node->fwd;
-//  }
-//
-//  if (curr_node == NULL) {
-//    // We're at the very end of the list
-//    curr_node->fwd->bwd = chunk;
-//    chunk->fwd = curr_node->fwd->bwd;
-//    curr_node->fwd = chunk;
-//    chunk->bwd = curr_node;
-//  } else {
-//    // We're in the middle of the list
-//  }
-//}
-
+void add_to_free_list(node_t* newly_freed_node, node_t* free_list_head) {
+  // todo
+}
