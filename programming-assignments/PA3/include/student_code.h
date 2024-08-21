@@ -13,8 +13,6 @@
 // Question: How many bytes is this?
 #define MAX_ARENA_SIZE (0x7FFFFFFF)
 
-extern int statusno;
-
 //Note: size represents the number of bytes available for allocation and does
 //not include the header bytes.
 typedef struct __node_t {
@@ -24,6 +22,9 @@ typedef struct __node_t {
   struct __node_t *bwd;
 } node_t;
 
+extern int statusno;
+extern node_t *_free_list;
+
 // Provided functions
 extern int init(size_t size);
 extern int destroy();
@@ -31,19 +32,19 @@ void print_header(node_t *header);
 
 // Functions to write
 /**
- * Starting at starting_node, find a chunk that is at least `size` in size
+ * Starting at free_list, find a chunk that is at least `size` in size
  * @param size - size of requested node
- * @param starting_node - start point in the free list
+ * @param free_list - start point in the free list
  * @return node_t*: first node in the free list big enough for allocation
  */
-node_t* find_first_free_chunk(size_t size, node_t* starting_node);
+node_t* find_first_free_chunk(size_t size, node_t* free_list);
 
 /**
- * Prepare node for allocation by splitting, if necessary, or setting metadata.
- * @param node - the memory chunk to prepare
+ * Prepare node_to_allocate for allocation by splitting, if necessary, or setting metadata.
+ * @param node_to_allocate - the memory chunk to prepare
  * @param size - the size of the requested memory
  */
-void split_node(node_t* node, size_t size);
+node_t* split_node(node_t* node_to_allocate, size_t size);
 
 /**
  * Given a pointer to an object to free, returns the associated header containing size
@@ -73,7 +74,12 @@ extern void* mem_alloc(size_t size);
  */
 extern void mem_free(void* ptr);
 
-
+/**
+ * Adds a newly freed node to the free list.
+ * Note: free list should be sorted by address.
+ * @param newly_freed_node
+ */
+void add_to_free_list(node_t* newly_freed_node, node_t* free_list_head);
 
 
 #endif

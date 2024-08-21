@@ -75,29 +75,31 @@ Test(Alloc, test_allocationfree_placement){
 
 
 Test(Alloc, test_allocation_withsplits){
-  int size =0;
+  int size = 0;
   int page_size = getpagesize();
   void *buff = NULL, *buff2 = NULL;
   node_t *header = NULL, *header2 = NULL;
+
+  size_t first_allocation_size = 64;
 
   // Test: First allocation causes split. Check that the header is in the
   // correct place, has the correct field values, and that chunks were split
   // correctly
   init(page_size);
-  buff = mem_alloc(64);
+  buff = mem_alloc(first_allocation_size);
   cr_assert(buff != NULL);
 
   header = (node_t *)(buff - sizeof(node_t));
-  cr_assert(header->size == 64);
+  cr_assert(header->size == first_allocation_size);
   cr_assert(header->bwd == NULL);
   cr_assert(header->is_free == 0);
-  cr_assert(header->fwd == ((void*)header)+sizeof(node_t)+64);
+  cr_assert(header->fwd == NULL);
 
-  node_t *next = header->fwd;
+  node_t *next = _free_list; //header->fwd;
 
   cr_assert(next->fwd == NULL);
-  cr_assert(next->bwd == header);
-  cr_assert(next->size == page_size-64-(sizeof(node_t)*2));
+  cr_assert(next->bwd == NULL);
+  cr_assert(next->size == page_size - first_allocation_size - (sizeof(node_t)*2));
   cr_assert(next->is_free == 1);
 
   // Test: Second allocation uses up remaining free space. Check that
@@ -111,7 +113,7 @@ Test(Alloc, test_allocation_withsplits){
   cr_assert(header2->size == size);
   cr_assert(header2->is_free == 0);
   cr_assert(header2->fwd == NULL);
-  cr_assert(header2->bwd == header);
+  cr_assert(header2->bwd == NULL);
 
   destroy();
 

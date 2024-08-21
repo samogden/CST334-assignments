@@ -280,7 +280,6 @@ Test(Functions, split_node__big_enough_to_split1) {
   node_t* node0 = (node_t*)memory;
   node_t* node1 = (node_t*)(memory + 2*sizeof(node_t));
 
-
   node0->size = sizeof(node_t);
   node0->is_free = true;
   node0->fwd = node1;
@@ -291,17 +290,20 @@ Test(Functions, split_node__big_enough_to_split1) {
   node1->fwd = NULL;
   node1->bwd = node0;
 
-  split_node(node0, 0);
-  node_t* new_node = node0->fwd;
+  log_debug("split_node: pre\n");
+  node_t* new_node = split_node(node0, 0);
+  log_debug("split_node: post\n");
 
+  log_debug("split_node: testing\n");
   cr_assert(new_node->size == 0);
+  log_debug("split_node: testing 1\n");
   cr_assert(new_node->is_free == true);
   cr_assert(new_node->fwd == node1);
-  cr_assert(new_node->bwd == node0);
+  cr_assert(new_node->bwd == NULL);
 
   cr_assert(node0->size == 0);
   cr_assert(node0->is_free == false);
-  cr_assert(node0->fwd == new_node);
+  cr_assert(node0->fwd == NULL);
   cr_assert(node0->bwd == NULL);
 
   free(memory);
@@ -325,18 +327,166 @@ Test(Functions, split_node__big_enough_to_split2) {
   node1->fwd = NULL;
   node1->bwd = node0;
 
-  split_node(node0, 1);
-  node_t* new_node = node0->fwd;
+  node_t* new_node = split_node(node0, 1);
+  // node_t* new_node = node0->fwd;
 
   cr_assert(new_node->size == 0);
   cr_assert(new_node->is_free == true);
   cr_assert(new_node->fwd == node1);
-  cr_assert(new_node->bwd == node0);
+  cr_assert(new_node->bwd == NULL);
 
   cr_assert(node0->size == 1);
   cr_assert(node0->is_free == false);
-  cr_assert(node0->fwd == new_node);
+  cr_assert(node0->fwd == NULL);
   cr_assert(node0->bwd == NULL);
 
   free(memory);
+}
+
+Test(Functions, add_to_free_list__no_free_list) {
+  // Note: Although we init, this is a bit of a hack since we aren't actually putting things in the arena
+  init(sizeof(node_t));
+  void* memory = malloc(sizeof(node_t));
+  _free_list = NULL;
+
+  node_t* node0 = (node_t*)memory;
+  node0->size = 0;
+  node0->fwd = NULL;
+  node0->bwd = NULL;
+  node0->is_free = false;
+
+  add_to_free_list(node0, _free_list);
+
+  cr_assert(node0->size == 0); // This shouldn't change
+  cr_assert_null(node0->fwd); // This should be updated if it were set to something before
+  cr_assert_null(node0->bwd); // This should be updated if it were set to something before
+  cr_assert_not(node0->is_free); // This isn't touched here
+
+  cr_assert(_free_list == node0);
+
+}
+
+Test(Functions, add_to_free_list__free_list_head) {
+  // Note: Although we init, this is a bit of a hack since we aren't actually putting things in the arena
+  init(2*sizeof(node_t));
+  void* memory = malloc(2*sizeof(node_t));
+  _free_list = NULL;
+
+  // This node is allocated
+  node_t* node0 = (node_t*)memory;
+  node0->size = 0;
+  node0->fwd = NULL;
+  node0->bwd = NULL;
+  node0->is_free = false;
+
+  // This node is unallocated
+  node_t* node1 = (node_t*)memory + 1;
+  node1->size = 0;
+  node1->fwd = NULL;
+  node1->bwd = NULL;
+  node1->is_free = true;
+  // Set the freelist to this node
+  _free_list = node1;
+
+  add_to_free_list(node0, _free_list);
+
+  cr_assert(node0->size == 0); // This shouldn't change
+  cr_assert(node0->fwd == node1);
+  cr_assert(node0->bwd == NULL);
+  cr_assert( ! node0->is_free); // This isn't touched here
+
+  cr_assert(node1->size == 0); // This shouldn't change
+  cr_assert(node1->fwd == NULL);
+  cr_assert(node1->bwd == node0);
+  cr_assert(node1->is_free); // This isn't touched here
+
+  cr_assert(_free_list == node0);
+}
+
+Test(Functions, add_to_free_list__free_list_tail) {
+  // Note: Although we init, this is a bit of a hack since we aren't actually putting things in the arena
+  init(2*sizeof(node_t));
+  void* memory = malloc(2*sizeof(node_t));
+  _free_list = NULL;
+
+  // This node is unallocated
+  node_t* node0 = (node_t*)memory;
+  node0->size = 0;
+  node0->fwd = NULL;
+  node0->bwd = NULL;
+  node0->is_free = true;
+  // Set the freelist to this node
+  _free_list = node0;
+
+  // This node isnallocated
+  node_t* node1 = (node_t*)memory + 1;
+  node1->size = 0;
+  node1->fwd = NULL;
+  node1->bwd = NULL;
+  node1->is_free = false;
+
+  add_to_free_list(node1, _free_list);
+
+  cr_assert(node0->size == 0); // This shouldn't change
+  cr_assert(node0->fwd == node1);
+  cr_assert(node0->bwd == NULL);
+  cr_assert(node0->is_free); // This isn't touched here
+
+  cr_assert(node1->size == 0); // This shouldn't change
+  cr_assert(node1->fwd == NULL);
+  cr_assert(node1->bwd == node0);
+  cr_assert( ! node1->is_free); // This isn't touched here
+
+  cr_assert(_free_list == node0);
+}
+
+
+Test(Functions, add_to_free_list__free_list_middle) {
+  // Note: Although we init, this is a bit of a hack since we aren't actually putting things in the arena
+  init(3*sizeof(node_t));
+  void* memory = malloc(3*sizeof(node_t));
+  _free_list = NULL;
+
+  node_t* node0 = (node_t*)memory;
+  node_t* node1 = (node_t*)memory + 1;
+  node_t* node2 = (node_t*)memory + 2;
+
+  // This node is unallocated
+  node0->size = 0;
+  node0->fwd = node2;
+  node0->bwd = NULL;
+  node0->is_free = true;
+  // Set the freelist to this node
+  _free_list = node0;
+
+  // This node isnallocated
+  node1->size = 0;
+  node1->fwd = NULL;
+  node1->bwd = NULL;
+  node1->is_free = false;
+
+  // This node is unallocated
+  node2->size = 0;
+  node2->fwd = NULL;
+  node2->bwd = node0;
+  node2->is_free = true;
+
+  add_to_free_list(node1, _free_list);
+
+  cr_assert(node0->size == 0); // This shouldn't change
+  cr_assert(node0->fwd == node1);
+  cr_assert(node0->bwd == NULL);
+  cr_assert(node0->is_free); // This isn't touched here
+
+  cr_assert(node1->size == 0); // This shouldn't change
+  cr_assert(node1->fwd == node2);
+  cr_assert(node1->bwd == node0);
+  cr_assert( ! node1->is_free); // This isn't touched here
+
+  cr_assert(node2->size == 0); // This shouldn't change
+  cr_assert(node2->fwd == NULL);
+  cr_assert(node2->bwd == node1);
+  cr_assert(node2->is_free); // This isn't touched here
+
+  cr_assert(_free_list == node0);
 }

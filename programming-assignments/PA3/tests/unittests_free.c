@@ -1,4 +1,4 @@
-Test(Free, test_free_basic){
+Test(Free, test_free_basic, .disabled=false){
   int size;
   int page_size = getpagesize();
   void *buff;
@@ -17,7 +17,7 @@ Test(Free, test_free_basic){
   destroy();
 }
 
-Test(Free, test_free_coalescing_case1){
+Test(Free, test_free_coalescing_case1, .disabled=false){
   int size, size2, size3;
   int page_size = getpagesize();
   void *buff, *buff2, *buff3;
@@ -69,7 +69,7 @@ Test(Free, test_free_coalescing_case1){
   destroy();
 }
 
-Test(Free, test_free_coalescing_case2){
+Test(Free, test_free_coalescing_case2, .disabled=false){
   int size, size2;
   int page_size = getpagesize();
   void *buff, *buff2;
@@ -111,7 +111,7 @@ Test(Free, test_free_coalescing_case2){
   destroy();
 }
 
-Test(Free, test_free_coalescing_case3){
+Test(Free, test_free_coalescing_case3, .disabled=false){
   int size, size2;
   int page_size = getpagesize();
   void *buff, *buff2;
@@ -153,7 +153,7 @@ Test(Free, test_free_coalescing_case3){
 }
 
 
-Test(Free, test_free_coalescing_chains_fwd){
+Test(Free, test_free_coalescing_chains_fwd, .disabled=false){
   int size;
   int page_size = getpagesize();
   void *buff, *buff2, *buff3, *buff4;
@@ -174,9 +174,13 @@ Test(Free, test_free_coalescing_chains_fwd){
 
   node_t *header = ((void*)buff) - sizeof(node_t);
 
+  log_debug("Free buff\n")
   mem_free(buff);
+  log_debug("Free buff2\n")
   mem_free(buff2);
+  log_debug("Free buff3\n")
   mem_free(buff3);
+  log_debug("Free buff4\n")
   mem_free(buff4);
 
   //check to make sure the above seq. ends with
@@ -190,7 +194,7 @@ Test(Free, test_free_coalescing_chains_fwd){
 }
 
 
-Test(Free, test_free_coalescing_chains_bwd){
+Test(Free, test_free_coalescing_chains_bwd, .disabled=false){
   int size;
   int page_size = getpagesize();
   void *buff, *buff2, *buff3, *buff4;
