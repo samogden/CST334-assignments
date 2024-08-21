@@ -21,7 +21,7 @@ TestSuite(SubstitutionrCipher, .disabled=false, .timeout=60.0);
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
 // PRE_TEST: occurs after the test initialization, but before the test is run.
 ReportHook(PRE_TEST)(struct criterion_test *test) {
-  log_debug("Starting test: %s\n", test->name)
+  log_info("Starting test: %s\n", test->name)
 }
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c

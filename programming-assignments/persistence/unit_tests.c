@@ -1,21 +1,14 @@
 #include <criterion/criterion.h>
-#include <signal.h>
 #include <common.h>
-#include <time.h>
+#include <signal.h>
 
-// Include src headers
+// Include src code
 #include "student_code.h"
-#include "defines.h"
-
-// Define any testing parameters
-#define NUMBER_OF_REPEATS 10
 
 // Include unit tests
-#include "tests/unittests_functions.c"
-#include "tests/unittests_mmu_pagetable.c"
+// #include "tests/unittests_functions.c"
 
-TestSuite(Functions, .disabled=false, .timeout=60.0);
-TestSuite(MMU_PageTable, .disabled=false, .timeout=60.0);
+// TestSuite(Functions, .disabled=false, .timeout=60.0);
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
 // PRE_TEST: occurs after the test initialization, but before the test is run.
