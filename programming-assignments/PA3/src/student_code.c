@@ -97,14 +97,14 @@ node_t * find_first_free_chunk(size_t size, node_t* free_list) {
   // todo
 }
 
-void split_node(node_t* node, size_t size) {
+node_t* split_node(node_t* node_to_allocate, size_t size) {
 
-  node_t* next = node->fwd;
+  node_t* next = node_to_allocate->fwd;
 
-  if (node->size == size){
+  if (node_to_allocate->size == size){
     // Then the node is exactly the right size
     // todo
-  } else if(node->size - size < sizeof(node_t)){
+  } else if(node_to_allocate->size - size < sizeof(node_t)){
     // Then the node is bigger than requested, but too small to split
     // todo
   }
