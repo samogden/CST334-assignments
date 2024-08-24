@@ -235,16 +235,21 @@ def make_test(path_to_assignment_directory):
 
 def make_lint(path_to_assignment_directory):
   os.chdir(path_to_assignment_directory)
-  proc = subprocess.Popen(["make", "check"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+  proc = subprocess.Popen(["make check"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
   proc.wait()
   
   stdout = proc.stdout.read().decode()
   stderr = proc.stderr.read().decode()
   
+  log.debug(f"stdout: {stdout}")
+  log.debug(f"stderr: {stderr}")
+  
+  exit(0)
+  
   if proc.returncode == 0:
-    return True, stderr
+    return True, stdout + "\n\n" + stderr
   else:
-    return False, stderr
+    return False, stdout + "\n\n" + stderr
   
 
 def find_function(source_code, target_function_name):
@@ -309,12 +314,12 @@ def main():
     }
     log.error("Build failed")
   results_json["lint_success"] = lint_success
-  results_json["lint_logs"] = lint_log
+  results_json["lint_logs"] = json.encoder.JSONEncoder().encode(lint_log)
   
   if len(scoring_tests) == 0:
     results_json["score"] = "Not calculated"
     
-  results_json["build_logs"] = json.encoder.JSONEncoder().encode(build_log),
+  results_json["build_logs"] = json.encoder.JSONEncoder().encode(build_log)
   print(json.dumps(results_json, indent=4))
   with open(args.output, 'w') as fid:
     json.dump(results_json, fid, indent=4)
