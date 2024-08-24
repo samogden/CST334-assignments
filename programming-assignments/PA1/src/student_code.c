@@ -48,7 +48,9 @@ int find_last_index(char* str, char target) {
  * Structures *
  **************/
 Person person_make_new(char* first_name, char* last_name, int age) {
+  Person p = {};
   // todo
+  return p;
 }
 
 char* person_to_string(Person person) {
@@ -58,7 +60,9 @@ char* person_to_string(Person person) {
 }
 
 Group group_make_new(char* group_name) {
+Group g = {};
   // todo
+  return g;
 }
 
 int num_people_in_group(Group group) {

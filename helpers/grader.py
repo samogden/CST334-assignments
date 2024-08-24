@@ -244,8 +244,6 @@ def make_lint(path_to_assignment_directory):
   log.debug(f"stdout: {stdout}")
   log.debug(f"stderr: {stderr}")
   
-  exit(0)
-  
   if proc.returncode == 0:
     return True, stdout + "\n\n" + stderr
   else:
