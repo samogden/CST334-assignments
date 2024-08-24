@@ -26,14 +26,14 @@ docker pull samogden/cst334
 
 Then, navigate using your terminal on your local machine to your working directory (i.e. the github repo `CST334-assignments`) and run the below command to start docker:
 ```shell
-docker run -it --rm -v ${PWD}:/tmp/programming samogden/cst334
+docker run -it --rm -v ${PWD}:/tmp/hw samogden/cst334
 ```
 
 ***Question:*** What are the differences between these commands and the ones for lab1?  What do the differences mean?
 
 And then change to the appropriate directory:
 ```shell
-cd /tmp/programming/programming-assignments/PA1
+cd /tmp/hw/programming-assignments/PA1
 ```
 
 Now you're ready to get started coding!
@@ -41,7 +41,57 @@ Now you're ready to get started coding!
 
 ### Testing Code
 
-To test your code you will run two commands; one of them will compile your code and the other will run the unit tests.
+The easiest way to test your code is to run the below command:
+
+```shell
+make
+```
+
+This will, by default, compile the code and run the unit tests.
+We will discuss in class what exactly a `make` command is and how they work, but for now this should get you going.
+
+#### Alternative build commands
+
+There are a few alternative build commands that are also potentially useful for you.
+These will allow you to build and run the tests as separate steps, see the grading output of your tests, and check to see whether your code is passing a lint test.
+
+##### Building and running as separate steps
+
+To build your code and then run it, you will run the below two commands.
+
+```shell
+make clean unit_tests
+./unit_tests -j1
+```
+
+The first command tells make to clean out your old code (which ensures any changes you made took), and then build the unit tests.
+the second command runs the unit_tests executable one test at a time.
+If you get an error on the second command that `./unit_tests` is not found then it is likely that your compilation failed and you should check the output of the first command for errors.
+
+##### Grading your submission
+
+Any submissions to canvas will be automatically graded within ~5 minutes but if you want to test your submission (and see what you might have left to work on) you can do so with the below command:
+
+```shell
+make grade
+```
+
+This will run the grading script and show you the results.
+The output is not terribly well formatted and I have no intent to make it better formatted and so I strongly recommend using the plain `make` command for more helpful feedback.
+
+##### Lint tests
+
+You can get 1 point of extra credit on each assignment that passes a lint check.
+A [lint check](https://en.wikipedia.org/wiki/Lint_(software)) is a check of how your code looks.
+Some have more in-depth checks but these are making sure that you are following standard coding conventions.
+
+You can run this test to see how your code is doing with the below command.
+Note that the lint check is run as part of the `make grade` above.
+
+```shell
+make grade
+```
+
 
 #### Building code
 
@@ -60,7 +110,7 @@ These warnings are there because I did some hacky things to make sure the code c
 #### Running code
 
 ```shell
-./unit_tests
+./unit_tests -j1
 ```
 
 This command runs the unit tests.
@@ -143,14 +193,15 @@ void decrypt_caesar(char* input_str, int shift_size); // 5 points
 ### General substitution cipher (bonus points)
 ***(10 bonus points)***
 
-This general substituion cipher will take in a list of shifts and make the appropriate replacements.
-Since it is extra credit details are left to you to figure out, but some unit tests are provided.
+This general substitution cipher will take in a list of shifts and make the appropriate replacements.
+Since it is extra credit, the details are left to you to figure out, but some unit tests are provided.
+
 
 ```c
-bool is_reversible(int[] encryption_key);                             // 4 points
-int* get_decryption_key(int[] encryption_key);                        // 4 points
+bool is_reversible(int[] encryption_key);                             // 1 points
+int* get_decryption_key(int[] encryption_key);                        // 1 points
 void encrypt_substitution(char* input_str, int[] encryption_key);     // 1 point
-void decrypt_substitution(char* input_str, int[] get_decryption_key); // 1 point
+void decrypt_substitution(char* input_str, int[] decryption_key); // 1 point
 
 ```
 

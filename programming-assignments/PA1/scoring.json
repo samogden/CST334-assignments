@@ -93,12 +93,12 @@
       ]
     }, 
     
-    {"suite" : "SubstitutionCipher", "test_group" : "is_reversible", "value" : 4, "tests" :
+    {"suite" : "SubstitutionCipher", "test_group" : "is_reversible", "value" : 1, "tests" :
       [
         "is_reversible"
       ]
     }, 
-    {"suite" : "SubstitutionCipher", "test_group" : "decryption_key", "value" : 4, "tests" :
+    {"suite" : "SubstitutionCipher", "test_group" : "decryption_key", "value" : 1, "tests" :
       [
         "decryption_key"
       ]
