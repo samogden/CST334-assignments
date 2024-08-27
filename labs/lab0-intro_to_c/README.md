@@ -11,15 +11,20 @@ A more complete example would be `0b10` which is equal to 2 in decimal.
 
 ## Step 0: Preparation
 
-Make sure that you've gone through the steps to install docker and get it running as per the slides on canvas.
+There are three things to do in preparation for this lab:
+1. Make sure you have docker installed
+2. Create a google document (or some other thing that can track text and pictures), title it Lab 1 and prepare to record some steps
+3. Open terminal (on mac) or powershell (on windows) and navigate to a directory such as "Documents" (mac) or "My documents" (windows)
+  - Opening a folder in powershell ([link](https://www.partitionwizard.com/clone-disk/windows-open-powershell-in-a-folder.html))
+  - Opening a folder in terminal ([link](https://www.maketecheasier.com/open-folder-in-finder-from-mac-terminal/))
+  - Note: This will be the folder you do your homework and future labs in so make it some place you'll remember (like a documents folder)!
 
-Additionally, create a google document (or microsoft word, or apple pages, if you prefer) titled "Lab 1"
 
 ### Step 1: Start Docker
 
 First, navigate to your working directory in your terminal of choice (e.g. PowerShell on Windows or Terminal on macOS) and type in the following command:
 ```bash
-docker run -it --rm -v ${PWD}:/tmp/lab samogden/cst334
+docker run -it --rm -v ${PWD}:/tmp/hw samogden/cst334
 ```
 
 This will start docker and mount the current folder inside of it, giving us access to our shared files.
@@ -27,10 +32,10 @@ This will start docker and mount the current folder inside of it, giving us acce
 Next, run the below command to change directory.
 
 ```bash
-cd /tmp/lab
+cd /tmp/hw
 ```
 
-Because this folder was mounted with the `-v ${PWD}:/tmp/lab` flag when we started the docker image it is shared with our host operating system allowing us to edit files locally and have the changes automatically appear in the docker image.
+Because this folder was mounted with the `-v ${PWD}:/tmp/hw` flag when we started the docker image it is shared with our host operating system allowing us to edit files locally and have the changes automatically appear in the docker image.
 
 
 ## Step 1: Downloading the starter code
@@ -46,10 +51,10 @@ To change to the directory containing the files for this lab (including a copy o
 ```bash
 cd CST334-assignments
 cd labs
-cd lab1-intro_to_c
+cd lab0-intro_to_c
 ```
 
-Note that you can run all of these commands on a single line as `cd CST334-assignments/labs/lab1-intro_to_c`.
+Note that you can run all of these commands on a single line as `cd CST334-assignments/labs/lab0-intro_to_c`.
 
 ## Step 2: Open the starter code
 
@@ -86,25 +91,25 @@ Looking at the starter code we see the below:
 The first three lines are include statements, which import libraries.
 `stdio.h` is used for input (short for "Standard IO"), `stdlib.h` is standard libraries, and `unistd.h` is a set of miscellaneous functions and types that give access to the POSIX operating system API, which linux uses.
 
-Line 5 uses the preprocessing command `#define` to define MAXSTR to be 8.
+**Line 5** uses the preprocessing command `#define` to define MAXSTR to be 8.
 Preprocessing commands are widely used in C to perform functions early in the compilation process.
 In fact, the `#include` commands in the first three lines are other examples of preprocessing commands.
 Preprocessing commands can be identified because they always start with a `#`.
 In this case, `#define MAXSTR 8` means that the preprocessor should go through the source code and replace `MAXSTR` with `8` wherever it sees it.
 Define statements like this are often used for variables to set them to particular values, similar to global variables but with lower runtime requirements.
 
-Line 7 declares our main function -- every C program needs a main function (although in the homework we see that we don't need to write them ourselves when running unit tests).
+**Line 7** declares our main function -- every C program needs a main function (although in the homework we see that we don't need to write them ourselves when running unit tests).
 In C the main function should always have a return type of `int`.
 The return value corresponds to the success or failure of our program -- 0 indicates a success and other positive values mean a warning or error.
 Although not calling return is technically acceptable it is good practice to always include a return value, which we do on line 17.
 
-Line 10 declares a character array of length `MAXSTR`, using the compiler directive we declared before to set the length.
+**Line 10** declares a character array of length `MAXSTR`, using the compiler directive we declared before to set the length.
 Therefore, if we want a longer input string to be possible, we could simply increase the value of `MAXSTR`.
 
-Line 11 declares an int that will be our output value.
+**Line 11** declares an int that will be our output value.
 In `gcc` there is no guarantee that a value that is declared but not initialized (e.g. `int i;`) will have a reasonable value in it so we make sure to initialize it to 0.
 
-Lines 14-15 are set up to identify if we are using a `tty` or not -- this stands for `TeleTYpewriter`.
+**Lines 14-15** are set up to identify if we are using a `tty` or not -- this stands for `TeleTYpewriter`.
 What it means is whether we are running the program by calling it in the terminal or automatically inputting text, something called "piping" which we will see a bit later.
 Right now, if we detect that a user is typing text in we automatically output a right angle bracket followed by a space to give them a prompt to enter in a character.
 
@@ -163,7 +168,7 @@ printf("input: %s\n", input_s);
 Make sure to make the indentation match as pretty code is much easier to debug!
 
 These two lines do two things.
-First, `scanf("%s", input_s);` calls the `scanf` function and passes it the format string `%s` as well as our string, `input_s`.
+The first line, `scanf("%s", input_s);` calls the `scanf` function and passes it the format string `%s` as well as our string, `input_s`.
 [Format strings](https://www.geeksforgeeks.org/scanf-in-c/#) in C specify how to to convert strings into variables and vice versa.
 The format string `%s` specifically tells `scanf` that it will be reading a string.
 The second argument `input_s` is our string, and it is where `scanf` will store what it reads in from the command line.
