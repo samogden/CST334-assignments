@@ -42,7 +42,7 @@ clean:
 	rm -rf bin unit_tests debug
 
 check:
-	clang-tidy -checks=bugprone-*,readability-*,-readability-identifier-length,-readability-else-after-return,-bugprone-easily-swappable-parameters,-readability-redundant-control-flow,-readability-non-const-parameter -warnings-as-errors=* src/student_code.c -- -Iinclude/
+	clang-tidy -checks=bugprone-*,readability-*,-readability-identifier-length,-readability-else-after-return,-bugprone-easily-swappable-parameters,-readability-redundant-control-flow,-readability-non-const-parameter -warnings-as-errors=bugprone-*,readability-* src/student_code.c -- -I$(INCLUDE_DIR) -I../common/
 
 bin:
 	mkdir -p bin
