@@ -35,7 +35,7 @@ In this lab we'll be talking about compilation flags and we'll be trying out a t
 ### Lab files
 
 This lab is designed to be a miniature version of the homework.
-It has a [`src`](src) folder and a [`tests`](tests) folder, contianing source code and testing files respectively.
+It has a [`src`](src) folder, a [`include`](include) folder, and a [`tests`](tests) folder, contianing source code, headers, and testing files respectively.
 It also has a [`Makefile`](Makefile) that will build executables for you.
 Itt has two other files, one of which we've seen in PA1 and the other which is new.
 
@@ -76,7 +76,7 @@ Below we can see what it currently consists of.
 
 ```shell
 [DOCKER] /tmp/hw/labs/lab1/ $ cat -n debug.c
-     1	#include "src/student_code.h"
+     1	#include "student_code.h"
      2
      3	int main() {
      4	    return 0;
@@ -89,9 +89,50 @@ We can see a similar structure here, where it includes our student code function
 This is intentional.  We want to keep this file fairly empty in order to move what we're currently debugging into there.
 Essentially, it's a scratchpad where we're going to be looking at bugs more closely.
 
+#### `include/student_code.h`
+
+When looking at a new project it's often helpful to look at the header files.
+Header files define how you can interact with code, so it essentially defines the API that the library presents.
+
+Inside a header file is any definitions that are used in a program and any functions that the library is presenting.
+Let's check out what we're presenting in this project.
+
+```c
+ 1	#ifndef PROJECTS_STUDENT_CODE_H
+ 2	#define PROJECTS_STUDENT_CODE_H
+ 3
+ 4	typedef struct Person {
+ 5	    int age;
+ 6	    char name[8];
+ 7	    int favorite_number;
+ 8	} Person;
+ 9
+10	/**
+11	 * This function takes in an age, a name, and a favorite number and returns a person
+12	 * @param age integer representing age
+13	 * @param name character string representing name (at most 7 chars long!)
+14	 * @param favorite_number integer representing favorite number
+15	 * @return
+16	 */
+17	Person make_new_person(int age, char* name, int favorite_number);
+18
+19	#endif //PROJECTS_STUDENT_CODE_H
+```
+
+The first thing we notice is that on lines 1, 2, and 19 we are using some preprocessor commands.
+Preprocessor commands let us do things, in this case making it check to see if a variable is set.
+This prevent us from re-including the same header file twice, which would cause the compiler confusion.
+
+Next, from lines 4-8 we define a Person struct and typedef it to make it so we can just say `Person` instead of `struct Person`.
+
+Finally, lines 10-17 define a function called `make_new_person`.
+This function's declaration is line 17, but the lines 11-15 describe what the function is going to do.
+The unit tests _should_ be written to match this description so if you are wondering what a test should do this is a good place to check.  
+
+
 #### `src/student_code.c`
 
-Now that we've looked a little bit at our general setup, let's look at the specifics of what our code does.
+Now that we've looked a little bit at our general setup and headers, let's look at the specifics of what our code does.
 Unlike the homework, I'm providing a bit of code, so let's check it out!
 
 ```c
@@ -715,6 +756,9 @@ Usually when we see that:
 Then it means that something has overflowed a buffer.
 
 So let's look at our buffers by looking at our `student_code.h` file.
+This is in the `include/` directory instead of our `src/` directory.
+We already looked at this file before, but let's look at it again.
+
 ```c
 1	#ifndef PROJECTS_STUDENT_CODE_H
 2	#define PROJECTS_STUDENT_CODE_H
