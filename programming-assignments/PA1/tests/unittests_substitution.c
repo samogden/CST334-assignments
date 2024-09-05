@@ -1,7 +1,7 @@
 Test(SubstitutionCipher, is_reversible, .disabled=false) {
   // Check to see if the translation table is isomorphic
   int encryption_key[26];
-  memset(encryption_key, 0, sizeof(int));
+  memset(encryption_key, 0, 26 * sizeof(int));
 
   // The encryption key is directly the letter to change it to, so it should already fail
   cr_assert_not(is_reversible(encryption_key));
