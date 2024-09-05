@@ -522,6 +522,9 @@ Aborted
 We can now cleanly compile but we're still failing.
 Time to move onto figuring out what's going on!
 
+***Note:*** 
+It might not fail here, but keep reading!
+
 ***TODO:*** Take a screenshot of your debug.c and paste it into your google document.
 
 ### Step 7: GDB
