@@ -1,5 +1,5 @@
 #include <criterion/criterion.h>
-#include "../src/student_code.h"
+#include "student_code.h"
 
 TestSuite(Person, .disabled=false);
 
