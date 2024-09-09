@@ -219,7 +219,7 @@ That is, in the directory you started docker in click folders until you are in t
 
 
 
-### Step 4: Let's watch things break
+## Step 4: Let's watch things break
 
 Okay, so now that we've check out our various files, let's run our program and see how our tests are doing!
 We run it by using the `make` command, which parses our Makefile.
@@ -254,7 +254,7 @@ If this happens then please read through the next few sections until you get to 
 
 ***TODO:*** Take a screenshot of the `make` command failing and paste it into your google document.
 
-#### Step 4a: Digging into what we're seeing
+### Step 4a: Digging into what we're seeing
 
 Let's try to parse out what happened.
 To break this down a bit I'm going to pipe the output of make into `cat -n` to add line numbers, and then add in some artificial spacing for clarity.
@@ -312,7 +312,7 @@ Finally, line 15 is just our make file telling us that something went wrong.
 Well shoot.
 Time to get debugging!
 
-### Step 5: Checking out our unit tests.
+## Step 5: Checking out our unit tests.
 
 The first thing we should do is go and find out where our tests are failing.
 Let's check out our unit test file in `tests/tests-person.c`.
@@ -402,7 +402,7 @@ Set the `.disabled` on the first test to be`true` (and remember to turn it on ag
 
 ***TODO:*** Take a screenshot with the test disabled and paste it into your google doc.
 
-#### Step 5a: let's see what happens when we've disabled that test
+### Step 5a: let's see what happens when we've disabled that test
 
 ```shell
 [DOCKER] /tmp/hw/labs/lab1/ $ make 2>&1 | cat -n
@@ -423,7 +423,7 @@ If we can fix it then it can probably help us figure out what's going on a bit b
 Let's get going and dig into it a bit more!
 
 
-### Step 6: Isolating the problem
+## Step 6: Isolating the problem
 
 Before we start digging into debugging tools I have to say that I'm willing to bet some of you can already guess what's going on.
 For a problem like this a full debug is potentially overkill but it's good to go through the steps and practice.
@@ -527,7 +527,7 @@ It might not fail here, but keep reading!
 
 ***TODO:*** Take a screenshot of your debug.c and paste it into your google document.
 
-### Step 7: GDB
+## Step 7: GDB
 
 The first tool we'll be using is [GDB](https://www.sourceware.org/gdb/), aka the GNU Project Debugger.
 To start up GDB we simply type `gdb [program name]` and it launches the debugger with that program as it's input.
@@ -624,7 +624,7 @@ To remedy this we want to turn on debugging.
 
 Quit gdb by running `quit`.
 
-#### Step 7b: Compiling for GDB
+### Step 7b: Compiling for GDB
 
 Let's do a slightly modification to our Makefile to have it compile with some extra information for gdb.
 This is already turned on in the projects but I wanted to have an excuse to talk about it.
@@ -659,7 +659,7 @@ Whoa, that's a lot more information!
 Now GDB is not only showing us what line is failing, but also the arguments being passed in!
 That's much more useful.
 
-#### Step 7c: Stepping through code in GDB
+### Step 7c: Stepping through code in GDB
 
 Okay!  Now that we have actual information, let's try stepping through some code.
 To do this run `break make_new_person` to set a breakpoint at the beginning of our make_new_person function, and then call `run`.
@@ -745,7 +745,7 @@ Hmmmm.
 ***TODO:*** Take a screenshot of you walking through gdb like the above and paste it into your google document.
 
 
-### Step 8: Looking at our code
+## Step 8: Looking at our code
 
 Based on what we've seen until now we know that something is wrong with how we're using the `strcpy` function.
 Even though it's a library function it's somehow messing something up.
@@ -840,7 +840,7 @@ Success!
 ***TODO:*** Take a screenshot of running the passing unit test.
 
 
-### Step 5: Commit our changes
+## Step 9: Commit our changes
 
 After working on our code and fixing a bug, or getting another unit test to pass, it is always good practice to commit our code to our git repository.
 This allows us to make sure that if we run into any problems when developing for the next test, or with our repo in general, we can simply roll back the changes.
