@@ -28,6 +28,7 @@ unit_tests: clean unit_tests.c bin $(OBJS) $(TEST)
 # Rule to build the debug executable
 debug: clean debug.c bin $(OBJS) $(TEST)
 	$(CC) $(CFLAGS) debug.c -o $@ $(OBJS)
+	gdb ./debug
 
 # Rule to compile .c files into .o files
 bin/%.o: src/%.c $(HEADERS) $(TEST)
