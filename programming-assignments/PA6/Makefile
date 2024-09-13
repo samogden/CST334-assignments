@@ -18,16 +18,19 @@ CFLAGS=-g -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -I
 TARGET = unit_tests
 
 # Build all
-all: clean debug unit_tests
-	./unit_tests -j1 --timeout 30
+all: clean build_debug unit_tests
+	./unit_tests -j1 --timeout 10
 
 # Rule to build the executable
 unit_tests: clean unit_tests.c bin $(OBJS) $(TEST)
 	$(CC) $(CFLAGS) unit_tests.c -o $@ $(OBJS)
 
 # Rule to build the debug executable
-debug: clean debug.c bin $(OBJS) $(TEST)
-	$(CC) $(CFLAGS) debug.c -o $@ $(OBJS)
+build_debug: clean debug.c bin $(OBJS) $(TEST)
+	$(CC) $(CFLAGS) debug.c -o debug $(OBJS)
+
+# Rule to build the debug executable
+debug: clean build_debug
 	gdb ./debug
 
 # Rule to compile .c files into .o files
@@ -48,4 +51,6 @@ check:
 bin:
 	mkdir -p bin
 
-.PHONY: all clean grade
+.PHONY: all clean grade build_debug
+	
+.INTERMEDIATE: .build_debug
