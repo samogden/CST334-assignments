@@ -1,5 +1,10 @@
 # CST334 Project: Process Scheduling
 
+## Note
+
+As a heads-up, assignments often change after I first write them and might become a little out of sync with this README file.
+I will do my best to keep them up to date, but specific numbers of tests run might be different than what you see.
+
 ## Background
 
 In this project we'll be making a process scheduling simulator!
