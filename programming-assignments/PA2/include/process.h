@@ -4,8 +4,10 @@
 
 #include "statistics.h"
 
+typedef unsigned int processid_t;
+
 typedef struct PROCESS {
-    unsigned int id; // Each process should have a unique ID
+    processid_t id; // Each process should have a unique ID
     float entry_time; // Time of job entry
     float duration; // Length of job
     float time_remaining; // Amount of runtime left for job
