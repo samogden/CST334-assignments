@@ -70,8 +70,6 @@ Note, this might not be entirely accurate, but in general is very close to the a
 
 
 This assignment consists of a process scheduling simulation where there are a number of different ways of selecting the next job.
-For the sake of simplicity, we are running each job in a series of time slices and then selecting a new job when appropriate.  
-Note that this causes a few of our algorithms to behave slightly differently -- for example, SJF now has preemption happen for it, which can lead to slightly different behavior than we saw in class.
 
 The core of this simulation happens in `process_scheduling.c` starting at line 21:
 
