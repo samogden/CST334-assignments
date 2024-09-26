@@ -61,9 +61,10 @@ Test(SubstitutionCipher, decryption_key, .disabled=false) {
   }
   decryption_key = get_decryption_key(encryption_key);
   cr_assert_not_null(decryption_key);
-
+  
+  // Test if the decryption key works along with the encryption key.
   for (int i = 0; i < 26; i++) {
-    cr_assert_eq(expected_decryption_key[i], decryption_key[i]);
+    cr_assert_eq(encryption_key[decryption_key[i]],expected_decryption_key[i]);
   }
 }
 
