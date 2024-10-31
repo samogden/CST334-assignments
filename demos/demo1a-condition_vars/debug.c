@@ -4,19 +4,28 @@
 #include <stdio.h>
 #include <pthread.h>
 
-#define NUM_TO_ADD 10000
+#define NUM_TO_ADD 10
 
-typedef struct add_args_t {
+typedef struct args_t {
   Queue* q;
   unsigned int val;
-} add_args_t;
+} args_t;
 
-void* add_item_wrapper(void* add_args) {
-  Queue* q = ((add_args_t*)add_args)->q;
-  unsigned int val = ((add_args_t*)add_args)->val;
+void* add_item_wrapper(void* args) {
+  Queue* q = ((args_t*)args)->q;
+  unsigned int val = ((args_t*)args)->val;
 
   add_item(q, val);
   printf("size: %d\n", get_size(q));
+
+  return NULL;
+}
+
+void* get_item_wrapper(void* args) {
+  Queue* q = ((args_t*)args)->q;
+
+  int item = get_item(q);
+  printf("item: %d\n", item);
 
   return NULL;
 }
@@ -25,7 +34,7 @@ int main() {
 
   Queue q = init_queue();
   pthread_t threads[NUM_TO_ADD];
-  add_args_t args[NUM_TO_ADD];
+  args_t args[NUM_TO_ADD];
 
   for (unsigned int i = 0; i < NUM_TO_ADD; i++) {
     args[i].q = &q;
