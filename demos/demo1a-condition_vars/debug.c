@@ -41,12 +41,22 @@ int main() {
     args[i].val = i;
 
     // add_item_wrapper(&args);
-    pthread_create(
-      &threads[i],
-      NULL,
-      add_item_wrapper,
-      &args[i]
-    );
+    if (i > ((NUM_TO_ADD/2))) {
+      pthread_create(
+        &threads[i],
+        NULL,
+        add_item_wrapper,
+        &args[i]
+      );
+    } else {
+      pthread_create(
+        &threads[i],
+        NULL,
+        get_item_wrapper,
+        &args[i]
+      );
+
+    }
   }
   for (int i = 0; i < NUM_TO_ADD; i++) {
     // catch all our threads
