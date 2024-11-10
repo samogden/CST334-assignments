@@ -46,7 +46,7 @@
       ]
     },
 
-    {"suite" : "MMU_PageTable", "test_group" : "end_to_end", "value" : 10, "tests" :
+    {"suite" : "MMU_PageTable", "test_group" : "end_to_end", "value" : 20, "tests" :
       [
         "end_to_end"
       ]

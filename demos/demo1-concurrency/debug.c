@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <pthread.h>
 
-#define NUM_TO_ADD 10
+#define NUM_TO_ADD 10000
 
 typedef struct add_args_t {
   Queue* q;
@@ -25,15 +25,23 @@ int main() {
 
   Queue q = init_queue();
   pthread_t threads[NUM_TO_ADD];
+  add_args_t args[NUM_TO_ADD];
 
   for (unsigned int i = 0; i < NUM_TO_ADD; i++) {
-    add_args_t args = {
-      .q = &q,
-      .val = i
-    };
+    args[i].q = &q;
+    args[i].val = i;
 
-    add_item_wrapper(&args);
-    //pthread_create(&threads[i], NULL, add_item_wrapper, &args);
+    // add_item_wrapper(&args);
+    pthread_create(
+      &threads[i],
+      NULL,
+      add_item_wrapper,
+      &args[i]
+    );
+  }
+  for (int i = 0; i < NUM_TO_ADD; i++) {
+    // catch all our threads
+    pthread_join(threads[i], NULL);
   }
   print_queue(&q);
 
