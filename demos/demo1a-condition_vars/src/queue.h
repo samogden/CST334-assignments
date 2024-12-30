@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <pthread.h>
 
-#define QUEUE_SIZE 16000
+#define QUEUE_SIZE 10
 
 
 typedef struct Queue {
@@ -25,7 +25,7 @@ bool is_full(Queue* q);
 bool is_empty(Queue* q);
 
 int add_item(Queue* q, int item);
-int get_item(Queue* q, int item);
+int get_item(Queue* q);
 
 void print_queue(Queue* q);
 

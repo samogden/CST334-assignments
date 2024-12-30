@@ -45,6 +45,16 @@ int _add_item(Queue* q, int item) {
   return _get_size(q);
 }
 
+int _get_item(Queue* q) {
+  if (is_empty(q)) {
+    return -1;
+  }
+  int return_val = q->entries[q->tail];
+  q->tail = q->tail + 1 % QUEUE_SIZE;
+  return return_val;
+}
+
+
 int add_item(Queue* q, int item) {
   pthread_mutex_lock(q->mutex);
 
@@ -54,12 +64,13 @@ int add_item(Queue* q, int item) {
   return return_val;
 }
 
-int get_item(Queue* q, int item) {
-  if (is_empty(q)) {
-    return -1;
-  }
-  int return_val = q->entries[q->tail];
-  q->tail = q->tail + 1 % QUEUE_SIZE;
+
+int get_item(Queue* q) {
+  pthread_mutex_lock(q->mutex);
+
+  int return_val = _get_item(q);
+
+  pthread_mutex_unlock(q->mutex);
   return return_val;
 }
 
