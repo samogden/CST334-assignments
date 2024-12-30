@@ -12,7 +12,7 @@ HEADERS = $(wildcard include/*.h)
 
 # Compiler flags
 CC=gcc
-CFLAGS=-g -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -I../common/ -I$(INCLUDE_DIR)
+CFLAGS=-g -Wall -lcriterion -I/opt/homebrew/include/ -I../common/ -I$(INCLUDE_DIR)
 
 # Target executable name
 TARGET = unit_tests
