@@ -27,7 +27,7 @@ In this lab we'll be talking about compilation flags and we'll be trying out a t
 > 
 > These can be used to figure out _where_ you are in a file system and where you can move to in it!
 > 
-> p.s. don't forget that you can use `..` to reference the parent directory.  For example, `ls /tmp/lab/..` will tell you the contents of the `/tmp` directory.
+> p.s. don't forget that you can use `..` to reference the parent directory.  For example, `ls /tmp/hw/..` will tell you the contents of the `/tmp` directory.
 > 
 ---
 
@@ -35,7 +35,7 @@ In this lab we'll be talking about compilation flags and we'll be trying out a t
 ### Lab files
 
 This lab is designed to be a miniature version of the homework.
-It has a [`src`](src) folder and a [`tests`](tests) folder, contianing source code and testing files respectively.
+It has a [`src`](src) folder, a [`include`](include) folder, and a [`tests`](tests) folder, contianing source code, headers, and testing files respectively.
 It also has a [`Makefile`](Makefile) that will build executables for you.
 Itt has two other files, one of which we've seen in PA1 and the other which is new.
 
@@ -46,7 +46,7 @@ Let's dig into a few of these files now.
 The first file we'll be looking at is [`unit_tests.c`](unit_tests.c), the source code of which we can see below
 
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ cat -n unit_tests.c
+[DOCKER] /tmp/hw/labs/lab1/ $ cat -n unit_tests.c
      1	#include <criterion/criterion.h>
      2
      3	#include "tests/tests-person.c"
@@ -75,8 +75,8 @@ The second file is called `debug.c` and is meant to help us isolate problems in 
 Below we can see what it currently consists of.
 
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ cat -n debug.c
-     1	#include "src/student_code.h"
+[DOCKER] /tmp/hw/labs/lab1/ $ cat -n debug.c
+     1	#include "student_code.h"
      2
      3	int main() {
      4	    return 0;
@@ -89,9 +89,50 @@ We can see a similar structure here, where it includes our student code function
 This is intentional.  We want to keep this file fairly empty in order to move what we're currently debugging into there.
 Essentially, it's a scratchpad where we're going to be looking at bugs more closely.
 
+#### `include/student_code.h`
+
+When looking at a new project it's often helpful to look at the header files.
+Header files define how you can interact with code, so it essentially defines the API that the library presents.
+
+Inside a header file is any definitions that are used in a program and any functions that the library is presenting.
+Let's check out what we're presenting in this project.
+
+```c
+ 1	#ifndef PROJECTS_STUDENT_CODE_H
+ 2	#define PROJECTS_STUDENT_CODE_H
+ 3
+ 4	typedef struct Person {
+ 5	    int age;
+ 6	    char name[8];
+ 7	    int favorite_number;
+ 8	} Person;
+ 9
+10	/**
+11	 * This function takes in an age, a name, and a favorite number and returns a person
+12	 * @param age integer representing age
+13	 * @param name character string representing name (at most 7 chars long!)
+14	 * @param favorite_number integer representing favorite number
+15	 * @return
+16	 */
+17	Person make_new_person(int age, char* name, int favorite_number);
+18
+19	#endif //PROJECTS_STUDENT_CODE_H
+```
+
+The first thing we notice is that on lines 1, 2, and 19 we are using some preprocessor commands.
+Preprocessor commands let us do things, in this case making it check to see if a variable is set.
+This prevent us from re-including the same header file twice, which would cause the compiler confusion.
+
+Next, from lines 4-8 we define a Person struct and typedef it to make it so we can just say `Person` instead of `struct Person`.
+
+Finally, lines 10-17 define a function called `make_new_person`.
+This function's declaration is line 17, but the lines 11-15 describe what the function is going to do.
+The unit tests _should_ be written to match this description so if you are wondering what a test should do this is a good place to check.  
+
+
 #### `src/student_code.c`
 
-Now that we've looked a little bit at our general setup, let's look at the specifics of what our code does.
+Now that we've looked a little bit at our general setup and headers, let's look at the specifics of what our code does.
 Unlike the homework, I'm providing a bit of code, so let's check it out!
 
 ```c
@@ -119,7 +160,7 @@ Next, we have some fanciness and then the actual function itself.
 This function is fairly straight forward -- we're just making a new instance of a `Person` struct, setting some parts of it and then returning the memory object.
 The only time we don't do this directly ourselves is when we use the library function `strcpy` which copies null terminated strings from one memory location to another.
 
-***TODO:*** Go check out the documentation for [strcpy]([https://pubs.opengroup.org/onlinepubs/009696799/functions/strcpy.html](https://linux.die.net/man/3/strcpy)).
+***TODO:*** Go check out the documentation for [strcpy](https://linux.die.net/man/3/strcpy).
 Does anything jump out at you?
 
 Overall, this looks pretty okay and basic.
@@ -178,14 +219,14 @@ That is, in the directory you started docker in click folders until you are in t
 
 
 
-### Step 4: Let's watch things break
+## Step 4: Let's watch things break
 
 Okay, so now that we've check out our various files, let's run our program and see how our tests are doing!
 We run it by using the `make` command, which parses our Makefile.
 Running it we get the below:
 
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ make
+[DOCKER] /tmp/hw/labs/lab1/ $ make
 rm -rf bin unit_tests debug
 mkdir -p bin
 gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
@@ -213,7 +254,7 @@ If this happens then please read through the next few sections until you get to 
 
 ***TODO:*** Take a screenshot of the `make` command failing and paste it into your google document.
 
-#### Step 4a: Digging into what we're seeing
+### Step 4a: Digging into what we're seeing
 
 Let's try to parse out what happened.
 To break this down a bit I'm going to pipe the output of make into `cat -n` to add line numbers, and then add in some artificial spacing for clarity.
@@ -222,7 +263,7 @@ The command has two parts.
 `| cat -n` says "take the output of the previous command and pass it into `cat -n`", and `cat -n` just repeats back what is input with line numbers added in.
 
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ make 2>&1 | cat -n
+[DOCKER] /tmp/hw/labs/lab1/ $ make 2>&1 | cat -n
      1	rm -rf bin unit_tests debug
      
      2	mkdir -p bin
@@ -271,7 +312,7 @@ Finally, line 15 is just our make file telling us that something went wrong.
 Well shoot.
 Time to get debugging!
 
-### Step 5: Checking out our unit tests.
+## Step 5: Checking out our unit tests.
 
 The first thing we should do is go and find out where our tests are failing.
 Let's check out our unit test file in `tests/tests-person.c`.
@@ -361,10 +402,10 @@ Set the `.disabled` on the first test to be`true` (and remember to turn it on ag
 
 ***TODO:*** Take a screenshot with the test disabled and paste it into your google doc.
 
-#### Step 5a: let's see what happens when we've disabled that test
+### Step 5a: let's see what happens when we've disabled that test
 
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ make 2>&1 | cat -n
+[DOCKER] /tmp/hw/labs/lab1/ $ make 2>&1 | cat -n
      1	rm -rf bin unit_tests debug
      2	mkdir -p bin
      3	gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
@@ -382,7 +423,7 @@ If we can fix it then it can probably help us figure out what's going on a bit b
 Let's get going and dig into it a bit more!
 
 
-### Step 6: Isolating the problem
+## Step 6: Isolating the problem
 
 Before we start digging into debugging tools I have to say that I'm willing to bet some of you can already guess what's going on.
 For a problem like this a full debug is potentially overkill but it's good to go through the steps and practice.
@@ -411,7 +452,7 @@ Let's copy lines 15-21 over into our main function as such:
 After we've done this let's run a `make debug`, which calls a special make rule I've added that builds a debug executable.
 
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ make debug
+[DOCKER] /tmp/hw/labs/lab1/ $ make debug
 gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
 debug.c: In function 'main':
 debug.c:8:5: warning: implicit declaration of function 'cr_assert' [-Wimplicit-function-declaration]
@@ -454,7 +495,7 @@ Also, note that we are printing out decimals instead of booleans because boolean
 
 Running this again we see we've still got an issue, but GCC has suggestions for how to fix it.
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ make debug
+[DOCKER] /tmp/hw/labs/lab1/ $ make debug
 mkdir -p bin
 gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
 gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
@@ -471,9 +512,9 @@ debug.c:3:1: note: include '<string.h>' or provide a declaration of 'strcmp'
 We can just follow it's suggestions and add in the `string.h` library and we should be good to go:
 
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ make debug
+[DOCKER] /tmp/hw/labs/lab1/ $ make debug
 gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
-[DOCKER] /tmp/lab/labs/lab1/ $ ./debug
+[DOCKER] /tmp/hw/labs/lab1/ $ ./debug
 *** stack smashing detected ***: terminated
 Aborted
 ```
@@ -481,15 +522,18 @@ Aborted
 We can now cleanly compile but we're still failing.
 Time to move onto figuring out what's going on!
 
+***Note:*** 
+It might not fail here, but keep reading!
+
 ***TODO:*** Take a screenshot of your debug.c and paste it into your google document.
 
-### Step 7: GDB
+## Step 7: GDB
 
 The first tool we'll be using is [GDB](https://www.sourceware.org/gdb/), aka the GNU Project Debugger.
 To start up GDB we simply type `gdb [program name]` and it launches the debugger with that program as it's input.
 
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ gdb debug
+[DOCKER] /tmp/hw/labs/lab1/ $ gdb debug
 GNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1
 Copyright (C) 2022 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -521,7 +565,7 @@ You should see something like the below:
 
 ```shell
 (gdb) run
-Starting program: /tmp/lab/labs/lab1/debug
+Starting program: /tmp/hw/labs/lab1/debug
 [Thread debugging using libthread_db enabled]
 Using host libthread_db library "/lib/aarch64-linux-gnu/libthread_db.so.1".
 *** stack smashing detected ***: terminated
@@ -580,7 +624,7 @@ To remedy this we want to turn on debugging.
 
 Quit gdb by running `quit`.
 
-#### Step 7b: Compiling for GDB
+### Step 7b: Compiling for GDB
 
 Let's do a slightly modification to our Makefile to have it compile with some extra information for gdb.
 This is already turned on in the projects but I wanted to have an excuse to talk about it.
@@ -615,7 +659,7 @@ Whoa, that's a lot more information!
 Now GDB is not only showing us what line is failing, but also the arguments being passed in!
 That's much more useful.
 
-#### Step 7c: Stepping through code in GDB
+### Step 7c: Stepping through code in GDB
 
 Okay!  Now that we have actual information, let's try stepping through some code.
 To do this run `break make_new_person` to set a breakpoint at the beginning of our make_new_person function, and then call `run`.
@@ -624,7 +668,7 @@ To do this run `break make_new_person` to set a breakpoint at the beginning of o
 (gdb) break make_new_person
 Breakpoint 1 at 0xa04: file src/student_code.c, line 9.
 (gdb) run
-Starting program: /tmp/lab/labs/lab1/debug
+Starting program: /tmp/hw/labs/lab1/debug
 [Thread debugging using libthread_db enabled]
 Using host libthread_db library "/lib/aarch64-linux-gnu/libthread_db.so.1".
 
@@ -701,7 +745,7 @@ Hmmmm.
 ***TODO:*** Take a screenshot of you walking through gdb like the above and paste it into your google document.
 
 
-### Step 8: Looking at our code
+## Step 8: Looking at our code
 
 Based on what we've seen until now we know that something is wrong with how we're using the `strcpy` function.
 Even though it's a library function it's somehow messing something up.
@@ -715,6 +759,9 @@ Usually when we see that:
 Then it means that something has overflowed a buffer.
 
 So let's look at our buffers by looking at our `student_code.h` file.
+This is in the `include/` directory instead of our `src/` directory.
+We already looked at this file before, but let's look at it again.
+
 ```c
 1	#ifndef PROJECTS_STUDENT_CODE_H
 2	#define PROJECTS_STUDENT_CODE_H
@@ -744,7 +791,7 @@ The name we're testing with is much longer than that!
 
 Is that how many characters we're printing out?
 ```c
-[DOCKER] /tmp/lab/labs/lab1/ $ echo "Douglas " | awk -F '' -v 'OFS=\n' '{$1=$1}1'  | cat -n
+[DOCKER] /tmp/hw/labs/lab1/ $ echo "Douglas " | awk -F '' -v 'OFS=\n' '{$1=$1}1'  | cat -n
  1	D
  2	o
  3	u
@@ -767,9 +814,9 @@ Let's try changing the size of this array to something bigger, say 1024, to allo
 Making this change and re-running we see that our debug now runs successfully!
 
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ make debug
+[DOCKER] /tmp/hw/labs/lab1/ $ make debug
 gcc -Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
-[DOCKER] /tmp/lab/labs/lab1/ $ ./debug
+[DOCKER] /tmp/hw/labs/lab1/ $ ./debug
 1
 1
 1
@@ -777,7 +824,7 @@ gcc -Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug
 
 Let's try out our unit tests!
 ```shell
-[DOCKER] /tmp/lab/labs/lab1/ $ make
+[DOCKER] /tmp/hw/labs/lab1/ $ make
 rm -rf bin unit_tests debug
 mkdir -p bin
 gcc -Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
@@ -793,14 +840,14 @@ Success!
 ***TODO:*** Take a screenshot of running the passing unit test.
 
 
-### Step 5: Commit our changes
+## Step 9: Commit our changes
 
 After working on our code and fixing a bug, or getting another unit test to pass, it is always good practice to commit our code to our git repository.
 This allows us to make sure that if we run into any problems when developing for the next test, or with our repo in general, we can simply roll back the changes.
 You can search for more details on your own (hint: `git restore ...`), but for now we want to run a commit:
 
 ```shell
-[DOCKER] /tmp/lab/labs/lab2/ $ git commit . -m "Commit after lab1"
+[DOCKER] /tmp/hw/labs/lab2/ $ git commit . -m "Commit after lab1"
 [main 4dacf3c] Commit after lab1
  1 file changed, 1 insertion(+)
 ```

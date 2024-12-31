@@ -145,7 +145,7 @@ def parse_flags() -> Namespace:
 
 def run_unittests(path_to_assignment_directory):
   os.chdir(path_to_assignment_directory)
-  proc = subprocess.Popen(["./unit_tests", "--json", "--timeout", "60"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  proc = subprocess.Popen(["./unit_tests", "-j1", "--json"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   proc.wait()
   stdout = proc.stdout.read().decode('latin-1')
   stderr = proc.stderr.read().decode('latin-1')
@@ -233,6 +233,23 @@ def make_test(path_to_assignment_directory):
   else:
     return False, stderr
 
+def make_lint(path_to_assignment_directory):
+  os.chdir(path_to_assignment_directory)
+  proc = subprocess.Popen(["make check"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+  proc.wait()
+  
+  stdout = proc.stdout.read().decode()
+  stderr = proc.stderr.read().decode()
+  
+  log.debug(f"stdout: {stdout}")
+  log.debug(f"stderr: {stderr}")
+  
+  if proc.returncode == 0:
+    return True, stdout + "\n\n" + stderr
+  else:
+    return False, stdout + "\n\n" + stderr
+  
+
 def find_function(source_code, target_function_name):
   
   def skip_multiline_comment(lines, line_i):
@@ -281,6 +298,7 @@ def main():
   scoring_tests = parse_scoring(os.path.join(os.path.abspath(args.assignment_dir), "scoring.json"))
   results_json = {}
   build_success, build_log = make_test(os.path.abspath(args.assignment_dir))
+  lint_success, lint_log = make_lint(os.path.abspath(args.assignment_dir))
   if build_success:
     test = run_unittests(os.path.abspath(args.assignment_dir))
     test.score(scoring_tests)
@@ -293,11 +311,13 @@ def main():
       "score" : 0.0
     }
     log.error("Build failed")
+  results_json["lint_success"] = lint_success
+  results_json["lint_logs"] = json.encoder.JSONEncoder().encode(lint_log)
   
   if len(scoring_tests) == 0:
     results_json["score"] = "Not calculated"
     
-  results_json["build_logs"] = json.encoder.JSONEncoder().encode(build_log),
+  results_json["build_logs"] = json.encoder.JSONEncoder().encode(build_log)
   print(json.dumps(results_json, indent=4))
   with open(args.output, 'w') as fid:
     json.dump(results_json, fid, indent=4)

@@ -22,11 +22,9 @@ Therefore, you are welcome to get an early start but make sure you test before y
   - If you are unfamiliar with `git` there are plenty of resources available online, such as [this one about git commit](https://www.git-tower.com/learn/git/commands/git-commit).  Don't hesitate to ask google or LLMs about git usage (altough I've been seeing memes recently about ChatGPT deleting repos so heads up)
 - To update to the latest version of the code you will be using the `git pull` command.  This might result in what is called a `merge conflict` so make sure you read the outputted text closely!
   - Same as above, google is your friend as git is widely used and there are plenty of good resources
-- In general there are three commands we will be using when checking whether the homework is working.  I have written them below in order of preference for debugging homework.
-  - `make clean unit_tests && ./unit_tests`
-    - This will erase old files, build the code and then, if the build succeeded, run the new code.  Don't forget to check output for errors!
+- In general there are two commands we will be using when checking whether the homework is working.  I have written them below in order of preference for debugging homework.
   - `make`
     - This will erase old files, build the code and then, if the build succeeded, run the new code.  Don't forget to check output for errors!
   - `make grade`
-    - This will report what unit tests you are passing/failing, and then will try to calculate a grade.  It's the same script I use for grading, but I don't always set up the grading before the project is due.  
+    - This will report what unit tests you are passing/failing, and then will try to calculate a grade.  It's the same script I use for grading, but I don't always set up the grading before the project is due.
     - ***Note***: The error reporting in this command is very difficult to understand and should only be used for reference, not as a many debugging command
