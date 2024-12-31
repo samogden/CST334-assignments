@@ -1,0 +1,23 @@
+{
+  "tests" : [
+    {"suite" : "String", "test_group" : "string", "value" : 80, "tests" :
+      [
+        "String__init_0",
+        "String__length_0",
+        "String__resize_0",
+        "String__clear_0",
+        "String__empty_0",
+        "String__at_0",
+        "String__back_0",
+        "String__front_0",
+        "String__append_0",
+        "String__push_back_0",
+        "String__pop_back_0",
+        "String__insert_0",
+        "String__erase_0",
+        "String__replace_0",
+        "String__swap_0"
+      ]
+    }
+  ]
+}
