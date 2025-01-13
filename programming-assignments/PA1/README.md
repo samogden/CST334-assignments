@@ -1,16 +1,59 @@
-# CST334 Project: Intro to C
+# CST334 Project 1: Intro to C
 
-## Background
+## Project Goals
 
-In this project we're going to be mostly playing around with C to get a sense of how it works.
-This means we'll not only be trying out building our own structs, but also will be making system calls, using libraries, and trying to find some erroneous calls.
+1. Understand hiow C handles data, and how it is different from Object-Oriented languages (like C++ and Java)
+2. Get comfortable writing C code, and ensure that your development environment is configured properly
 
 ## Overview
 
-There are four parts to this homework, each worth a different amount of the overall grade.
-These four are [strings](#strings), [system calls](#system-calls), [caesar cipher](#caesar-cipher), and [substitution cipher](#general-substitution-cipher-bonus-points).
+In this project we are developing a C library similar to the C++ and Java libraries for strings.
+The core idea of this project is that in C we are directly dealing with data and have a very low-level view of what it is doing.
+To support this we need to manually manage our memory, which is what you will be doing in this project.
 
-Note that throughout the code there are a few questions that you should answer for the PA1 checkpoint.
+Key sections in this document are:
+- [Background](#background)
+- [Getting Started](#getting-started)
+- [Functions](#functions)
+
+You can read more background in the [background](#background) section below.
+
+
+
+## Background
+
+Both of these languages are "object oriented" which means they approach coding by considering "objects" which combine data with functions that act upon that data, explicitly tying the two together.
+That is, we can call functions directly on the object we are using.
+This leads to libraries where you can have code along the lines of:
+
+```java
+
+String str = new Str("Hello");
+str.append("!");
+
+```
+
+In contrast, C treats data and the functions that act upon it separately, where we can define data (which we refer to as `struct`s, short for "structures"), and then functions that can be called on the memory location of that data.
+This leads to functions calls along the lines of:
+
+```c
+
+typedef String struct {
+  char* data;
+} String;
+
+String str;
+str.data = malloc(1024);
+strcpy(str.data, "Hello");
+
+append(&str, "!");
+// Note: This is not how we are handling this in our library, but close enough for the demonstration. 
+
+```
+
+The difference for this is a little beyond this class, but essentially C is much more focused on processing data while Object-Oriented languages are instead focused on building structures with datas -- they act as an abstraction that we don't need when dealing with operating systems.
+
+
 
 ## Getting started
 
@@ -28,8 +71,6 @@ Then, navigate using your terminal on your local machine to your working directo
 ```shell
 docker run -it --rm -v ${PWD}:/tmp/hw samogden/cst334
 ```
-
-***Question:*** What are the differences between these commands and the ones for lab1?  What do the differences mean?
 
 And then change to the appropriate directory:
 ```shell
@@ -125,85 +166,9 @@ Note that if it helps you can also call `./unit_tests --help` to get more inform
 Also, note that the tests do not yet have point values associated with them.
 You will have to consult the below point values to calculate your score.
 
-## Assignment components
 
+## Functions
 
-### Strings 
-***(25 points)***
-
-Remember from class that Strings in C are null-terminated character arrays.
-In this section you should practice using string functions and mimic them on your own.
-Note that some of these functions (e.g. `copy_str` and `length_of_str`) are available in the c string library, but you should implement your own version of them.
-I will reiterate this in the code itself, and use of these standard functions will result in a 0 for these problems.
-
-#### Specific todos and point values
-
-```c
-int get_str_length(char* str);                      // 5 points
-char* copy_str(char* str);                          // 5 points
-void truncate_string(char* str, int new_length);    // 4 points
-void to_uppercase(char* str);                       // 4 points
-void to_lowercase(char* str);                       // 4 points
-void find_first_index(char* str, char target);      // 2 points
-void find_last_index(char* str, char target);       // 1 points
-```
-
-### Structs 
-***(25 points)***
-
-Structs in C are contiguous memory objects, where we group together more primative object types to make more complex types.
-They are similar to objects in object-oriented languages, but consist of only the data instead of the associated functions as well.
-With that said, we can also have functions associated with them, albeit with a more verbose usage (i.e. a longer and more explicit set of input parameters).
-In this section we'll practice both designing new structs, but also see how to use them and how to make functions for them.
-
-#### Specific todos and point values
-
-```c
-struct Group;                                                       // 5 points
-Person person_make_new(char* first_name, char* last_name, int age); // 4 points
-char* person_to_string(Person person);                              // 2 points
-Group group_make_new(char* group_name);                             // 3 points
-int num_people_in_group(Group* group);                              // 2 points
-int free_spaces_in_group(Group* group);                             // 4 points
-int add_person(Group* group, Person* person_to_add);                // 4 points
-int remove_person(Group* group, Person* person_to_remove);          // 1 point
-```
-
-***NOTE:***
-You will need to change the `struct Group` definition in `student_code.h` to pass the unit tests.
-The `void*` types are placeholders for you to change in the struct in order to get unit tests to pass.
-
-### Caesar Cipher
-***(30 points)***
-
-C is ideal for low-level bit manipulation, making it perfect for playing around with encryption.
-We're going to be doing this through the [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher), which is one of the earliest known encryption ciphers.
-The core idea of a caesar cipher is that you "shift" the letter of the input by some amount.
-For instance, a caesar cipher with shift of 1 would change 'a' to 'b' and 'z' to 'a'.
-
-Your job is to implement these functions!
-
-```c
-char shift_left(char input_char, int shift_size);     // 10 points
-char shift_right(char input_char, int shift_size);    // 10 points
-void encrypt_caesar(char* input_str, int shift_size); // 5 points
-void decrypt_caesar(char* input_str, int shift_size); // 5 points
-```
-
-### General substitution cipher (bonus points)
-***(10 bonus points)***
-
-This general substitution cipher will take in a list of shifts and make the appropriate replacements.
-Since it is extra credit, the details are left to you to figure out, but some unit tests are provided.
-
-
-```c
-bool is_reversible(int[] encryption_key);                             // 1 points
-int* get_decryption_key(int[] encryption_key);                        // 1 points
-void encrypt_substitution(char* input_str, int[] encryption_key);     // 1 point
-void decrypt_substitution(char* input_str, int[] decryption_key); // 1 point
-
-```
 
 
 
