@@ -1,116 +1,22 @@
 {
   "tests" : [
-    {"suite" : "String", "test_group" : "get_str_length", "value" : 5, "tests" :
+    {"suite" : "String", "test_group" : "string", "value" : 80, "tests" :
       [
-        "get_str_length"
-      ]
-    }, 
-    {"suite" : "String", "test_group" : "copy_str", "value" : 5, "tests" :
-      [
-        "copy_str"
-      ]
-    }, 
-    {"suite" : "String", "test_group" : "truncate_str", "value" : 4, "tests" :
-      [
-        "truncate_str"
-      ]
-    }, 
-    {"suite" : "String", "test_group" : "to_uppercase", "value" : 4, "tests" :
-      [
-        "to_uppercase"
-      ]
-    }, 
-    {"suite" : "String", "test_group" : "to_lowercase", "value" : 4, "tests" :
-      [
-        "to_lowercase"
-      ]
-    }, 
-    {"suite" : "String", "test_group" : "find_first_index", "value" : 2, "tests" :
-      [
-        "find_first_index"
-      ]
-    }, 
-    {"suite" : "String", "test_group" : "find_last_index", "value" : 1, "tests" :
-      [
-        "find_last_index"
-      ]
-    }, 
-    
-    {"suite" : "Struct", "test_group" : "person_make_new", "value" : 5, "tests" :
-      [
-        "person_make_new"
-      ]
-    }, 
-    {"suite" : "Struct", "test_group" : "person_to_string", "value" : 5, "tests" :
-      [
-        "person_to_string"
-      ]
-    }, 
-    {"suite" : "Struct", "test_group" : "group_make_new", "value" : 4, "tests" :
-      [
-        "group_make_new"
-      ]
-    }, 
-    {"suite" : "Struct", "test_group" : "num_people_in_group", "value" : 2, "tests" :
-      [
-        "num_people_in_group"
-      ]
-    }, 
-    {"suite" : "Struct", "test_group" : "free_spaces_in_group", "value" : 4, "tests" :
-      [
-        "free_spaces_in_group"
-      ]
-    }, 
-    {"suite" : "Struct", "test_group" : "add_person", "value" : 4, "tests" :
-      [
-        "add_person"
-      ]
-    }, 
-    {"suite" : "Struct", "test_group" : "remove_person", "value" : 1, "tests" :
-      [
-        "remove_person"
-      ]
-    }, 
-    
-    {"suite" : "CaesarCipher", "test_group" : "shift_left", "value" : 10, "tests" : 
-      [
-        "shift_left"
-      ]
-    }, 
-    {"suite" : "CaesarCipher", "test_group" : "shift_right", "value" : 10, "tests" : 
-      [
-        "shift_right"
-      ]
-    }, 
-    {"suite" : "CaesarCipher", "test_group" : "encrypt_caesar", "value" : 5, "tests" :
-      [
-        "encrypt_caesar"
-      ]
-    }, 
-    {"suite" : "CaesarCipher", "test_group" : "decrypt_caesar", "value" : 5, "tests" :
-      [
-        "decrypt_caesar"
-      ]
-    }, 
-    
-    {"suite" : "SubstitutionCipher", "test_group" : "is_reversible", "value" : 1, "tests" :
-      [
-        "is_reversible"
-      ]
-    }, 
-    {"suite" : "SubstitutionCipher", "test_group" : "decryption_key", "value" : 1, "tests" :
-      [
-        "decryption_key"
-      ]
-    }, 
-    {"suite" : "SubstitutionCipher", "test_group" : "encrypt_substitution", "value" : 1, "tests" :
-      [
-        "encrypt_substitution"
-      ]
-    }, 
-    {"suite" : "SubstitutionCipher", "test_group" : "decrypt_substitution", "value" : 1, "tests" :
-      [
-        "decrypt_substitution"
+        "String__init_0",
+        "String__length_0",
+        "String__resize_0",
+        "String__clear_0",
+        "String__empty_0",
+        "String__at_0",
+        "String__back_0",
+        "String__front_0",
+        "String__append_0",
+        "String__push_back_0",
+        "String__pop_back_0",
+        "String__insert_0",
+        "String__erase_0",
+        "String__replace_0",
+        "String__swap_0"
       ]
     }
   ]

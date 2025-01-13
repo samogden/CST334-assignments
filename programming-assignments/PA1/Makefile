@@ -12,7 +12,7 @@ HEADERS = $(wildcard include/*.h)
 
 # Compiler flags
 CC=gcc
-CFLAGS=-g -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -I../common/ -I$(INCLUDE_DIR)
+CFLAGS=-g -Wall -lcriterion -I/opt/homebrew/include/ -I../common/ -I$(INCLUDE_DIR)
 
 # Target executable name
 TARGET = unit_tests
@@ -46,7 +46,7 @@ clean:
 	rm -rf bin unit_tests debug
 
 check:
-	clang-tidy -checks=bugprone-*,readability-*,-readability-identifier-length,-readability-else-after-return,-bugprone-easily-swappable-parameters,-readability-redundant-control-flow,-readability-non-const-parameter -warnings-as-errors=bugprone-*,readability-* src/student_code.c -- -I$(INCLUDE_DIR) -I../common/
+	clang-tidy -checks=bugprone-*,readability-*,-readability-identifier-length,-readability-else-after-return,-bugprone-easily-swappable-parameters,-readability-redundant-control-flow,-readability-non-const-parameter,-clang-analyzer-security* -warnings-as-errors=bugprone-*,readability-* src/student_code.c -- -I$(INCLUDE_DIR) -I../common/
 
 bin:
 	mkdir -p bin

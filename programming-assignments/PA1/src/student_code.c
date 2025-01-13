@@ -1,140 +1,74 @@
 
 #include "student_code.h"
+#include <string.h>
+#include <stdlib.h>
 
-
-/***********
- * Strings *
- ***********/
-int get_str_length(char* str) {
-  // todo
-  // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-  // Question: How do we know that we've gotten to the end of a c-string?
-  return -1;
-}
-
-char* copy_str(char* str) {
-  // todo
-  // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-  return "";
-}
-
-void truncate_string(char* str, int new_length) {
-  // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
+String String__init(char* input_c_str) {
   // todo
 }
 
-void to_uppercase(char* str) {
+void String__delete(String* str) {
   // todo
 }
 
-void to_lowercase(char* str) {
+size_t String__length(const String* str) {
   // todo
 }
 
-int find_first_index(char* str, char target) {
+void String__reserve(String* str, size_t new_capacity) {
   // todo
-  // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-  return -1;
 }
 
-int find_last_index(char* str, char target) {
+void String__resize(String* str, size_t new_size, const char c) {
   // todo
-  // Note: You cannot use any functions in string.h for this function!  Doing so will result in a score of 0
-  return -1;
 }
 
-
-/**************
- * Structures *
- **************/
-Person person_make_new(char* first_name, char* last_name, int age) {
-  Person p = {};
+void String__clear(String* str) {
   // todo
-  return p;
 }
 
-char* person_to_string(Person person) {
+bool String__empty(String* str) {
   // todo
-  // hint: sprintf
-  return "";
 }
 
-Group group_make_new(char* group_name) {
-Group g = {};
+char String__at(String* str, size_t index) {
   // todo
-  return g;
 }
 
-int num_people_in_group(Group group) {
+char String__back(String* str) {
   // todo
-  return -1;
 }
 
-int free_spaces_in_group(Group group) {
+char String__front(String* str) {
   // todo
-  return -1;
 }
 
-int add_person(Group* group, Person* person_to_add) {
+void String__append(String* str, const String* str_to_add) {
   // todo
-  // Question: Say we have already added a person to the group and try to add them again.  What should be we do?  Where can we check what the expected behavior is?
-  return -1;
 }
 
-int remove_person(Group* group, Person* person_to_remove) {
+void String__push_back(String* str, const char char_to_add) {
   // todo
-  return -1;
 }
 
-
-
-/*
- * Caesar Cipher
- */
-char shift_left(char input_char, int shift_size) {
-  // todo
-  return 0;
+void String__pop_back(String* str) {
+  String__resize(str, (str->length - 1), '\0');
 }
 
-char shift_right(char input_char, int shift_size) {
+void String__insert(String* str, const String* str_to_insert, size_t index) {
   // todo
-  return 0;
 }
 
-char* encrypt_caesar(char* input_str, int shift_size) {
+void String__erase(String* str, size_t pos, size_t len) {
   // todo
-  return NULL;
 }
 
-char* decrypt_caesar(char* input_str, int shift_size) {
+void String__replace(String* str, size_t pos, size_t len, const String* str_to_replace_with) {
   // todo
-  return NULL;
 }
 
-/*
- * General substitution Cipher
- */
-
-bool is_reversible(int* encryption_key) {
+void String__swap(String* str1, String* str2) {
   // todo
-  return false;
 }
-
-int* get_decryption_key(int* encryption_key) {
-  // todo
-  return NULL;
-}
-
-void encrypt_substitution(char* input_str, int* encryption_key) {
-  // todo
-  return;
-}
-
-void decrypt_substitution(char* input_str, int* decryption_key) {
-  // todo
-  return;
-}
-
-
 
 

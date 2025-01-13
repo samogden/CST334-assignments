@@ -186,15 +186,11 @@ void mem_free(void *ptr){
     return;
   }
 
-  // Step backward from the pointer to look at the node header
-  // todo
-
-  // Free the memory
-  // todo
-
   // Step forward from the pointer to look at the node header
-  node_t *chunk = get_header(ptr);
-  chunk->is_free = true;
+  // todo
+  
+  // Set the node to be free
+  // todo
   
   // Insert chunk into free list
   // todo
