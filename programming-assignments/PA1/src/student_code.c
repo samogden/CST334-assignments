@@ -4,11 +4,25 @@
 #include <stdlib.h>
 
 String String__init(char* input_c_str) {
-  // todo
+  String new_str;
+
+  // Get size of the input string since we use it a few times throughout
+  size_t length_of_string = strlen(input_c_str);
+
+  // Set metadata associated with the string
+  new_str.length = length_of_string;
+  new_str.capacity = length_of_string + 1;
+
+  // Copy over the data itself
+  new_str.data = malloc(new_str.capacity);
+  strncpy(new_str.data, input_c_str, new_str.capacity);
+
+  // Return the string
+  return new_str;
 }
 
 void String__delete(String* str) {
-  // todo
+  free(str->data);
 }
 
 size_t String__length(const String* str) {

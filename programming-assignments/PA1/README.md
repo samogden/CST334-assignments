@@ -169,7 +169,37 @@ You will have to consult the below point values to calculate your score.
 
 ## Functions
 
+These are the functions you will be writing.
+Please note that these functions are listed alphabetterically, and worth different amounts.
+I would suggest prioritizing your work based on the point value and which functions seem most likely to help with code reuse.
 
+```c
+
+void String__append(String* str, const String* str_to_add)                                    // 6 points
+char String__at(String* str, size_t index)                                                    // 15 points
+char String__back(String* str)                                                                // 15 points
+void String__clear(String* str)                                                               // 6 points
+bool String__empty(String* str)                                                               // 6 points
+void String__erase(String* str, size_t pos, size_t len)                                       // 6 points
+char String__front(String* str)                                                               // 6 points
+void String__insert(String* str, const String* str_to_insert, size_t index)                   // 6 points
+size_t String__length(const String* str)                                                      // 6 points
+void String__pop_back(String* str)                                                            // 6 points
+void String__push_back(String* str, const char char_to_add)                                   // 6 points
+void String__replace(String* str, size_t pos, size_t len, const String* str_to_replace_with)  // 10 points
+void String__reserve(String* str, size_t new_capacity)                                        // 2 points
+void String__resize(String* str, size_t new_size, const char c)                               // 2 points
+void String__swap(String* str1, String* str2)                                                 // 2 points
+
+```
+
+## Scoring
+
+Your submission will be scored out of 100 points.
+Please note that although the unit tests I have provided cover most cases I have withheld a number of other unit tests that are run only on submission.
+Some of these withheld tests may require extrapolation to solve.
+
+Additionally, a number of the functions you are writing can be written with other functions.
 
 
 ## Conclusion

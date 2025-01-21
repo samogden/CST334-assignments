@@ -1,8 +1,7 @@
 {
   "tests" : [
-    {"suite" : "String", "test_group" : "string", "value" : 80, "tests" :
+    {"suite" : "String", "test_group" : "string", "value" : 100, "tests" :
       [
-        "String__init_0",
         "String__length_0",
         "String__resize_0",
         "String__clear_0",
