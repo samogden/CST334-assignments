@@ -630,7 +630,7 @@ Let's do a slightly modification to our Makefile to have it compile with some ex
 This is already turned on in the projects but I wanted to have an excuse to talk about it.
 In your Makefile goto line 2 and after `-Wall` add in a `-g` flag so it reads:
 ```makefile
-CFLAGS=-Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/
+CFLAGS=-Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -I../common/ -I$(INCLUDE_DIR)
 ```
 
 This flag will add in some extra information that gdb uses.
