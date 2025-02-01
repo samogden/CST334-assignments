@@ -438,11 +438,11 @@ Let's copy lines 15-21 over into our main function as such:
  2
  3	int main() {
  4	    // Next we poke around at our expectations a bit
- 5	    Person p2 = make_new_person(27, "Douglas Adams", 42);
+ 5	    Person p2 = make_new_person(27, "Douglas Adamssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss", 42);
  6
  7	    //Next, we test to make sure it worked correctly
  8	    cr_assert(p2.age == 27); // Test age
- 9	    cr_assert(strcmp(p2.name, "Douglas Adams") == 0); // Note that we use the strcmp function
+ 9	    cr_assert(strcmp(p2.name, "Douglas Adamssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss") == 0); // Note that we use the strcmp function
 10	    cr_assert(p2.favorite_number == 42); // Test favorite number
 11
 12	    return 0;
