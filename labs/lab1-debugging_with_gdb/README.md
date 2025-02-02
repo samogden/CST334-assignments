@@ -46,7 +46,7 @@ Let's dig into a few of these files now.
 The first file we'll be looking at is [`unit_tests.c`](unit_tests.c), the source code of which we can see below
 
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ cat -n unit_tests.c
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ cat -n unit_tests.c
      1	#include <criterion/criterion.h>
      2
      3	#include "tests/tests-person.c"
@@ -75,7 +75,7 @@ The second file is called `debug.c` and is meant to help us isolate problems in 
 Below we can see what it currently consists of.
 
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ cat -n debug.c
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ cat -n debug.c
      1	#include "student_code.h"
      2
      3	int main() {
@@ -207,15 +207,15 @@ To change to the directory containing the files for this lab (including a copy o
 ```bash
 cd CST334-assignments
 cd labs
-cd lab1-intro_to_c
+cd lab1-debugging_with_gdb
 ```
 
-Note that you can run all of these commands on a single line as `cd CST334-assignments/labs/lab1-intro_to_c`.
+Note that you can run all of these commands on a single line as `cd CST334-assignments/labs/lab1-debugging_with_gdb`.
 
 ## Step 3: Open the starter code
 
 To open the starter code you should navigate in your host operating system (e.g. windows or OSX) to the same directory as your terminal instance is.
-That is, in the directory you started docker in click folders until you are in the `lab1-intro_to_c` directory.
+That is, in the directory you started docker in click folders until you are in the `lab1-debugging_with_gdb` directory.
 
 
 
@@ -226,7 +226,7 @@ We run it by using the `make` command, which parses our Makefile.
 Running it we get the below:
 
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ make
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ make
 rm -rf bin unit_tests debug
 mkdir -p bin
 gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
@@ -263,7 +263,7 @@ The command has two parts.
 `| cat -n` says "take the output of the previous command and pass it into `cat -n`", and `cat -n` just repeats back what is input with line numbers added in.
 
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ make 2>&1 | cat -n
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ make 2>&1 | cat -n
      1	rm -rf bin unit_tests debug
      
      2	mkdir -p bin
@@ -405,7 +405,7 @@ Set the `.disabled` on the first test to be`true` (and remember to turn it on ag
 ### Step 5a: let's see what happens when we've disabled that test
 
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ make 2>&1 | cat -n
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ make 2>&1 | cat -n
      1	rm -rf bin unit_tests debug
      2	mkdir -p bin
      3	gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
@@ -452,7 +452,7 @@ Let's copy lines 15-21 over into our main function as such:
 After we've done this let's run a `make debug`, which calls a special make rule I've added that builds a debug executable.
 
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ make debug
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ make debug
 gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
 debug.c: In function 'main':
 debug.c:8:5: warning: implicit declaration of function 'cr_assert' [-Wimplicit-function-declaration]
@@ -495,7 +495,7 @@ Also, note that we are printing out decimals instead of booleans because boolean
 
 Running this again we see we've still got an issue, but GCC has suggestions for how to fix it.
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ make debug
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ make debug
 mkdir -p bin
 gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
 gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
@@ -512,9 +512,9 @@ debug.c:3:1: note: include '<string.h>' or provide a declaration of 'strcmp'
 We can just follow it's suggestions and add in the `string.h` library and we should be good to go:
 
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ make debug
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ make debug
 gcc -Wall -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
-[DOCKER] /tmp/hw/labs/lab1/ $ ./debug
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ ./debug
 *** stack smashing detected ***: terminated
 Aborted
 ```
@@ -533,7 +533,7 @@ The first tool we'll be using is [GDB](https://www.sourceware.org/gdb/), aka the
 To start up GDB we simply type `gdb [program name]` and it launches the debugger with that program as it's input.
 
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ gdb debug
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ gdb debug
 GNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1
 Copyright (C) 2022 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -565,7 +565,7 @@ You should see something like the below:
 
 ```shell
 (gdb) run
-Starting program: /tmp/hw/labs/lab1/debug
+Starting program: /tmp/hw/labs/lab1-debugging_with_gdb/debug
 [Thread debugging using libthread_db enabled]
 Using host libthread_db library "/lib/aarch64-linux-gnu/libthread_db.so.1".
 *** stack smashing detected ***: terminated
@@ -668,7 +668,7 @@ To do this run `break make_new_person` to set a breakpoint at the beginning of o
 (gdb) break make_new_person
 Breakpoint 1 at 0xa04: file src/student_code.c, line 9.
 (gdb) run
-Starting program: /tmp/hw/labs/lab1/debug
+Starting program: /tmp/hw/labs/lab1-debugging_with_gdb/debug
 [Thread debugging using libthread_db enabled]
 Using host libthread_db library "/lib/aarch64-linux-gnu/libthread_db.so.1".
 
@@ -791,7 +791,7 @@ The name we're testing with is much longer than that!
 
 Is that how many characters we're printing out?
 ```c
-[DOCKER] /tmp/hw/labs/lab1/ $ echo "Douglas " | awk -F '' -v 'OFS=\n' '{$1=$1}1'  | cat -n
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ echo "Douglas " | awk -F '' -v 'OFS=\n' '{$1=$1}1'  | cat -n
  1	D
  2	o
  3	u
@@ -814,9 +814,9 @@ Let's try changing the size of this array to something bigger, say 1024, to allo
 Making this change and re-running we see that our debug now runs successfully!
 
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ make debug
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ make debug
 gcc -Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug.c -o debug bin/student_code.o
-[DOCKER] /tmp/hw/labs/lab1/ $ ./debug
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ ./debug
 1
 1
 1
@@ -824,7 +824,7 @@ gcc -Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ debug
 
 Let's try out our unit tests!
 ```shell
-[DOCKER] /tmp/hw/labs/lab1/ $ make
+[DOCKER] /tmp/hw/labs/lab1-debugging_with_gdb/ $ make
 rm -rf bin unit_tests debug
 mkdir -p bin
 gcc -Wall -g -lcriterion -I/opt/homebrew/Cellar/criterion/2.4.1_2/include/ -c src/student_code.c -o bin/student_code.o
