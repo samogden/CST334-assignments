@@ -59,7 +59,7 @@ Note that you can run all of these commands on a single line as `cd CST334-assig
 ## Step 2: Open the starter code
 
 To open the starter code you should navigate in your host operating system (e.g. windows or OSX) to the same directory as your terminal instance is.
-That is, in the directory you started docker in click folders until you are in the `lab1-intro_to_c` directory.
+That is, in the directory you started docker in click folders until you are in the `lab0-intro_to_c` directory.
 
 In this folder you will find a file called `bin_to_dec.c`.
 Open it in your text editor of choice (e.g. TextEdit, SublimeText, Notepad++, or an IDE).
@@ -113,7 +113,7 @@ In `gcc` there is no guarantee that a value that is declared but not initialized
 What it means is whether we are running the program by calling it in the terminal or automatically inputting text, something called "piping" which we will see a bit later.
 Right now, if we detect that a user is typing text in we automatically output a right angle bracket followed by a space to give them a prompt to enter in a character.
 
-***TODO:*** Take a picture of your texteditor with this file open and paste it into your Lab1 document.
+***TODO:*** Take a picture of your texteditor with this file open and paste it into your Lab0 document.
 
 ## Step 3: Test compilation
 
@@ -176,7 +176,7 @@ The second argument `input_s` is our string, and it is where `scanf` will store 
 The second line is a `printf` statement, which is how we output text in C.
 In this case we give it a format string `%s\n` which means it is going to be passed a string to output with a bit of text on either side.
 
-***TODO:*** What does the `\n` at the end of the do?  Write your answer in your Lab1 document.
+***TODO:*** What does the `\n` at the end of the do?  Write your answer in your Lab0 document.
 
 Compile with the same `gcc` command as before (or use the `Makefile` if you've asked ChatGPT about its usage) and re-run to test it out.
 
@@ -250,7 +250,7 @@ input: 2134
 length: 4
 ```
 
-***TODO:*** Screenshot this output (using any input number you want) and copy it into your Lab1 document.
+***TODO:*** Screenshot this output (using any input number you want) and copy it into your Lab0 document.
 
 
 ## Quick aside on converting binary numbers to 
@@ -423,7 +423,7 @@ for (int i = 0; i < length ; i++ ) {
 
 Compile and test your code catching and reporting an incorrect input
 
-***TODO:*** Screenshot your program reporting an error and put it into the Lab1 document
+***TODO:*** Screenshot your program reporting an error and put it into the Lab0 document
 
 I also encourage you to ask ChatGPT how to check the return code of a program.
 We'll be discussing it in class but it can help debug issues in code.
@@ -453,14 +453,14 @@ In decimal that is: 6
 Congratulations!
 Your first C program in OS is now complete!
 
-***TODO:*** Screenshot your program running and copy it into the Lab1 document.
+***TODO:*** Screenshot your program running and copy it into the Lab0 document.
 
 ## Conclusion
 
 Your program is now complete!
 We've seen a lot of things in this lab, including format specifiers, bit shifting, I/O in C, and some preprocessor commands.
 
-***TODO:*** Take a few minutes to write a short bit at the end of your Lab1 document reflecting on what worked how you expected or what was new for you.  If you used ChatGPT at all, did you find it useful or did it just add complexity?
+***TODO:*** Take a few minutes to write a short bit at the end of your Lab0 document reflecting on what worked how you expected or what was new for you.  If you used ChatGPT at all, did you find it useful or did it just add complexity?
 
 
 Submit your "Lab 1" document on canvas.
