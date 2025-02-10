@@ -359,6 +359,8 @@ Test(String, String__replace_0, .disabled=false) {
    */
   String__replace(&test_str_1, replacement_offset, replacement_length, &test_str_2);
 
+  // String should now be "HGoodByelo"
+
   /*
    * Post-checks
    */
