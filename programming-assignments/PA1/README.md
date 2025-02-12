@@ -207,3 +207,8 @@ Additionally, a number of the functions you are writing can be written with othe
 Good luck!
 Remember, don't pour too much time into low-value functions!
 Those are the ones that I expect to be the difficult or less important, but cool nevertheless!
+
+## Hint
+
+Don't forget to check out the [header file](include/student_code.h) for function definitions!  
+They tell you what functions should be doing!
