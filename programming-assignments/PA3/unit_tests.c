@@ -1,28 +1,21 @@
 #include <criterion/criterion.h>
-#include <limits.h>
 #include <signal.h>
-#include <assert.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/mman.h>
-#include <time.h>
-#include <unistd.h>
 #include <common.h>
+#include <time.h>
 
-// Include student code
+// Include src headers
 #include "student_code.h"
+#include "defines.h"
 
-// Include our unit test files
+// Define any testing parameters
+#define NUMBER_OF_REPEATS 10
+
+// Include unit tests
 #include "tests/unittests_functions.c"
-#include "tests/unittests_alloc.c"
-#include "tests/unittests_free.c"
-
+#include "tests/unittests_mmu_pagetable.c"
 
 TestSuite(Functions, .disabled=false, .timeout=60.0);
-TestSuite(Alloc, .disabled=false, .timeout=60.0);
-TestSuite(Free, .disabled=false, .timeout=60.0);
-
+TestSuite(MMU_PageTable, .disabled=false, .timeout=60.0);
 
 // From: https://github.com/codewars/criterion-hooks/blob/main/criterion-hooks.c
 // PRE_TEST: occurs after the test initialization, but before the test is run.
