@@ -3,6 +3,7 @@
 
 This repository contains code for CST334 (Operating Systems) at CSUMB.
 This repository will be used both for in-class work and homework assignments.
+If you are interested in getting ahead on homework, please read the caveats in the [working ahead section](#working-ahead) below.
 
 ## Organization
 
