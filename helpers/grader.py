@@ -150,7 +150,7 @@ def run_unittests(path_to_assignment_directory):
   stdout = proc.stdout.read().decode('latin-1')
   stderr = proc.stderr.read().decode('latin-1')
   
-  return parse_unit_tests_json(stdout), stderr
+  return parse_unit_tests_json(stdout), stdout + stderr
 
 def parse_unit_tests_json(in_lines) -> Results:
   json_lines = fix_json(in_lines)
@@ -301,6 +301,7 @@ def main():
   lint_success, lint_log = make_lint(os.path.abspath(args.assignment_dir))
   if build_success:
     test, test_stderr = run_unittests(os.path.abspath(args.assignment_dir))
+    log.debug(f"Test_output: {test_stderr}")
     test.score(scoring_tests)
     score, results = test.get_score()
     results_json["score"] = score
@@ -317,7 +318,7 @@ def main():
   if len(scoring_tests) == 0:
     results_json["score"] = "Not calculated"
     
-  results_json["build_logs"] = json.encoder.JSONEncoder().encode(build_log) + "\n######\n\n" + test_stderr
+  results_json["build_logs"] = json.encoder.JSONEncoder().encode(build_log)
   print(json.dumps(results_json, indent=4))
   with open(args.output, 'w') as fid:
     json.dump(results_json, fid, indent=4)
