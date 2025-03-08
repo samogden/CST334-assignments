@@ -222,16 +222,16 @@ def parse_scoring(path_to_scoring) -> List[ScoringItem]:
 
 def make_test(path_to_assignment_directory):
   os.chdir(path_to_assignment_directory)
-  proc = subprocess.Popen(["make", "unit_tests"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  proc = subprocess.Popen(["make", "unit_tests"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
   proc.wait()
   
   stdout = proc.stdout.read().decode()
-  stderr = proc.stderr.read().decode()
+  # stderr = proc.stderr.read().decode()
   
   if proc.returncode == 0:
-    return True, stderr
+    return True, stdout
   else:
-    return False, stderr
+    return False, stdout
 
 def make_lint(path_to_assignment_directory):
   os.chdir(path_to_assignment_directory)
