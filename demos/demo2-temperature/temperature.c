@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #define NUM_API_READER_THREADS 12
+#define fsleep(seconds) usleep((unsigned int)((seconds) * 1000000))
 
 volatile int temperature;
 pthread_mutex_t mutex;
@@ -29,7 +30,7 @@ void *API_provider(void* threadid) {
     // Sleep because we don't need to 
     // update the temperature 100 million 
     // times per second
-    sleep(1);
+    fsleep(1);
   }
 }
 
@@ -40,7 +41,7 @@ void *API_reader__polling(void* threadid) {
     pthread_mutex_lock(&mutex);
     printf("Reader(%02ld) current temp: %d\n", (long)threadid, temperature);
     pthread_mutex_unlock(&mutex);
-    usleep(100000);
+    fsleep(0.5);
   }
 }
 
