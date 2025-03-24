@@ -10,7 +10,6 @@
 
 #define QUEUE_SIZE 10
 
-
 typedef struct Queue {
   unsigned int entries[QUEUE_SIZE];
   int head;
