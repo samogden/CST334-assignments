@@ -150,7 +150,7 @@ def run_unittests(path_to_assignment_directory):
   stdout = proc.stdout.read().decode('latin-1')
   stderr = proc.stderr.read().decode('latin-1')
   
-  return parse_unit_tests_json(stdout)
+  return parse_unit_tests_json(stdout), stdout + stderr
 
 def parse_unit_tests_json(in_lines) -> Results:
   json_lines = fix_json(in_lines)
@@ -222,16 +222,16 @@ def parse_scoring(path_to_scoring) -> List[ScoringItem]:
 
 def make_test(path_to_assignment_directory):
   os.chdir(path_to_assignment_directory)
-  proc = subprocess.Popen(["make", "unit_tests"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  proc = subprocess.Popen(["make", "unit_tests"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
   proc.wait()
   
   stdout = proc.stdout.read().decode()
-  stderr = proc.stderr.read().decode()
+  # stderr = proc.stderr.read().decode()
   
   if proc.returncode == 0:
-    return True, stderr
+    return True, stdout
   else:
-    return False, stderr
+    return False, stdout
 
 def make_lint(path_to_assignment_directory):
   os.chdir(path_to_assignment_directory)
@@ -300,7 +300,8 @@ def main():
   build_success, build_log = make_test(os.path.abspath(args.assignment_dir))
   lint_success, lint_log = make_lint(os.path.abspath(args.assignment_dir))
   if build_success:
-    test = run_unittests(os.path.abspath(args.assignment_dir))
+    test, test_stderr = run_unittests(os.path.abspath(args.assignment_dir))
+    log.debug(f"Test_output: {test_stderr}")
     test.score(scoring_tests)
     score, results = test.get_score()
     results_json["score"] = score

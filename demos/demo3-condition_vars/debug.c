@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <pthread.h>
 
-#define NUM_TO_ADD 10
+#define NUM_TO_ADD 20
 
 typedef struct args_t {
   Queue* q;
@@ -15,8 +15,8 @@ void* add_item_wrapper(void* args) {
   Queue* q = ((args_t*)args)->q;
   unsigned int val = ((args_t*)args)->val;
 
-  add_item(q, val);
-  printf("size: %d\n", get_size(q));
+  int added_item = add_item(q, val);
+  printf("(add) added: %d\n", added_item);
 
   return NULL;
 }
@@ -25,7 +25,7 @@ void* get_item_wrapper(void* args) {
   Queue* q = ((args_t*)args)->q;
 
   int item = get_item(q);
-  printf("item: %d\n", item);
+  printf("(get) item: %d\n", item);
 
   return NULL;
 }
@@ -41,7 +41,7 @@ int main() {
     args[i].val = i;
 
     // add_item_wrapper(&args);
-    if (i > ((NUM_TO_ADD/2))) {
+    if (i < ((NUM_TO_ADD/2))) {
       pthread_create(
         &threads[i],
         NULL,

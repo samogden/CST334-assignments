@@ -18,7 +18,11 @@ Queue init_queue() {
 }
 
 int _get_size(Queue* q) {
-  return (q->head - q->tail) % QUEUE_SIZE;
+  if (q->head >= q->tail) {
+    return q->head - q->tail;
+  } else {
+    return QUEUE_SIZE - (q->tail - q->head);
+  }
 }
 
 int get_size(Queue* q) {
@@ -28,10 +32,10 @@ int get_size(Queue* q) {
   return return_val;
 }
 
-
 bool is_full(Queue* q) {
   return ((q->head + 1) % QUEUE_SIZE) == q->tail;
 }
+
 bool is_empty(Queue* q) {
   return (q->head == q->tail);
 }
@@ -41,7 +45,7 @@ int _add_item(Queue* q, int item) {
     return -1;
   }
   q->entries[q->head] = item;
-  q->head = q->head + 1 % QUEUE_SIZE;
+  q->head = (q->head + 1) % QUEUE_SIZE;
   return _get_size(q);
 }
 
@@ -50,7 +54,7 @@ int _get_item(Queue* q) {
     return -1;
   }
   int return_val = q->entries[q->tail];
-  q->tail = q->tail + 1 % QUEUE_SIZE;
+  q->tail = (q->tail + 1) % QUEUE_SIZE;
   return return_val;
 }
 
@@ -64,7 +68,6 @@ int add_item(Queue* q, int item) {
   return return_val;
 }
 
-
 int get_item(Queue* q) {
   pthread_mutex_lock(q->mutex);
 
@@ -75,7 +78,10 @@ int get_item(Queue* q) {
 }
 
 void print_queue(Queue* q) {
-  for (int i = q->tail; i < get_size(q); i++) {
-    printf("%d -> %d\n", i - q->tail, q->entries[i % QUEUE_SIZE]);
-  }}
+  int size = get_size(q);
+  printf("Queue contents:");
+  for (int i = 0; i < size; i++) {
+    printf("%d -> %d\n", i, q->entries[(q->tail + i) % QUEUE_SIZE]);
+  }
+}
 
