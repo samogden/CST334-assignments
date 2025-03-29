@@ -75,7 +75,7 @@ How many bits do we need to represent our full physical address?
 ## Question 2
 For this question we are using the below page table:
 
-| **VPN** | **PFN**      |
+| **VPN** | **PTE**      |
 |---------|--------------|
 | `000`   | `0x8000000d` |
 | `001`   | `0x80000006` |
@@ -185,7 +185,7 @@ The offset is always the same in the virtual and the physical address.
 
 </details>
 
-### Question 2e
+### Question 2g
 
 Please complete the below table.  Note, adding extra columns may help you track things.
 
