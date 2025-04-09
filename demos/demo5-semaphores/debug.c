@@ -6,6 +6,23 @@
 
 #include <semaphore.h>
 
+/*
+ * Stolen from an LLM
+ */
+// Initialize macro
+#define sem_init_wrapper(sem, value) sem_init(&(sem), 0, value)
+
+// Method-like macros
+#define sem_wait_method(sem) sem_wait(&(sem))
+#define sem_post_method(sem) sem_post(&(sem))
+
+// Optional: Define a "dot" operator for more OO-like syntax
+#define init(sem, value) sem_init_wrapper(sem, value)
+#define wait(sem) sem_wait_method(sem)
+#define signal(sem) sem_post_method(sem)
+/* End of stolen code */
+
+
 #define NUM_THREADS 2
 #define INITIAL_SEMAPHORE_VALUE 0
 
@@ -62,8 +79,8 @@ void* GENERIC_THREAD_FUNCTION(void* args) {
 
 void run_AB() {
 
-  sem_init(&semA, 0, INITIAL_SEMAPHORE_VALUE);
-  sem_init(&semB, 0, INITIAL_SEMAPHORE_VALUE);
+  init(semA, INITIAL_SEMAPHORE_VALUE);
+  init(semB, INITIAL_SEMAPHORE_VALUE);
 
   pthread_t threadA, threadB;
 
@@ -80,7 +97,7 @@ void run_many() {
 
   // Initialize Semaphore
   for (int i = 0; i< NUM_THREADS; i++) {
-    sem_init(&semaphores[i], 0, INITIAL_SEMAPHORE_VALUE);
+    init(semaphores[i], INITIAL_SEMAPHORE_VALUE);
   }
 
   for (int i = 0; i < NUM_THREADS; i++) {
