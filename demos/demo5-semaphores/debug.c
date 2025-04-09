@@ -20,6 +20,12 @@
 #define init(sem, value) sem_init_wrapper(sem, value)
 #define wait(sem) sem_wait_method(sem)
 #define signal(sem) sem_post_method(sem)
+
+#define print_sem_value(sem) do { \
+    int temp_val; \
+    sem_getvalue(&(sem), &temp_val); \
+    printf("Semaphore %s = %d\n", #sem, temp_val); \
+} while(0)
 /* End of stolen code */
 
 
@@ -84,35 +90,10 @@ void* GENERIC_THREAD_FUNCTION(void* args) {
   printf("%c1 rendezvous\n", 'A' + thread_number);
 
   // STOP ALL THREADS HERE
-  wait(my_first_barrier.lock); // lock
-  my_first_barrier.count++; // critical section
-  if (my_first_barrier.count == my_first_barrier.N) {
-    signal(my_first_barrier.barrier);
-  }
-  signal(my_first_barrier.lock); // unlock
-
-  sem_getvalue(&my_first_barrier.barrier, &curr_val);
-  printf("%d\n", curr_val);
-
-  wait(my_first_barrier.barrier); // wait for other threads
-  signal(my_first_barrier.barrier); // turnstile
-
-  sem_getvalue(&my_first_barrier.barrier, &curr_val);
-  printf("%d\n", curr_val);
-
-  wait(my_first_barrier.lock); // lock
-  my_first_barrier.count--; // critical section
-  if (my_first_barrier.count == 0) {
-    wait(my_first_barrier.barrier);
-  }
-  signal(my_first_barrier.lock); // unlock
 
 
   // STEP 2
   printf("%c2 critical\n", 'A' + thread_number);
-
-  sem_getvalue(&my_first_barrier.barrier, &curr_val);
-  printf("%d\n", curr_val);
 
   return NULL;
 }
@@ -135,10 +116,10 @@ void run_many() {
   pthread_t threads[NUM_THREADS];
   args_t args[NUM_THREADS];
 
-  // Initialize Semaphore
-  // for (int i = 0; i< NUM_THREADS; i++) {
-  //   init(semaphores[i], INITIAL_SEMAPHORE_VALUE);
-  // }
+  Initialize Semaphore
+  for (int i = 0; i< NUM_THREADS; i++) {
+    init(semaphores[i], INITIAL_SEMAPHORE_VALUE);
+  }
 
   for (int i = 0; i < NUM_THREADS; i++) {
     args[i].thread_number = i;
@@ -151,13 +132,8 @@ void run_many() {
 
 int main() {
 
-  my_first_barrier.N = NUM_THREADS;
-  my_first_barrier.count = 0;
-  init(my_first_barrier.lock, 1);
-  init(my_first_barrier.barrier, 0);
-
-  // run_AB();
-  run_many();
+  run_AB();
+  // run_many();
   // printf("-------\n");
   // run_many();
 
