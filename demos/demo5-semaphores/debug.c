@@ -23,12 +23,21 @@
 /* End of stolen code */
 
 
-#define NUM_THREADS 2
+#define NUM_THREADS 26
 #define INITIAL_SEMAPHORE_VALUE 0
 
 sem_t semaphores[NUM_THREADS];
 sem_t semA;
 sem_t semB;
+
+typedef struct barrier_t {
+  int N; // number of threads
+  int count; // how many have arrived
+  sem_t lock;
+  sem_t barrier;
+}barrier_t;
+
+barrier_t my_first_barrier;
 
 volatile int counter = 0;
 
@@ -41,12 +50,13 @@ void* A(void* args) {
   usleep(rand() % 10000); // Do something slow
 
   // A1
-  printf("%c1\n", 'A');
+  printf("A1\n");
 
-  // todo
+  signal(semA);
+  wait(semB);
 
   // A2
-  printf("%c2\n", 'A');
+  printf("A2\n");
   return NULL;
 }
 
@@ -54,12 +64,13 @@ void* B(void* args) {
   usleep(rand() % 10000); // Do something slow
 
   // A1
-  printf("%c1\n", 'B');
+  printf("B1\n");
 
-  // todo
+  signal(semB);
+  wait(semA);
 
   // A2
-  printf("%c2\n", 'B');
+  printf("B2\n");
   return NULL;
 }
 
@@ -67,20 +78,49 @@ void* GENERIC_THREAD_FUNCTION(void* args) {
   int thread_number = ((args_t*)args)->thread_number;
   usleep(rand() % 10000); // Do something slow
 
-  // STEP 1
-  printf("%c1\n", 'A' + thread_number);
+  int curr_val;
 
-  // Todo!
+  // STEP 1
+  printf("%c1 rendezvous\n", 'A' + thread_number);
+
+  // STOP ALL THREADS HERE
+  wait(my_first_barrier.lock); // lock
+  my_first_barrier.count++; // critical section
+  if (my_first_barrier.count == my_first_barrier.N) {
+    signal(my_first_barrier.barrier);
+  }
+  signal(my_first_barrier.lock); // unlock
+
+  sem_getvalue(&my_first_barrier.barrier, &curr_val);
+  printf("%d\n", curr_val);
+
+  wait(my_first_barrier.barrier); // wait for other threads
+  signal(my_first_barrier.barrier); // turnstile
+
+  sem_getvalue(&my_first_barrier.barrier, &curr_val);
+  printf("%d\n", curr_val);
+
+  wait(my_first_barrier.lock); // lock
+  my_first_barrier.count--; // critical section
+  if (my_first_barrier.count == 0) {
+    wait(my_first_barrier.barrier);
+  }
+  signal(my_first_barrier.lock); // unlock
+
 
   // STEP 2
-  printf("%c2\n", 'A' + thread_number);
+  printf("%c2 critical\n", 'A' + thread_number);
+
+  sem_getvalue(&my_first_barrier.barrier, &curr_val);
+  printf("%d\n", curr_val);
+
   return NULL;
 }
 
 void run_AB() {
 
-  init(semA, INITIAL_SEMAPHORE_VALUE);
-  init(semB, INITIAL_SEMAPHORE_VALUE);
+  init(semA, 1);
+  init(semB, 1);
 
   pthread_t threadA, threadB;
 
@@ -96,14 +136,13 @@ void run_many() {
   args_t args[NUM_THREADS];
 
   // Initialize Semaphore
-  for (int i = 0; i< NUM_THREADS; i++) {
-    init(semaphores[i], INITIAL_SEMAPHORE_VALUE);
-  }
+  // for (int i = 0; i< NUM_THREADS; i++) {
+  //   init(semaphores[i], INITIAL_SEMAPHORE_VALUE);
+  // }
 
   for (int i = 0; i < NUM_THREADS; i++) {
     args[i].thread_number = i;
     pthread_create(&threads[i], NULL, GENERIC_THREAD_FUNCTION, &args[i]);
-    sleep(1);
   }
   for (char i = 0; i < NUM_THREADS; i++) {
     pthread_join(threads[(size_t)i], NULL);
@@ -112,7 +151,15 @@ void run_many() {
 
 int main() {
 
-  run_AB();
+  my_first_barrier.N = NUM_THREADS;
+  my_first_barrier.count = 0;
+  init(my_first_barrier.lock, 1);
+  init(my_first_barrier.barrier, 0);
+
+  // run_AB();
+  run_many();
+  // printf("-------\n");
+  // run_many();
 
   return 0;
 }
