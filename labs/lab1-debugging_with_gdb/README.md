@@ -319,7 +319,7 @@ Let's check out our unit test file in `tests/tests-person.c`.
 
 ```c
  1	#include <criterion/criterion.h>
- 2	#include "../src/student_code.h"
+ 2	#include "student_code.h"
  3
  4	TestSuite(Person, .disabled=false);
  5
